@@ -22,10 +22,44 @@ namespace GCBlueTeamFinalProject.Controllers
             _context = context;
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["APIKeyName"];
         }
-        public IActionResult Index()
+        
+        public IActionResult RegisterUser()
         {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Users> UserList = _context.Users.Where(x => x.UserId == id).ToList();
+            for(int i = 0; i < UserList.Count; i++)
+            {
+                if (UserList[i].Gamertag != null)
+                {
+                    
+                    return View("YourProfile", UserList[i]);
+                }
+                
+            }
+            
             return View();
         }
+
+        
+        public IActionResult YourProfile(Users newUser)
+        {
+
+            if (ModelState.IsValid)
+            {
+                newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
+            }
+            else
+            {
+                //more validation
+                return RedirectToAction("RegisterUser");
+            }
+            return View(newUser);
+            
+        }
+
+        
         public async Task<ActionResult> GetPlayerBySearch(string search)
         {
             var client = new HttpClient();
@@ -37,7 +71,8 @@ namespace GCBlueTeamFinalProject.Controllers
             //ADD NUGET PACKAGE - Microsoft.aspnet.webapi.client
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return View(searchedPlayer);
+            Gamers searchedGamer = new Gamers(searchedPlayer);
+            return View(searchedGamer);
         }
         public IActionResult AddToGamers(Gamers newPlayer)
         {

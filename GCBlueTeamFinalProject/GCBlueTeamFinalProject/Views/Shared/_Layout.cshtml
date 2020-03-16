@@ -25,6 +25,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="DisplayGamers">Friends List</a>
                         </li>
+                        <li>
+                            <div class="form-check-inline">
+                                <form action="../HaloRank/GetPlayerBySearch" method="post">
+                                    <input type="text" name="search" value="" class="small" />
+                                    <input type="submit" value="Search Gamertag" class="small" />
+
+                                </form>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

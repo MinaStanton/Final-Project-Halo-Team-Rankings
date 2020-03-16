@@ -65,7 +65,7 @@ namespace GCBlueTeamFinalProject
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=HaloRank}/{action=RegisterUser}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
