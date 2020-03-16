@@ -31,7 +31,7 @@ namespace GCBlueTeamFinalProject.Models
         public string Notes { get; set; }
         public int? GameTypeIntId { get; set; }
         public string GameTypeNvarCharId { get; set; }
-
+        public string DisplayAcc { get; set; }
         public virtual AspNetUsers User { get; set; }
         public Gamers() //added default construct
         {
@@ -55,6 +55,8 @@ namespace GCBlueTeamFinalProject.Models
             TotalShotsLanded = player.Results[0].Result.ArenaStats.TotalShotsLanded;
             AccuracyRatio = CalculateAccuracy(player.Results[0].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
                 player.Results[0].Result.ArenaStats.TotalShotsLanded);
+            DisplayAcc = DisplayPercent(CalculateAccuracy(player.Results[0].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
+                player.Results[0].Result.ArenaStats.TotalShotsLanded));
             TotalGamesWon = player.Results[0].Result.ArenaStats.TotalGamesWon;
             TotalGamesLost = player.Results[0].Result.ArenaStats.TotalGamesLost;
             TotalGamesTied = player.Results[0].Result.ArenaStats.TotalGamesTied;
@@ -75,22 +77,22 @@ namespace GCBlueTeamFinalProject.Models
         }
         public double CalculateKillDeathRatio(int kills, int deaths) //for calculating K/D Ratio (used in the constructor when initializing a new Gamer object)
         {
-            double KD = kills / deaths;
-            Math.Round(KD, 2);
+            double KD = (double)kills / (double)deaths;
+            KD = Math.Round(KD, 2);
             return KD;
         }
         public double CalculateKillDeathAssistRatio(int kills, int deaths, int assists) //for calculating KDA Ratio (used in the constructor when initializing a new Gamer object)
         {
             int calculatedAssists = assists / 2;
             int KA = kills + calculatedAssists;
-            double KDA = KA / deaths;
-            Math.Round(KDA, 2);
+            double KDA = (double)KA / (double)deaths;
+            KDA = Math.Round(KDA, 2);
             return KDA;
         }
-        public double CalculateAccuracy(int landed, int fired) //for calculating Accuracy as a double (used in the constructor when initializing a new Gamer object)
+        public double CalculateAccuracy(int fired, int landed) //for calculating Accuracy as a double (used in the constructor when initializing a new Gamer object)
         {
-            double accuracy = landed / fired;
-            Math.Round(accuracy, 2);
+            double accuracy = (double)landed / (double)fired;
+            accuracy = Math.Round(accuracy, 2);
             return accuracy;
         }
         public static string DisplayPercent(double number) //for displaying percentages as a % instead of a double (used in a view, NOT used in the contructor) using for both accuracy and winlossratio
@@ -99,8 +101,8 @@ namespace GCBlueTeamFinalProject.Models
         }
         public double CalculateWinLossRatio(int wins, int losses, int ties) //for calculating W/L Ratio (used in the constructor when initializing a new Gamer object)
         {
-            double WLRatio = wins / (losses + ties);
-            Math.Round(WLRatio, 2);
+            double WLRatio = (double)wins / (double)(losses + ties);
+            WLRatio = Math.Round(WLRatio, 2);
             return WLRatio;
         }
     }
