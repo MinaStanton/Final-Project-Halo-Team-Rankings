@@ -37,6 +37,7 @@ namespace GCBlueTeamFinalProject.Controllers
             //ADD NUGET PACKAGE - Microsoft.aspnet.webapi.client
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             return View(searchedPlayer);
         }
         public IActionResult AddToGamers(Gamers newPlayer)

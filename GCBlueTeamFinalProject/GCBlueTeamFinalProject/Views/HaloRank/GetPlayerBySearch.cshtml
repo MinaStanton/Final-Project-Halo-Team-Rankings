@@ -21,6 +21,8 @@
         <th>Total Games Lost</th>
         <th>Total Games Tied</th>
         <th>Total Games Completed</th>
+        <th>Total Time Played</th>
+        <th>Game Type Id</th>
     </tr>
 
     <tr>
@@ -37,6 +39,8 @@
         <td>@Model.Results[0].Result.ArenaStats.TotalGamesLost</td>
         <td>@Model.Results[0].Result.ArenaStats.TotalGamesTied</td>
         <td>@Model.Results[0].Result.ArenaStats.TotalGamesCompleted</td>
+        <td>@Model.Results[0].Result.ArenaStats.TotalTimePlayed</td>
+        <td>@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId</td>
     </tr>
 
 </table>
@@ -54,6 +58,8 @@
     <input type="hidden" name="TotalGamesLost" value="@Model.Results[0].Result.ArenaStats.TotalGamesLost" />
     <input type="hidden" name="TotalGamesTied" value="@Model.Results[0].Result.ArenaStats.TotalGamesTied" />
     <input type="hidden" name="TotalGamesCompleted" value="@Model.Results[0].Result.ArenaStats.TotalGamesCompleted" />
+    <input type="hidden" name="TotalTimePlayed" value="@Model.Results[0].Result.ArenaStats.TotalTimePlayed" />
+    <input type="hidden" name="GameTypeNvarCharId" value="@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId" />
     <input type="hidden" name="UserID" value="@ViewBag.UserId" />
     <input type="submit" value="Add to friends list" />
 </form>
