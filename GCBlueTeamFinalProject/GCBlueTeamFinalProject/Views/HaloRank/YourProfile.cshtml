@@ -3,5 +3,63 @@
     ViewData["Title"] = "YourProfile";
 }
 
-<h1>YourProfile</h1>
+
+
+@model UsersGamers                           
+
+
+    <h1>User Profile</h1>
+
+    <div>
+
+        <h3>User</h3><br />
+        @Model.MyUser.UserName
+        <br />
+        <h3>GamerTag</h3> <br />
+        @Model.MyUser.Gamertag
+        <br />
+        <h3>Date Of Birth</h3><br />
+        @Model.MyUser.UserName
+        <br />
+
+    </div>
+
+
+
+@* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
+<table class="table-dark">
+    <tr>
+        <th>Total Kills</th>
+        <th>Total Deaths</th>
+        <th>Total Assists</th>
+        <th>Kill Death Ratio</th>
+        <th>Total Assassinations</th>
+        <th>Total Headshots</th>
+        <th>Total Shots Fired</th>
+        <th>Total Shots Landed</th>
+        <th>Accuracy Ratio</th>
+        <th>Total Games Won</th>
+        <th>Total Games Lost</th>
+        <th>Total Games Tied</th>
+        <th>Total Games Completed</th>
+        <th>Total Time Played</th>
+    </tr>
+    <tr>
+        <td>@Model.MyGamer.TotalKills</td>
+        <td>@Model.MyGamer.TotalDeaths</td>
+        <td>@Model.MyGamer.TotalAssists</td>
+        <td>@Model.MyGamer.Kdratio</td>
+        <td>@Model.MyGamer.TotalAssassinations</td>
+        <td>@Model.MyGamer.TotalHeadshots</td>
+        <td>@Model.MyGamer.TotalShotsFired</td>
+        <td>@Model.MyGamer.TotalShotsLanded</td>
+        <td>@Model.MyGamer.AccuracyRatio</td>
+        <td>@Model.MyGamer.TotalGamesWon</td>
+        <td>@Model.MyGamer.TotalGamesLost</td>
+        <td>@Model.MyGamer.TotalGamesTied</td>
+        <td>@Model.MyGamer.WinLossRatio</td>
+        <td>@Model.MyGamer.TotalGamesCompleted</td>
+    </tr>
+    </table>
+
 
