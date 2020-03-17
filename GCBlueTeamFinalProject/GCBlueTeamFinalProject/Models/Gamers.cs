@@ -31,7 +31,7 @@ namespace GCBlueTeamFinalProject.Models
         public string Notes { get; set; }
         public int? GameTypeIntId { get; set; }
         public string GameTypeNvarCharId { get; set; }
-        public string DisplayAcc { get; set; }
+        //public string DisplayAcc { get; set; }
         public virtual AspNetUsers User { get; set; }
         public Gamers() //added default construct
         {
@@ -55,8 +55,8 @@ namespace GCBlueTeamFinalProject.Models
             TotalShotsLanded = player.Results[0].Result.ArenaStats.TotalShotsLanded;
             AccuracyRatio = CalculateAccuracy(player.Results[0].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
                 player.Results[0].Result.ArenaStats.TotalShotsLanded);
-            DisplayAcc = DisplayPercent(CalculateAccuracy(player.Results[0].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
-                player.Results[0].Result.ArenaStats.TotalShotsLanded));
+            //DisplayAcc = DisplayPercent(CalculateAccuracy(player.Results[0].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
+                //player.Results[0].Result.ArenaStats.TotalShotsLanded));
             TotalGamesWon = player.Results[0].Result.ArenaStats.TotalGamesWon;
             TotalGamesLost = player.Results[0].Result.ArenaStats.TotalGamesLost;
             TotalGamesTied = player.Results[0].Result.ArenaStats.TotalGamesTied;

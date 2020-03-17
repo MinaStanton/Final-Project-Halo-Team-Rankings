@@ -31,23 +31,55 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 if (UserList[i].Gamertag != null)
                 {
-                    
                     return View("YourProfile", UserList[i]);
                 }
-                
             }
-            
             return View();
         }
 
         
-        public IActionResult YourProfile(Users newUser)
-        {
+        //public IActionResult YourProfile(Users newUser)
+        //{
 
+        //    if (ModelState.IsValid)
+        //    {
+        //        newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //        _context.Users.Add(newUser);
+        //        _context.SaveChanges();
+        //    }
+        //    else
+        //    {
+        //        //more validation
+        //        return RedirectToAction("RegisterUser");
+        //    }
+        //    return View(newUser);
+            
+        //}
+
+        public async  Task<ActionResult> YourProfile(Users newUser)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+          
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+            var response = await client.GetAsync($"?players={newUser.Gamertag}");
+       
+            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
+            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
+
+            if (searchedPlayer == null)
+            {
+
+                return View("Error", "This Gamertag does not exist, please try again.");
+            }
+
+            Gamers searchedGamer = new Gamers(searchedPlayer);
             if (ModelState.IsValid)
             {
                 newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Users.Add(newUser);
+                _context.Gamers.Add(searchedGamer);
                 _context.SaveChanges();
             }
             else
@@ -56,10 +88,9 @@ namespace GCBlueTeamFinalProject.Controllers
                 return RedirectToAction("RegisterUser");
             }
             return View(newUser);
-            
+
         }
 
-        
         public async Task<ActionResult> GetPlayerBySearch(string search)
         {
             var client = new HttpClient();
@@ -72,6 +103,12 @@ namespace GCBlueTeamFinalProject.Controllers
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Gamers searchedGamer = new Gamers(searchedPlayer);
+            
+            if(searchedGamer.Gamertag == null)
+            {
+                
+                return View("Error", "This Gamertag does not exist, please try again.");
+            }
             return View(searchedGamer);
         }
         public IActionResult AddToGamers(Gamers newPlayer)
