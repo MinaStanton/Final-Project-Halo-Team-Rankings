@@ -31,7 +31,8 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 if (UserList[i].Gamertag != null)
                 {
-                    return View("YourProfile", UserList[i]);
+                    
+                    return RedirectToAction("YourProfile", UserList[i]);
                 }
             }
             return View();
@@ -58,36 +59,49 @@ namespace GCBlueTeamFinalProject.Controllers
 
         public async  Task<ActionResult> YourProfile(Users newUser)
         {
+            // Calling on the API to check if Gamertag is valid
             var client = new HttpClient();
             client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-          
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
             var response = await client.GetAsync($"?players={newUser.Gamertag}");
-       
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
-            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            
-
             if (searchedPlayer == null)
             {
-
                 return View("Error", "This Gamertag does not exist, please try again.");
             }
-
+            // Taking users into a list and assigning ID in the DB
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Users> userList = _context.Users.Where(x => x.UserId == id).ToList();
+            //looking at searched gamers to see if the Gamertag already exists in the database
             Gamers searchedGamer = new Gamers(searchedPlayer);
+            for (int i =0; i<userList.Count; i++)
+            {
+                if(userList[i].UserId != null)
+                {
+                    UsersGamers MyProfile2 = new UsersGamers(userList[i], searchedGamer);
+                    return View(MyProfile2);
+                }
+            }
+           // then if it doesnt you are brough to the  add new user functions that will 
+           //redirect you to your profile if you havent made one
             if (ModelState.IsValid)
             {
-                newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                _context.Users.Add(newUser);
+                if(newUser.UserId == null)
+                {
+                    newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                   _context.Users.Add(newUser);
+                }
+                searchedGamer.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Gamers.Add(searchedGamer);
                 _context.SaveChanges();
             }
-            else
+            else 
             {
                 //more validation
                 return RedirectToAction("RegisterUser");
             }
-            return View(newUser);
+            UsersGamers MyProfile = new UsersGamers(newUser, searchedGamer);
+            return View(MyProfile);
 
         }
 
@@ -141,6 +155,81 @@ namespace GCBlueTeamFinalProject.Controllers
         public IActionResult CreateTeams(List<Gamers> gamers)
         {
             return View(Teams.TeamMaker(gamers)); //Sending a List<Teams> //may need to validate number of gamers here
+        }
+
+        //method to create teams Red vs Blue
+        //public async Task<ActionResult> CreateTeams(/*List<Gamers> gamers*/)
+        //{
+        //    var client = new HttpClient();
+        //    client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response = await client.GetAsync("?players=Lethul");
+
+        //    var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer = new Gamers(searchedPlayer);
+        //    //
+        //    var client1 = new HttpClient();
+        //    client1.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client1.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response1 = await client1.GetAsync("?players=blody09");
+
+        //    var searchedPlayer2 = await response1.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer2 = new Gamers(searchedPlayer2);
+        //    //
+        //    var client3 = new HttpClient();
+        //    client3.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client3.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response3 = await client3.GetAsync("?players=Sir%20Cruniac");
+
+        //    var searchedPlayer3 = await response3.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer3 = new Gamers(searchedPlayer3);
+        //    //
+        //    var client4 = new HttpClient();
+        //    client4.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client4.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response4 = await client4.GetAsync("?players=blody09");
+
+        //    var searchedPlayer4 = await response4.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer4 = new Gamers(searchedPlayer4);
+        //    //
+
+
+
+        //    Teams red = new Teams(searchedGamer.Gamertag, searchedGamer2.Gamertag);
+        //    Teams blue = new Teams(searchedGamer3.Gamertag, searchedGamer4.Gamertag);
+
+        //   List<Teams> teams = new List<Teams> { red, blue};
+
+        //   // return View("DisplayFavoriteTeams", teams);
+
+        //    return View(teams); 
+
+        //}
+
+        public IActionResult AddFavoriteTeams(Teams favTeam)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _context.Teams.Add(favTeam);
+                _context.SaveChanges();
+            }
+
+            return View("DisplayFavoriteTeams");
+        }
+
+        public IActionResult DisplayFavoriteTeams(List<Teams> favTeams)
+        {
+
+            return View(favTeams);
         }
     }
 }   

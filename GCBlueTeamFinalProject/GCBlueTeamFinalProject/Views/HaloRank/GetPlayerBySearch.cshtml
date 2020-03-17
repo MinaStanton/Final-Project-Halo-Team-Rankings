@@ -1,12 +1,8 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "GetPlayerBySearch";
 }
-
 <h1>GetPlayerBySearch</h1>
 @model Gamers
-
-
 <table class=" table table-dark">
     <tr>
         <th>Gamertag</th>
@@ -24,45 +20,39 @@
         <th>Total Time Played</th>
         <th>Game Type Id</th>
     </tr>
-
     <tr>
         <td>@Model.Gamertag</td>
+        <td>@Model.TotalKills</td>
+        <td>@Model.TotalDeaths</td>
+        <td>@Model.TotalAssists</td>
         <td>@Model.Kdratio</td>
-        <td>@Model.Score</td>
-       @* <td>@Model.DisplayAcc</td>*@
-        @*<td>@Model.Results[0].Result.PlayerId.Gamertag</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalKills</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalDeaths</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalAssists</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalAssassinations</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalHeadshots</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalShotsFired</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalShotsLanded</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalGamesWon</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalGamesLost</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalGamesTied</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalGamesCompleted</td>
-        <td>@Model.Results[0].Result.ArenaStats.TotalTimePlayed</td>
-        <td>@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId</td>*@
+        <td>@Model.TotalAssassinations</td>
+        <td>@Model.TotalHeadshots</td>
+        <td>@Model.TotalShotsFired</td>
+        <td>@Model.TotalShotsLanded</td>
+        <td>@Model.AccuracyRatio</td>
+        <td>@Model.TotalGamesWon</td>
+        <td>@Model.TotalGamesLost</td>
+        <td>@Model.TotalGamesTied</td>
+        <td>@Model.WinLossRatio</td>
+        <td>@Model.TotalGamesCompleted</td>
     </tr>
-
 </table>
-
 <form action="../HaloRank/AddToGamers" method="post">
-    @*<input type="hidden" name="Gamertag" value="@Model.Results[0].Result.PlayerId.Gamertag" />
-    <input type="hidden" name="TotalKills" value="@Model.Results[0].Result.ArenaStats.TotalKills" />
-    <input type="hidden" name="TotalDeaths" value="@Model.Results[0].Result.ArenaStats.TotalDeaths" />
-    <input type="hidden" name="TotalAssists" value="@Model.Results[0].Result.ArenaStats.TotalAssists" />
-    <input type="hidden" name="TotalAssassinations" value="@Model.Results[0].Result.ArenaStats.TotalAssassinations" />
-    <input type="hidden" name="TotalHeadshots" value="@Model.Results[0].Result.ArenaStats.TotalHeadshots" />
-    <input type="hidden" name="TotalShotsFired" value="@Model.Results[0].Result.ArenaStats.TotalShotsFired" />
-    <input type="hidden" name="TotalShotsLanded" value="@Model.Results[0].Result.ArenaStats.TotalShotsLanded" />
-    <input type="hidden" name="TotalGamesWon" value="@Model.Results[0].Result.ArenaStats.TotalGamesWon" />
-    <input type="hidden" name="TotalGamesLost" value="@Model.Results[0].Result.ArenaStats.TotalGamesLost" />
-    <input type="hidden" name="TotalGamesTied" value="@Model.Results[0].Result.ArenaStats.TotalGamesTied" />
-    <input type="hidden" name="TotalGamesCompleted" value="@Model.Results[0].Result.ArenaStats.TotalGamesCompleted" />
-    <input type="hidden" name="TotalTimePlayed" value="@Model.Results[0].Result.ArenaStats.TotalTimePlayed" />
-    <input type="hidden" name="GameTypeNvarCharId" value="@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId" />*@
+    <input type="hidden" name="Gamertag" value="@Model.Gamertag" />
+    <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
+    <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
+    <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
+    <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
+    <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
+    <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
+    <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
+    <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
+    <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
+    <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
+    <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
+    <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
+    @*<input type="hidden" name="GameTypeNvarCharId" value="@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId" />*@
     <input type="hidden" name="UserID" value="@ViewBag.UserId" />
     <input type="submit" value="Add to friends list" />
 </form>
