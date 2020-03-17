@@ -138,5 +138,9 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
+        public IActionResult CreateTeams(List<Gamers> gamers)
+        {
+            return View(Teams.TeamMaker(gamers)); //Sending a List<Teams> //may need to validate number of gamers here
+        }
     }
 }   

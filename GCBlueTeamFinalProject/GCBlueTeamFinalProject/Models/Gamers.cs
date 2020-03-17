@@ -33,10 +33,10 @@ namespace GCBlueTeamFinalProject.Models
         public string GameTypeNvarCharId { get; set; }
         //public string DisplayAcc { get; set; }
         public virtual AspNetUsers User { get; set; }
-        public Gamers() //added default construct
-        {
+        //public Gamers() //added default construct
+        //{
 
-        }
+        //}
         public Gamers(PlayerRootObject player) //overloaded constructor for converting PlayerRootObject to Gamers object
         {
             Gamertag = player.Results[0].Result.PlayerId.Gamertag;
@@ -66,6 +66,7 @@ namespace GCBlueTeamFinalProject.Models
             TotalGamesCompleted = player.Results[0].Result.ArenaStats.TotalGamesCompleted;
             TotalTimePlayed = player.Results[0].Result.ArenaStats.TotalTimePlayed; //add parsing method, regex? (STRETCH GOAL)
             GameTypeNvarCharId = player.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId; //add parsing method (STRETCH GOAL)
+            Score = CalculateScore();
         }
         public static string DisplayRespawnTime(int seconds) //for displaying time spent respawning in view (NOT used in the contructor)
         {
@@ -104,6 +105,27 @@ namespace GCBlueTeamFinalProject.Models
             double WLRatio = (double)wins / (double)(losses + ties);
             WLRatio = Math.Round(WLRatio, 2);
             return WLRatio;
+        }
+        public int CalculateScore()
+        {
+            int scoreForKills = (int)TotalKills * 50;
+            int scoreFordeaths = (int)TotalDeaths * -50;
+            int scoreForAssists = (int)TotalAssists * 10;
+            int scoreForHeadShots = (int)TotalHeadshots * 10;
+            int scoreForAssassinations = (int)TotalAssassinations * 20;
+            int scoreForWins = (int)TotalGamesWon * 200;
+            int scoreForLosses = (int)TotalGamesLost * -200;
+            int scoreForTiedGames = (int)TotalGamesTied * -200;
+            int scoreForShotsLanded = (int)TotalShotsLanded * 15;
+            int scoreForShotsMissed = ((int)TotalShotsFired - (int)TotalShotsLanded) * -5;
+
+            int sum = scoreForKills + scoreFordeaths + scoreForAssists + scoreForHeadShots + 
+                scoreForAssassinations + scoreForWins + scoreForLosses + scoreForTiedGames +
+                scoreForShotsLanded + scoreForShotsMissed;
+
+            int avgScorePerGame = sum / (int)TotalGamesCompleted;
+
+            return avgScorePerGame;
         }
     }
 }
