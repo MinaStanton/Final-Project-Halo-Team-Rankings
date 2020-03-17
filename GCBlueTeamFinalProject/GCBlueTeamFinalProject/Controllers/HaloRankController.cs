@@ -138,5 +138,80 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
+
+        //method to create teams Red vs Blue
+        //public async Task<ActionResult> CreateTeams(/*List<Gamers> gamers*/)
+        //{
+        //    var client = new HttpClient();
+        //    client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response = await client.GetAsync("?players=Lethul");
+
+        //    var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer = new Gamers(searchedPlayer);
+        //    //
+        //    var client1 = new HttpClient();
+        //    client1.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client1.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response1 = await client1.GetAsync("?players=blody09");
+
+        //    var searchedPlayer2 = await response1.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer2 = new Gamers(searchedPlayer2);
+        //    //
+        //    var client3 = new HttpClient();
+        //    client3.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client3.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response3 = await client3.GetAsync("?players=Sir%20Cruniac");
+
+        //    var searchedPlayer3 = await response3.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer3 = new Gamers(searchedPlayer3);
+        //    //
+        //    var client4 = new HttpClient();
+        //    client4.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+
+        //    client4.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response4 = await client4.GetAsync("?players=blody09");
+
+        //    var searchedPlayer4 = await response4.Content.ReadAsAsync<PlayerRootObject>();
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    Gamers searchedGamer4 = new Gamers(searchedPlayer4);
+        //    //
+
+
+
+        //    Teams red = new Teams(searchedGamer.Gamertag, searchedGamer2.Gamertag);
+        //    Teams blue = new Teams(searchedGamer3.Gamertag, searchedGamer4.Gamertag);
+
+        //   List<Teams> teams = new List<Teams> { red, blue};
+
+        //   // return View("DisplayFavoriteTeams", teams);
+
+        //    return View(teams); 
+
+        //}
+
+        public IActionResult AddFavoriteTeams(Teams favTeam)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _context.Teams.Add(favTeam);
+                _context.SaveChanges();
+            }
+
+            return View("DisplayFavoriteTeams");
+        }
+
+        public IActionResult DisplayFavoriteTeams(List<Teams> favTeams)
+        {
+
+            return View(favTeams);
+        }
     }
 }   

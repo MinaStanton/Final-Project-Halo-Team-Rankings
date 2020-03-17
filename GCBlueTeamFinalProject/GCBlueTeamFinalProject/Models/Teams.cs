@@ -25,5 +25,16 @@ namespace GCBlueTeamFinalProject.Models
         public string UserId { get; set; }
 
         public virtual AspNetUsers User { get; set; }
+
+        public Teams()
+        {
+
+        }
+
+        public Teams(string gamer1, string gamer2)
+        {
+            Player1 = gamer1;
+            Player2 = gamer2;
+        }
     }
 }
