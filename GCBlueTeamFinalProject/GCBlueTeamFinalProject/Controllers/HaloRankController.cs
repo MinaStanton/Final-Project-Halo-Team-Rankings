@@ -31,7 +31,8 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 if (UserList[i].Gamertag != null)
                 {
-                    return View("YourProfile", UserList[i]);
+                    
+                    return RedirectToAction("YourProfile", UserList[i]);
                 }
             }
             return View();
@@ -58,36 +59,49 @@ namespace GCBlueTeamFinalProject.Controllers
 
         public async  Task<ActionResult> YourProfile(Users newUser)
         {
+            // Calling on the API to check if Gamertag is valid
             var client = new HttpClient();
             client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-          
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
             var response = await client.GetAsync($"?players={newUser.Gamertag}");
-       
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
-            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            
-
             if (searchedPlayer == null)
             {
-
                 return View("Error", "This Gamertag does not exist, please try again.");
             }
-
+            // Taking users into a list and assigning ID in the DB
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Users> userList = _context.Users.Where(x => x.UserId == id).ToList();
+            //looking at searched gamers to see if the Gamertag already exists in the database
             Gamers searchedGamer = new Gamers(searchedPlayer);
+            for (int i =0; i<userList.Count; i++)
+            {
+                if(userList[i].UserId != null)
+                {
+                    UsersGamers MyProfile2 = new UsersGamers(userList[i], searchedGamer);
+                    return View(MyProfile2);
+                }
+            }
+           // then if it doesnt you are brough to the  add new user functions that will 
+           //redirect you to your profile if you havent made one
             if (ModelState.IsValid)
             {
-                newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                _context.Users.Add(newUser);
+                if(newUser.UserId == null)
+                {
+                    newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                   _context.Users.Add(newUser);
+                }
+                searchedGamer.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 _context.Gamers.Add(searchedGamer);
                 _context.SaveChanges();
             }
-            else
+            else 
             {
                 //more validation
                 return RedirectToAction("RegisterUser");
             }
-            return View(newUser);
+            UsersGamers MyProfile = new UsersGamers(newUser, searchedGamer);
+            return View(MyProfile);
 
         }
 
