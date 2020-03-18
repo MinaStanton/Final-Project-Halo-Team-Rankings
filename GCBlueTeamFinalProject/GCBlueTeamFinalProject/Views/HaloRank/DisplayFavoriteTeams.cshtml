@@ -5,17 +5,29 @@
 @model List<Teams>
 <h1>Favorite Teams</h1>
 
-<div>
+<div class="table table-bordered">
     <table>
         <tr>
+            <th></th>
             <th>Team Name</th>
-            <th>Players</th>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Player 3</th>
+            <th>Player 4</th>
+            <th>Player 5</th>
+            <th>Player 6</th>
+            <th>Player 7</th>
+            <th>Player 8</th>
             <th>Average Win/Loss Ratio</th>
+            <th>Average Kill/Deaths Ratio</th>
+            <th>Average Kill/Death/Assists Ratio</th>
+            <th>Average Accuracy Ratio</th>
             <th>Average Score</th>
         </tr>
         @for(int i =0; i < Model.Count; i++)
         {
     <tr>
+        <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
         <td>@Model[i].TeamName</td>
         <td>@Model[i].Player1</td>
         <td>@Model[i].Player2</td>
@@ -26,7 +38,10 @@
         <td>@Model[i].Player7</td>
         <td>@Model[i].Player8</td>
         <td>@Model[i].AvgWlratio</td>
-        <td>@Model[i].AvgScore</td><br />
+        <td>@Model[i].AvgKdratio</td>
+        <td>@Model[i].AvgKdaratio</td>
+        <td>@Model[i].AvgAccRatio</td>
+        <td>@Model[i].AvgScore</td>
 
     </tr>
         }

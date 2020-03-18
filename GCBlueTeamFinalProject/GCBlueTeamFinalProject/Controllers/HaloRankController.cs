@@ -152,10 +152,12 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
-        public IActionResult CreateTeams(List<Gamers> gamers)
-        {
-            return View(Teams.TeamMaker(gamers)); //Sending a List<Teams> //may need to validate number of gamers here
-        }
+        //public IActionResult CreateTeams(List<Gamers> gamers)
+        //{
+        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    return View(Teams.TeamMaker(gamers)); //Sending a List<Teams> //may need to validate number of gamers here
+        //}
 
         //method to create teams Red vs Blue
         //public async Task<ActionResult> CreateTeams(/*List<Gamers> gamers*/)
@@ -169,53 +171,32 @@ namespace GCBlueTeamFinalProject.Controllers
         //    var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
         //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
         //    Gamers searchedGamer = new Gamers(searchedPlayer);
-        //    //
-        //    var client1 = new HttpClient();
-        //    client1.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+            
+        //    Teams red = new Teams(searchedGamer.Gamertag, searchedGamer.Gamertag, 25.4,.5);
+        //    Teams blue = new Teams(searchedGamer.Gamertag, searchedGamer.Gamertag, 75.3, 6.32);
 
-        //    client1.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-        //    var response1 = await client1.GetAsync("?players=blody09");
+        //    List<Teams> teams = new List<Teams> { red, blue };
 
-        //    var searchedPlayer2 = await response1.Content.ReadAsAsync<PlayerRootObject>();
-        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    Gamers searchedGamer2 = new Gamers(searchedPlayer2);
-        //    //
-        //    var client3 = new HttpClient();
-        //    client3.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+        //     return View("DisplayFavoriteTeams", teams);
 
-        //    client3.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-        //    var response3 = await client3.GetAsync("?players=Sir%20Cruniac");
-
-        //    var searchedPlayer3 = await response3.Content.ReadAsAsync<PlayerRootObject>();
-        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    Gamers searchedGamer3 = new Gamers(searchedPlayer3);
-        //    //
-        //    var client4 = new HttpClient();
-        //    client4.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-
-        //    client4.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-        //    var response4 = await client4.GetAsync("?players=blody09");
-
-        //    var searchedPlayer4 = await response4.Content.ReadAsAsync<PlayerRootObject>();
-        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    Gamers searchedGamer4 = new Gamers(searchedPlayer4);
-        //    //
-
-
-
-        //    Teams red = new Teams(searchedGamer.Gamertag, searchedGamer2.Gamertag);
-        //    Teams blue = new Teams(searchedGamer3.Gamertag, searchedGamer4.Gamertag);
-
-        //   List<Teams> teams = new List<Teams> { red, blue};
-
-        //   // return View("DisplayFavoriteTeams", teams);
-
-        //    return View(teams); 
+        //    //return View(teams);
 
         //}
 
         public IActionResult AddFavoriteTeams(Teams favTeam)
         {
+            //pulling a list of teams from the DB then checking if the team name already exists, if so then return to
+            //previous view which was create teams
+            string ID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Teams> already = _context.Teams.Where(x => x.UserId == ID).ToList();
+
+            for (int i = 0; i < already.Count; i++)
+            {
+                if (already[i].TeamName == favTeam.TeamName)
+                {
+                    return View("CreateTeams");
+                }
+            }
 
             if (ModelState.IsValid)
             {
@@ -223,9 +204,19 @@ namespace GCBlueTeamFinalProject.Controllers
                 _context.SaveChanges();
             }
 
-            return View("DisplayFavoriteTeams");
+            return View("CreateTeams");//sending back to create teams in case they want to add the second team to favorites
         }
-
+        //this method removes a team from the favorite teams list
+        public IActionResult DeleteFavoriteTeams(int id)
+        {
+            Teams found = _context.Teams.Find(id);
+            if (found != null)
+            {
+                _context.Teams.Remove(found);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("DisplayFavoriteTeams");
+        }
         public IActionResult DisplayFavoriteTeams(List<Teams> favTeams)
         {
 

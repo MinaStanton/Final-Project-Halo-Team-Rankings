@@ -30,6 +30,15 @@ namespace GCBlueTeamFinalProject.Models
         {
 
         }
+        //creating a constructor for testing
+        //public Teams(string gtag1, string gtag2, double wRatio, double kdRatio)
+        //{
+        //    Player1 = gtag1;
+        //    Player2 = gtag2;
+        //    AvgWlratio = wRatio;
+        //    AvgKdratio = kdRatio;
+        //}
+
         public Teams(List<Gamers> gamers)
         {
             Player1 = gamers[0].Gamertag;
