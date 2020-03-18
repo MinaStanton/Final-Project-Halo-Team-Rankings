@@ -10,21 +10,23 @@
     <tr>
         <th>Gamertag</th>
         <th>Total Games Played</th>
+        <th>Score</th>
+        <th>Rank</th>
     </tr>
     @foreach (Gamers player in Model)
     {
         <tr>
             <td>@player.Gamertag</td>
             <td>@player.TotalGamesCompleted</td>
+            <td>@player.Score</td>
+            <td>@player.Ranking</td>
             <td>
                 <a href="../HaloRank/DeleteFromGamers?id=@player.Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
-
     }
 </table>
 <form action="../HaloRank/GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" />
     <input type="submit"value="Search for Player" />
-
 </form>

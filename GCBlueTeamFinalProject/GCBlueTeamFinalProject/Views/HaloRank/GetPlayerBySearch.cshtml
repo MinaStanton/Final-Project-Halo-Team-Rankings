@@ -21,7 +21,7 @@
         <th>Win Loss Ratio</th>
         <th>Total Games Completed</th>
         <th>Total Time Played</th>
-        
+        <th>Score</th>
     </tr>
     <tr>
         <td>@Model.Gamertag</td>
@@ -40,6 +40,7 @@
         <td>@Model.WinLossRatio</td>
         <td>@Model.TotalGamesCompleted</td>
         <td>@Model.TotalTimePlayed</td>
+        <td>@Model.Score</td>
     </tr>
 </table>
 <form action="../HaloRank/AddToGamers" method="post">
@@ -56,6 +57,7 @@
     <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
     <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
     <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
+    <input type="hidden" name="Score" value="@Model.Score" />
     @*<input type="hidden" name="GameTypeNvarCharId" value="@Model.Results[0].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId" />*@
     <input type="hidden" name="UserID" value="@ViewBag.UserId" />
     <input type="submit" value="Add to friends list" />

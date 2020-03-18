@@ -57,7 +57,7 @@ namespace GCBlueTeamFinalProject.Controllers
             
         //}
 
-        public async  Task<ActionResult> YourProfile(Users newUser)
+        public async Task<ActionResult> YourProfile(Users newUser)
         {
             // Calling on the API to check if Gamertag is valid
             var client = new HttpClient();
@@ -73,7 +73,7 @@ namespace GCBlueTeamFinalProject.Controllers
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Users> userList = _context.Users.Where(x => x.UserId == id).ToList();
             //looking at searched gamers to see if the Gamertag already exists in the database
-            Gamers searchedGamer = new Gamers(searchedPlayer);
+            Gamers searchedGamer = new Gamers(searchedPlayer, 0);
             for (int i =0; i<userList.Count; i++)
             {
                 if(userList[i].UserId != null)
@@ -104,6 +104,10 @@ namespace GCBlueTeamFinalProject.Controllers
             return View(MyProfile);
 
         }
+        public IActionResult Error(string message)
+        {
+            return View(message);
+        }
 
         public async Task<ActionResult> GetPlayerBySearch(string search)
         {
@@ -116,7 +120,7 @@ namespace GCBlueTeamFinalProject.Controllers
             //ADD NUGET PACKAGE - Microsoft.aspnet.webapi.client
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Gamers searchedGamer = new Gamers(searchedPlayer);
+            Gamers searchedGamer = new Gamers(searchedPlayer, 0);
             
             if(searchedGamer.Gamertag == null)
             {
@@ -127,21 +131,83 @@ namespace GCBlueTeamFinalProject.Controllers
         }
         public IActionResult AddToGamers(Gamers newPlayer)
         {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+
             if (ModelState.IsValid)
             {
+                for (int i = 0; i < gamerList.Count; i++)
+                {
+                    if (gamerList[i].Gamertag == newPlayer.Gamertag)
+                    {
+                        return RedirectToAction("DisplayGamers");
+                    }
+                }
                 _context.Gamers.Add(newPlayer);
                 _context.SaveChanges();
             }
             return RedirectToAction("DisplayGamers");
         }
-        public IActionResult DisplayGamers()
+        //public IActionResult DisplayGamers()
+        //{
+        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+        //    List<Gamers> sortedList = gamerList.OrderBy(x => x.Score).Reverse().ToList();
+        //    for (int i = 0; i < sortedList.Count; i++)
+        //    {
+        //        sortedList[i].Ranking = i + 1;
+        //    }
+        //    //List<Gamers> gamerList = _context.Gamers.ToList();
+        //    //This line above for quickly showing all gamers in database instead of just associated with UserID
+        //    return View(sortedList);
+        //}
+        public async Task<ActionResult> DisplayGamers()
         {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
+            string search = "";
+            for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
+            {
+                if (i > 0)
+                {
+                    search = search + ",";
+                }
+                search = search + gamerList[i].Gamertag;
+            }
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+            var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
+            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
+            List<Gamers> apiListSearch = new List<Gamers>();
+            for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
+            {
+                apiListSearch.Add(new Gamers(searchedPlayer, i));
+            }
+
+            List<Gamers> sortedList = apiListSearch.OrderBy(x => x.Score).Reverse().ToList(); //sorts list of gamers by score
+            foreach(Gamers gamer in gamerList)
+            {
+                _context.Gamers.Remove(gamer);
+                _context.SaveChanges();
+            }
+
+            for (int i = 0; i < sortedList.Count; i++) //assigns a ranking based on order of list (based on score)
+            {
+                sortedList[i].Ranking = i + 1;
+                sortedList[i].UserId = id;
+                _context.Gamers.Add(sortedList[i]);
+                _context.SaveChanges();
+            }
+
+            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
             //List<Gamers> gamerList = _context.Gamers.ToList();
             //This line above for quickly showing all gamers in database instead of just associated with UserID
-            return View(gamerList);
+            return View(newGamerList); //displays sorted list of gamers
         }
+
+
         public IActionResult DeleteFromGamers(int id)
         {
             Gamers found = _context.Gamers.Find(id);
