@@ -26,6 +26,7 @@ namespace GCBlueTeamFinalProject.Models
         public string UserId { get; set; }
 
         public virtual AspNetUsers User { get; set; }
+        public Teams() { }
         public Teams(List<Gamers> gamers)
         {
             Player1 = gamers[0].Gamertag;
