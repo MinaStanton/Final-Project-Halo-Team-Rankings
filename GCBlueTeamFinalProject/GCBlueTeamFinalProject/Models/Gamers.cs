@@ -102,7 +102,7 @@ namespace GCBlueTeamFinalProject.Models
         }
         public double CalculateWinLossRatio(int wins, int losses, int ties) //for calculating W/L Ratio (used in the constructor when initializing a new Gamer object)
         {
-            double WLRatio = (double)wins / (double)(losses + ties);
+            double WLRatio = (double)wins / (double)(losses + ties + wins);
             WLRatio = Math.Round(WLRatio, 2);
             return WLRatio;
         }
