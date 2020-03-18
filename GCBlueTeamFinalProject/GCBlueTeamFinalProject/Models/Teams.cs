@@ -62,20 +62,20 @@ namespace GCBlueTeamFinalProject.Models
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
             }
-            if (gamers.Count == 3)
+            else if (gamers.Count == 3)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
                 Player3 = gamers[2].Gamertag;
             }
-            if (gamers.Count == 4)
+            else if (gamers.Count == 4)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
                 Player3 = gamers[2].Gamertag;
                 Player4 = gamers[3].Gamertag;
             }
-            if (gamers.Count == 5)
+            else if (gamers.Count == 5)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
@@ -83,7 +83,7 @@ namespace GCBlueTeamFinalProject.Models
                 Player4 = gamers[3].Gamertag;
                 Player5 = gamers[4].Gamertag;
             }
-            if (gamers.Count == 6)
+            else if (gamers.Count == 6)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
@@ -92,7 +92,7 @@ namespace GCBlueTeamFinalProject.Models
                 Player5 = gamers[4].Gamertag;
                 Player6 = gamers[5].Gamertag;
             }
-            if (gamers.Count == 7)
+            else if (gamers.Count == 7)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
@@ -102,7 +102,7 @@ namespace GCBlueTeamFinalProject.Models
                 Player6 = gamers[5].Gamertag;
                 Player7 = gamers[6].Gamertag;
             }
-            if (gamers.Count == 8)
+            else if (gamers.Count == 8)
             {
                 Player1 = gamers[0].Gamertag;
                 Player2 = gamers[1].Gamertag;
@@ -154,14 +154,16 @@ namespace GCBlueTeamFinalProject.Models
 
             return new List<Teams>() { teamsTeam1, teamsTeam2 };
         }
-        public int SetAvgScore(List<Gamers> team)
+        public double SetAvgScore(List<Gamers> team)
         {
-            int sum = 0;
+            double sum = 0;
             foreach (Gamers gamer in team)
             {
-                sum = sum + (int)gamer.Score;
+                sum = sum + (double)gamer.Score;
             }
-            return sum / team.Count;
+            double avgSum = sum / team.Count;
+            avgSum = Math.Round(avgSum);
+            return avgSum;
         }
         public double SetAvgKDRatio(List<Gamers> team)
         {
@@ -170,7 +172,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.Kdratio;
             }
-            return sum / team.Count;
+            double avgSum = sum / team.Count;
+            avgSum = Math.Round(avgSum, 2);
+            return avgSum;
         }
         public double SetAvgKDARatio(List<Gamers> team)
         {
@@ -179,7 +183,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.Kdaratio;
             }
-            return sum / team.Count;
+            double avgSum = sum / team.Count;
+            avgSum = Math.Round(avgSum, 2);
+            return avgSum;
         }
         public double SetAvgAccRatio(List<Gamers> team)
         {
@@ -188,7 +194,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.AccuracyRatio;
             }
-            return sum / team.Count;
+            double avgSum = sum / team.Count;
+            avgSum = Math.Round(avgSum, 2);
+            return avgSum;
         }
         public double SetAvgWLRatio(List<Gamers> team)
         {
@@ -197,7 +205,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.WinLossRatio;
             }
-            return sum / team.Count;
+            double avgSum = sum / team.Count;
+            avgSum = Math.Round(avgSum, 2);
+            return avgSum;
         }
         public static string DisplayPercent(double number) //for displaying percentages as a % instead of a double (used in a view, NOT used in the contructor) using for both accuracy and winlossratio
         {

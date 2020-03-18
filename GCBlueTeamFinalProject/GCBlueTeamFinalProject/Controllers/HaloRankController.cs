@@ -223,36 +223,46 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 return View("Error", "Must select at least 2 people for your teams");
             }
-            List<Gamers> newGamerList = _context.Gamers.Where(x => gamers.Contains(x.Gamertag)).ToList();
-            return View(Teams.TeamMaker(newGamerList)); //Sending a List<Teams> //may need to validate number of gamers here
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
+            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Teams> teams = Teams.TeamMaker(newGamerList);
+            return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
         }
 
        
 
-        public IActionResult AddFavoriteTeams(Teams favTeam)
+        public IActionResult AddFavoriteTeams(List<string> favTeam, string TeamName)
         {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && favTeam.Contains(x.Gamertag)).ToList();
+            Teams newFavTeam = new Teams(newGamerList);
+            newFavTeam.UserId = id;
+            newFavTeam.TeamName = TeamName;
             //pulling a list of teams from the DB then checking if the team name already exists, if so then return to
             //previous view which was create teams
-            string ID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Teams> already = _context.Teams.Where(x => x.UserId == ID).ToList();
+            List<Teams> already = _context.Teams.Where(x => x.UserId == id).ToList();
 
             for (int i = 0; i < already.Count; i++)
             {
-                if (already[i].TeamName == favTeam.TeamName)
+                if (already[i].TeamName == newFavTeam.TeamName)
                 {
-                    return View("CreateTeams");
+                    return RedirectToAction("DisplayFavoriteTeams");
                 }
             }
 
             if (ModelState.IsValid)
             {
-                _context.Teams.Add(favTeam);
+                _context.Teams.Add(newFavTeam);
                 _context.SaveChanges();
             }
 
-            return View("CreateTeams");//sending back to create teams in case they want to add the second team to favorites
+            return RedirectToAction("DisplayFavoriteTeams");
         }
         //this method removes a team from the favorite teams list
+
+
         public IActionResult DeleteFavoriteTeams(int id)
         {
             Teams found = _context.Teams.Find(id);
@@ -263,9 +273,10 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayFavoriteTeams");
         }
-        public IActionResult DisplayFavoriteTeams(List<Teams> favTeams)
+        public IActionResult DisplayFavoriteTeams()
         {
-
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Teams> favTeams = _context.Teams.Where(x => x.UserId == id).ToList();
             return View(favTeams);
         }
     }
