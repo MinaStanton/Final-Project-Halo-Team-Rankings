@@ -227,29 +227,7 @@ namespace GCBlueTeamFinalProject.Controllers
             return View(Teams.TeamMaker(newGamerList)); //Sending a List<Teams> //may need to validate number of gamers here
         }
 
-        //method to create teams Red vs Blue
-        //public async Task<ActionResult> CreateTeams(/*List<Gamers> gamers*/)
-        //{
-        //    var client = new HttpClient();
-        //    client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-
-        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-        //    var response = await client.GetAsync("?players=Lethul");
-
-        //    var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
-        //    ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //    Gamers searchedGamer = new Gamers(searchedPlayer);
-            
-        //    Teams red = new Teams(searchedGamer.Gamertag, searchedGamer.Gamertag, 25.4,.5);
-        //    Teams blue = new Teams(searchedGamer.Gamertag, searchedGamer.Gamertag, 75.3, 6.32);
-
-        //    List<Teams> teams = new List<Teams> { red, blue };
-
-        //     return View("DisplayFavoriteTeams", teams);
-
-        //    //return View(teams);
-
-        //}
+       
 
         public IActionResult AddFavoriteTeams(Teams favTeam)
         {
