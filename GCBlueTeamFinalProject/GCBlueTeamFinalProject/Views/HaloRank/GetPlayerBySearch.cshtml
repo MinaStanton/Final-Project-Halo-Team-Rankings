@@ -9,16 +9,19 @@
         <th>Total Kills</th>
         <th>Total Deaths</th>
         <th>Total Assists</th>
+        <th>Kill Deaths Ratio</th>
         <th>Total Assassinations</th>
         <th>Total Headshots</th>
         <th>Total Shots Fired</th>
         <th>Total Shots Landed</th>
+        <th>Accuracy Ratio</th>
         <th>Total Games Won</th>
         <th>Total Games Lost</th>
         <th>Total Games Tied</th>
+        <th>Win Loss Ratio</th>
         <th>Total Games Completed</th>
         <th>Total Time Played</th>
-        <th>Game Type Id</th>
+        
     </tr>
     <tr>
         <td>@Model.Gamertag</td>
@@ -36,6 +39,7 @@
         <td>@Model.TotalGamesTied</td>
         <td>@Model.WinLossRatio</td>
         <td>@Model.TotalGamesCompleted</td>
+        <td>@Model.TotalTimePlayed</td>
     </tr>
 </table>
 <form action="../HaloRank/AddToGamers" method="post">

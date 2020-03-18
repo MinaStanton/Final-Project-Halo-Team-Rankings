@@ -33,10 +33,10 @@ namespace GCBlueTeamFinalProject.Models
         public string GameTypeNvarCharId { get; set; }
         //public string DisplayAcc { get; set; }
         public virtual AspNetUsers User { get; set; }
-        //public Gamers() //added default construct
-        //{
+        public Gamers() //added default construct
+        {
 
-        //}
+        }
         public Gamers(PlayerRootObject player) //overloaded constructor for converting PlayerRootObject to Gamers object
         {
             Gamertag = player.Results[0].Result.PlayerId.Gamertag;
