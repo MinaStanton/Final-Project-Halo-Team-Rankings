@@ -41,14 +41,78 @@ namespace GCBlueTeamFinalProject.Models
 
         public Teams(List<Gamers> gamers)
         {
-            Player1 = gamers[0].Gamertag;
-            Player2 = gamers[1].Gamertag;
-            Player3 = gamers[2].Gamertag;
-            Player4 = gamers[3].Gamertag;
-            Player5 = gamers[4].Gamertag;
-            Player6 = gamers[5].Gamertag;
-            Player7 = gamers[6].Gamertag;
-            Player8 = gamers[7].Gamertag;
+            //List<string> players = new List<string>()
+            //{ 
+            //    Player1,
+            //    Player2,
+            //    Player3,
+            //    Player4,
+            //    Player5,
+            //    Player6,
+            //    Player7,
+            //    Player8
+            //};
+            //for (int i = 0; i < gamers.Count; i++)
+            //{
+            //    players[i] = gamers[i].Gamertag;
+            //}
+
+            if (gamers.Count == 2)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+            }
+            if (gamers.Count == 3)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+            }
+            if (gamers.Count == 4)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+                Player4 = gamers[3].Gamertag;
+            }
+            if (gamers.Count == 5)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+                Player4 = gamers[3].Gamertag;
+                Player5 = gamers[4].Gamertag;
+            }
+            if (gamers.Count == 6)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+                Player4 = gamers[3].Gamertag;
+                Player5 = gamers[4].Gamertag;
+                Player6 = gamers[5].Gamertag;
+            }
+            if (gamers.Count == 7)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+                Player4 = gamers[3].Gamertag;
+                Player5 = gamers[4].Gamertag;
+                Player6 = gamers[5].Gamertag;
+                Player7 = gamers[6].Gamertag;
+            }
+            if (gamers.Count == 8)
+            {
+                Player1 = gamers[0].Gamertag;
+                Player2 = gamers[1].Gamertag;
+                Player3 = gamers[2].Gamertag;
+                Player4 = gamers[3].Gamertag;
+                Player5 = gamers[4].Gamertag;
+                Player6 = gamers[5].Gamertag;
+                Player7 = gamers[6].Gamertag;
+                Player8 = gamers[7].Gamertag;
+            }
             AvgScore = SetAvgScore(gamers);
             AvgKdratio = SetAvgKDRatio(gamers);
             AvgKdaratio = SetAvgKDARatio(gamers);
@@ -62,32 +126,27 @@ namespace GCBlueTeamFinalProject.Models
             List<Gamers> team1 = new List<Gamers>();
             List<Gamers> team2 = new List<Gamers>();
 
-            if (gamers.Count == 4)
+            team1.Add(gamers[0]);
+            var currentTeam = team2;
+            var i = 1;
+            while(i < gamers.Count)
             {
-                team1.Add(gamers[0]);
-                team2.Add(gamers[1]);
-                team2.Add(gamers[2]);
-                team1.Add(gamers[3]);
-            }
-            else if (gamers.Count == 6)
-            {
-                team1.Add(gamers[0]);
-                team2.Add(gamers[1]);
-                team2.Add(gamers[2]);
-                team1.Add(gamers[3]);
-                team1.Add(gamers[4]);
-                team2.Add(gamers[5]);
-            }
-            else if (gamers.Count == 8)
-            {
-                team1.Add(gamers[0]);
-                team2.Add(gamers[1]);
-                team2.Add(gamers[2]);
-                team1.Add(gamers[3]);
-                team1.Add(gamers[4]);
-                team2.Add(gamers[5]);
-                team2.Add(gamers[6]);
-                team1.Add(gamers[7]);
+                currentTeam.Add(gamers[i]);
+                i++;
+                if(i < gamers.Count)
+                {
+                    currentTeam.Add(gamers[i]);
+                    i++;
+                }
+                //currentTeam = (currentTeam == team1 ? team2 : team1); //same as below
+                if(currentTeam == team1)
+                {
+                    currentTeam = team2;
+                }
+                else
+                {
+                    currentTeam = team1;
+                }
             }
 
             Teams teamsTeam1 = new Teams(team1);
