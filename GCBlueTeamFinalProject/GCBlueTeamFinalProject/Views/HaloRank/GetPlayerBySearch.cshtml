@@ -33,11 +33,11 @@
         <td>@Model.TotalHeadshots</td>
         <td>@Model.TotalShotsFired</td>
         <td>@Model.TotalShotsLanded</td>
-        <td>@Model.AccuracyRatio</td>
+        <td>@(Model.AccuracyRatio * 100)%</td>
         <td>@Model.TotalGamesWon</td>
         <td>@Model.TotalGamesLost</td>
         <td>@Model.TotalGamesTied</td>
-        <td>@Model.WinLossRatio</td>
+        <td>@(Model.WinLossRatio * 100)%</td>
         <td>@Model.TotalGamesCompleted</td>
         <td>@Model.TotalTimePlayed</td>
         <td>@Model.Score</td>
@@ -48,17 +48,17 @@
     <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
     <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
     <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
-    <input type="hidden" name="TotalAssassinations" value="@Model.Kdratio" />
-    <input type="hidden" name="TotalAssassinations" value="@Model.Kdaratio" />
+    <input type="hidden" name="Kdratio" value="@Model.Kdratio" />
+    <input type="hidden" name="Kdaratio" value="@Model.Kdaratio" />
     <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
     <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
     <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
     <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
-    <input type="hidden" name="TotalGamesWon" value="@Model.AccuracyRatio" />
+    <input type="hidden" name="AccuracyRatio" value="@Model.AccuracyRatio" />
     <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
     <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
     <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
-    <input type="hidden" name="TotalGamesCompleted" value="@Model.WinLossRatio" />
+    <input type="hidden" name="WinLossRatio" value="@Model.WinLossRatio" />
     <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
     <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
     <input type="hidden" name="Score" value="@Model.Score" />

@@ -65,7 +65,7 @@ namespace GCBlueTeamFinalProject.Models
                 player.Results[id].Result.ArenaStats.TotalGamesTied);
             TotalGamesCompleted = player.Results[id].Result.ArenaStats.TotalGamesCompleted;
             TotalTimePlayed = player.Results[id].Result.ArenaStats.TotalTimePlayed; //add parsing method, regex? (STRETCH GOAL)
-            GameTypeNvarCharId = player.Results[id].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId; //add parsing method (STRETCH GOAL)
+            //GameTypeNvarCharId = player.Results[id].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId; //add parsing method (STRETCH GOAL)
             Score = CalculateScore();
         }
         public static string DisplayRespawnTime(int seconds) //for displaying time spent respawning in view (NOT used in the contructor)

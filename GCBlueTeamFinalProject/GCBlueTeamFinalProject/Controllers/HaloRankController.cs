@@ -131,11 +131,10 @@ namespace GCBlueTeamFinalProject.Controllers
         }
         public IActionResult AddToGamers(Gamers newPlayer)
         {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
-
             if (ModelState.IsValid)
             {
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
                 for (int i = 0; i < gamerList.Count; i++)
                 {
                     if (gamerList[i].Gamertag == newPlayer.Gamertag)
@@ -186,7 +185,7 @@ namespace GCBlueTeamFinalProject.Controllers
                 apiListSearch.Add(new Gamers(searchedPlayer, i));
             }
 
-            List<Gamers> sortedList = apiListSearch.OrderBy(x => x.Score).Reverse().ToList(); //sorts list of gamers by score
+            List<Gamers> sortedList = apiListSearch.OrderByDescending(x => x.Score).ToList(); //sorts list of gamers by score
             foreach(Gamers gamer in gamerList)
             {
                 _context.Gamers.Remove(gamer);
@@ -218,9 +217,14 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
-        public IActionResult CreateTeams(List<Gamers> gamers)
+        public IActionResult CreateTeams(List<string> gamers)
         {
-            return View(Teams.TeamMaker(gamers)); //Sending a List<Teams> //may need to validate number of gamers here
+            if(gamers.Count < 2)
+            {
+                return View("Error", "Must select at least 2 people for your teams");
+            }
+            List<Gamers> newGamerList = _context.Gamers.Where(x => gamers.Contains(x.Gamertag)).ToList();
+            return View(Teams.TeamMaker(newGamerList)); //Sending a List<Teams> //may need to validate number of gamers here
         }
 
         //method to create teams Red vs Blue

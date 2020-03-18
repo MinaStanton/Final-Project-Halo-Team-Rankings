@@ -4,9 +4,9 @@
 @model List<Gamers>
 
 <h1>Display Gamers</h1>
+<form action="../HaloRank/CreateTeams" method="post">
+    <table class="table table-bordered">
 
-<table class="table table-bordered">
-    <form action="../HaloRank/CreateTeams" method="post">
         <tr>
             <th>Select players for Teams</th>
             <th>Gamertag</th>
@@ -27,41 +27,39 @@
             <th>Total Games Tied</th>
             <th>Win Loss Ratio</th>
             <th>Total Time Played</th>
+            <th></th>
         </tr>
 
-        @foreach (Gamers player in Model)
+        @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
-                <td><input type="checkbox" value="Gamertag" /></td>
-                <td>@player.Gamertag</td>
-                <td>@player.TotalGamesCompleted</td>
-                <td>@player.Score</td>
-                <td>@player.Ranking</td>
-                <td>@player.TotalKills</td>
-                <td>@player.TotalDeaths</td>
-                <td>@player.TotalAssists</td>
-                <td>@player.Kdratio</td>
-                <td>@player.TotalAssassinations</td>
-                <td>@player.TotalHeadshots</td>
-                <td>@player.TotalShotsFired</td>
-                <td>@player.TotalShotsLanded</td>
-                <td>@(player.AccuracyRatio * 100)%</td>
-                <td>@player.TotalGamesWon</td>
-                <td>@player.TotalGamesLost</td>
-                <td>@player.TotalGamesTied</td>
-                <td>@(player.WinLossRatio * 100)%</td>
-                <td>@player.TotalTimePlayed</td>
-
+                <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag"/></td>
+                <td>@Model[i].Gamertag</td>
+                <td>@Model[i].TotalGamesCompleted</td>
+                <td>@Model[i].Score</td>
+                <td>@Model[i].Ranking</td>
+                <td>@Model[i].TotalKills</td>
+                <td>@Model[i].TotalDeaths</td>
+                <td>@Model[i].TotalAssists</td>
+                <td>@Model[i].Kdratio</td>
+                <td>@Model[i].TotalAssassinations</td>
+                <td>@Model[i].TotalHeadshots</td>
+                <td>@Model[i].TotalShotsFired</td>
+                <td>@Model[i].TotalShotsLanded</td>
+                <td>@(Model[i].AccuracyRatio * 100)%</td>
+                <td>@Model[i].TotalGamesWon</td>
+                <td>@Model[i].TotalGamesLost</td>
+                <td>@Model[i].TotalGamesTied</td>
+                <td>@(Model[i].WinLossRatio * 100)%</td>
+                <td>@Model[i].TotalTimePlayed</td>
                 <td>
-                    <a href="../HaloRank/DeleteFromGamers?id=@player.Id" class="btn btn-danger">Delete</a>
+                    <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
-
         }
-        <input type="submit" name="Gamertag" value="Create your Team" />
-
-    </form>
-</table>
+    </table>
+    <input type="submit" name="submit" value="Create your Team" />
+</form>
 <form action="../HaloRank/GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" />
     <input type="submit"value="Search for Player" />
