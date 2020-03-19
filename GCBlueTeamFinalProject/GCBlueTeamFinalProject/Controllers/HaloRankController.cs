@@ -31,7 +31,6 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 if (UserList[i].Gamertag != null)
                 {
-                    
                     return RedirectToAction("YourProfile", UserList[i]);
                 }
             }
@@ -217,29 +216,51 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
-        public IActionResult CreateTeams(List<string> gamers)
+        public IActionResult CreateTeams(List<string> gamers, string submit, string teamName)
         {
-            if(gamers.Count < 2)
+            if(submit == "Generate Teams")
             {
-                return View("Error", "Must select at least 2 people for your teams");
+                if (gamers.Count < 4 || gamers.Count > 16)
+                {
+                    return View("Error", "Must select between 4 and 16 players for your teams");
+                }
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
+                ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                List<Teams> teams = Teams.TeamMaker(newGamerList);
+                return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
             }
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
-            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Teams> teams = Teams.TeamMaker(newGamerList);
-            return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
+            else
+            {
+                if (gamers.Count < 2 || gamers.Count > 8)
+                {
+                    return View("Error", "Must select between 2 and 8 players for your teams");
+                }
+                if(teamName == null)
+                {
+                    return View("Error", "Enter a name for your new favorite team");
+                }
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
+                Teams newTeam = new Teams(newGamerList);
+                newTeam.TeamName = teamName;
+                newTeam.UserId = id;
+                _context.Teams.Add(newTeam);
+                _context.SaveChanges();
+                return RedirectToAction("DisplayFavoriteTeams");
+            }
         }
 
        
 
-        public IActionResult AddFavoriteTeams(List<string> favTeam, string TeamName)
+        public IActionResult AddFavoriteTeams(List<string> favTeam, string teamName)
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && favTeam.Contains(x.Gamertag)).ToList();
             Teams newFavTeam = new Teams(newGamerList);
             newFavTeam.UserId = id;
-            newFavTeam.TeamName = TeamName;
+            newFavTeam.TeamName = teamName;
             //pulling a list of teams from the DB then checking if the team name already exists, if so then return to
             //previous view which was create teams
             List<Teams> already = _context.Teams.Where(x => x.UserId == id).ToList();
