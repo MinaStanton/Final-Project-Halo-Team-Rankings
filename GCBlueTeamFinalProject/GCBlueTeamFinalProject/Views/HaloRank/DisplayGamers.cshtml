@@ -3,7 +3,11 @@
 }
 @model List<Gamers>
 
-<h1>Display Gamers</h1>
+<h1>Friends List</h1>
+<form action="../HaloRank/GetPlayerBySearch" method="post">
+    <input type="text" name="search" value="" class="small" />
+    <input type="submit" value="Search Gamertag" class="small" />
+</form> <br />
 <form action="../HaloRank/CreateTeams" method="post">
 
     
@@ -69,10 +73,10 @@
 
 
 
-<form action="../HaloRank/GetPlayerBySearch" method="post">
+@*<form action="../HaloRank/GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" />
     <input type="submit" value="Search for Player" />
-</form>
+</form>*@
 
 
 

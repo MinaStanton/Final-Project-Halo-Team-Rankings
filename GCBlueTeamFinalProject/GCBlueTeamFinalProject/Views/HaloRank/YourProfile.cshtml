@@ -5,29 +5,38 @@
 
 
 
-@model UsersGamers                           
+@model UsersGamers
 
 
-    <h1>User Profile</h1>
+<h1>My Profile</h1>
+<form action="../GetPlayerBySearch" method="post">
+    <input type="text" name="search" value="" class="small" />
+    <input type="submit" value="Search Gamertag" class="small" />
+</form>
+<br />
+<table class="col-5">
+    <tr>
+        <td>
+            <h5>Name</h5>
+            <p>@Model.MyUser.UserName</p>
 
-    <div>
+            <h5>Date Of Birth</h5>
+            <p>@Model.MyUser.UserName</p>
+        </td>
+        <td>
+            <h5>Gamertag</h5>
+            <p>@Model.MyUser.Gamertag</p>
 
-        <h3>User</h3><br />
-        @Model.MyUser.UserName
-        <br />
-        <h3>GamerTag</h3> <br />
-        @Model.MyUser.Gamertag
-        <br />
-        <h3>Date Of Birth</h3><br />
-        @Model.MyUser.UserName
-        <br />
-
-    </div>
+            <h5>Gender</h5>
+            <p>@Model.MyUser.Gender</p>
+        </td>
+    </tr>
+</table>
 
 
 
 @* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
-<table class="table">
+<table class="table table-bordered">
     <tr>
         <th>Total Kills</th>
         <th>Total Deaths</th>
@@ -60,6 +69,5 @@
         <td>@(Model.MyGamer.WinLossRatio * 100)%</td>
         <td>@Model.MyGamer.TotalGamesCompleted</td>
     </tr>
-    </table>
-
+</table>
 

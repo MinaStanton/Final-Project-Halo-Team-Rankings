@@ -4,9 +4,12 @@
 }
 @model List<Teams>
 <h1>Favorite Teams</h1>
-
-<div class="table col-6">
-    <table>
+<form action="../HaloRank/GetPlayerBySearch" method="post">
+    <input type="text" name="search" value="" class="small" />
+    <input type="submit" value="Search Gamertag" class="small" />
+</form> <br />
+<div>
+    <table class="table table-bordered col-6">
         <tr>
             <th></th>
             <th>Team Name</th>

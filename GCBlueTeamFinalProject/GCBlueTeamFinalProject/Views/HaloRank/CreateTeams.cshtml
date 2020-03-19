@@ -12,7 +12,7 @@
     @for (int i = 0; i < Model.Count - 1; i++)
     {
         <div class="col-sm-6 col-lg-5" style="color:red">
-            <p>Team 1 Name: @Model[i].TeamName</p>
+            <p>Red Team @Model[i].TeamName</p>
             <p>@Model[i].Player1</p>
             <p>@Model[i].Player2</p>
             <p>@Model[i].Player3</p>
@@ -47,7 +47,7 @@
     @for (int i = 1; i < Model.Count; i++)
     {
         <div class="col-sm-6 col-lg-5" style="color:blue">
-            <p>Team 2 Name: @Model[i].TeamName</p>
+            <p>Blue Team @Model[i].TeamName</p>
             <p>@Model[i].Player1</p>
             <p>@Model[i].Player2</p>
             <p>@Model[i].Player3</p>
@@ -77,8 +77,4 @@
             </div>
         </div>
     }
-</div>
-
-<div class="col-sm-6 col-lg-5 " style="color:forestgreen">
-    <a href="../HaloRank/DisplayFavoriteTeams">View favorite teams</a>
 </div>

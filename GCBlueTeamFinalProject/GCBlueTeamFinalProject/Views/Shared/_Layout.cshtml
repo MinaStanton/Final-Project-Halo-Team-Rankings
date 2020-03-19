@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GCBlueTeamFinalProject</title>
+    <title>@ViewData["Title"] - Halo Arena Matchup</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GCBlueTeamFinalProject</a>
+                <a class="navbar-brand" asp-area="" asp-controller="HaloRank" asp-action="YourProfile">Halo Arena Matchup</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,16 +20,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="YourProfile">My Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="DisplayGamers">Friends List</a>
                         </li>
-                        <li>
-                            <div class="form-check-inline">
-                                <form action="../HaloRank/GetPlayerBySearch" method="post">
-                                    <input type="text" name="search" value="" class="small" />
-                                    <input type="submit" value="Search Gamertag" class="small" />
-                                </form>
-                            </div>
-                        </li>
+                        @*<li>
+            <div class="form-check-inline">
+                <form action="../HaloRank/GetPlayerBySearch" method="post">
+                    <input type="text" name="search" value="" class="small" />
+                    <input type="submit" value="Search Gamertag" class="small" />
+                </form>
+            </div>
+        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="DisplayFavoriteTeams">Favorite Teams</a>
                         </li>
@@ -46,7 +49,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - GCBlueTeamFinalProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - GC C# Blue Team Final Project - <a asp-area="" asp-controller="HaloRank" asp-action="YourProfile">My Profile</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

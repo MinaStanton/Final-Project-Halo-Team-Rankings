@@ -120,6 +120,14 @@ namespace GCBlueTeamFinalProject.Models
             int scoreForShotsMissed = ((int)TotalShotsFired - (int)TotalShotsLanded) * -1;
 
 
+            //double scoreForKDA = (double)Kdaratio * 150000;
+            //double scoreForAcc = (double)AccuracyRatio * 150000;
+            //double scoreForWL = (double)WinLossRatio * 150000;
+            //double avgSum = (scoreForKDA + scoreForAcc + scoreForWL) / 3;
+            //double avgScorePerGameRatios = avgSum / (double)TotalGamesCompleted;
+            //int avgInt = (int)Math.Round(avgScorePerGameRatios);
+
+
             int sum = scoreForKills + scoreFordeaths + scoreForAssists + scoreForHeadShots +
                 scoreForAssassinations + scoreForShotsLanded + scoreForShotsMissed;
             int sum2 = scoreForWins + scoreForLosses + scoreForTiedGames;
