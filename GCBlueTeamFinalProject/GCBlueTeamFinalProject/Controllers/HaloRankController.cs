@@ -219,19 +219,28 @@ namespace GCBlueTeamFinalProject.Controllers
         }
         public IActionResult CreateTeams(List<string> gamers)
         {
-            if(gamers.Count < 2)
+            if(gamers.Count < 2 || gamers.Count > 16)
             {
                 return View("Error", "Must select at least 2 people for your teams");
             }
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
-            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value; 
             ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Teams> teams = Teams.TeamMaker(newGamerList);
+            List<Teams> teams = Teams.TeamMaker(newGamerList);//
             return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
         }
 
-       
+        public IActionResult CompareGamers(List<string> gamers)
+        {
+            if (gamers.Count < 2 || gamers.Count > 16)
+            {
+                return View("Error", "Must select at least 2 people for your teams");
+            }
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
+            return View(CompareGamers);
+        }
 
         public IActionResult AddFavoriteTeams(List<string> favTeam, string TeamName)
         {
