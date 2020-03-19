@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "YourProfile";
+    ViewData["Title"] = "MyProfile";
 }
 
 
@@ -11,7 +11,7 @@
 <h1>My Profile</h1>
 <h6> Hello @Model.MyUser.UserName welcome back to your profile!</h6>
 
-<form action="../GetPlayerBySearch" method="post">
+<form action="../HaloRank/GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" class="small" />
     <input type="submit" value="Search Gamertag" class="small" />
 </form>

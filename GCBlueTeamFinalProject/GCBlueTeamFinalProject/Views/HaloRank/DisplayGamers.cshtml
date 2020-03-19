@@ -16,7 +16,10 @@
         <tr>
             <th>Select players for Teams</th>
             <th>Gamertag</th>
+            @*<th>Headshots per game</th>
+        <th>Assassinations per game</th>*@
             <th>Rank</th>
+            <th>Score</th>
             <th>Kill Death Ratio</th>
             <th>Accuracy Ratio</th>
             <th>Win Loss Ratio</th>
@@ -43,7 +46,10 @@
     <tr>
         <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
         <td>@Model[i].Gamertag</td>
+        @*<td>@Math.Round(((double)Model[i].TotalHeadshots / (double)Model[i].TotalGamesCompleted), 2)</td>
+        <td>@Math.Round(((double)Model[i].TotalAssassinations / (double)Model[i].TotalGamesCompleted), 2)</td>*@
         <td>@Model[i].Ranking</td>
+        <td>@Model[i].Score</td>
         <td>@Model[i].Kdratio</td>
         <td>@Model[i].AccuracyRatio%</td>
         <td>@Model[i].WinLossRatio%</td>

@@ -27,11 +27,11 @@ namespace GCBlueTeamFinalProject.Controllers
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Users> UserList = _context.Users.Where(x => x.UserId == id).ToList();
-            for(int i = 0; i < UserList.Count; i++)
+            for (int i = 0; i < UserList.Count; i++)
             {
                 if (UserList[i].Gamertag != null)
                 {
-                    return RedirectToAction("YourProfile", UserList[i]);
+                    return RedirectToAction("MyProfile");
                 }
             }
             return View();
@@ -56,8 +56,16 @@ namespace GCBlueTeamFinalProject.Controllers
             
         //}
 
-        public async Task<ActionResult> YourProfile(Users newUser)
+        public async Task<ActionResult> MyProfile()
         {
+
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Users> UserList = _context.Users.Where(x => x.UserId == id).ToList();
+            Users newUser = new Users();
+            for (int i = 0; i < UserList.Count; i++)
+            {
+                newUser = UserList[i];
+            }
             // Calling on the API to check if Gamertag is valid
             var client = new HttpClient();
             client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
@@ -69,7 +77,6 @@ namespace GCBlueTeamFinalProject.Controllers
                 return View("Error", "This Gamertag does not exist, please try again.");
             }
             // Taking users into a list and assigning ID in the DB
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Users> userList = _context.Users.Where(x => x.UserId == id).ToList();
             //looking at searched gamers to see if the Gamertag already exists in the database
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
