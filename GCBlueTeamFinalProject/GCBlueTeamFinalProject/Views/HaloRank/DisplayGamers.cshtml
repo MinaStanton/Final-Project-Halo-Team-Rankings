@@ -32,37 +32,38 @@
                 <th></th>
             </tr>
 
-            @for (int i = 0; i < Model.Count; i++)
-            {
-                <tr>
-                    <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
-                    <td>@Model[i].Gamertag</td>
-                    <td>@Model[i].TotalGamesCompleted</td>
-                    <td>@Model[i].Score</td>
-                    <td>@Model[i].Ranking</td>
-                    <td>@Model[i].TotalKills</td>
-                    <td>@Model[i].TotalDeaths</td>
-                    <td>@Model[i].TotalAssists</td>
-                    <td>@Model[i].Kdratio</td>
-                    <td>@Model[i].TotalAssassinations</td>
-                    <td>@Model[i].TotalHeadshots</td>
-                    <td>@Model[i].TotalShotsFired</td>
-                    <td>@Model[i].TotalShotsLanded</td>
-                    <td>@(Model[i].AccuracyRatio * 100)%</td>
-                    <td>@Model[i].TotalGamesWon</td>
-                    <td>@Model[i].TotalGamesLost</td>
-                    <td>@Model[i].TotalGamesTied</td>
-                    <td>@(Model[i].WinLossRatio * 100)%</td>
-                    <td>@Model[i].TotalTimePlayed</td>
-                    <td>
-                        <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            }
-        </table>
-
-        
-    <input type="submit" name="submit" value="Create your Team" />
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
+                <td>@Model[i].Gamertag</td>
+                <td>@Model[i].TotalGamesCompleted</td>
+                <td>@Model[i].Score</td>
+                <td>@Model[i].Ranking</td>
+                <td>@Model[i].TotalKills</td>
+                <td>@Model[i].TotalDeaths</td>
+                <td>@Model[i].TotalAssists</td>
+                <td>@Model[i].Kdratio</td>
+                <td>@Model[i].TotalAssassinations</td>
+                <td>@Model[i].TotalHeadshots</td>
+                <td>@Model[i].TotalShotsFired</td>
+                <td>@Model[i].TotalShotsLanded</td>
+                <td>@(Model[i].AccuracyRatio * 100)%</td>
+                <td>@Model[i].TotalGamesWon</td>
+                <td>@Model[i].TotalGamesLost</td>
+                <td>@Model[i].TotalGamesTied</td>
+                <td>@(Model[i].WinLossRatio * 100)%</td>
+                <td>@Model[i].TotalTimePlayed</td>
+                <td>
+                    <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <input type="reset" value="Reset Selection" />
+    <input type="submit" name="submit" value="Generate Teams" />
+    <input type="text" name="teamName" value="" placeholder="New Team Name"/>
+    <input type="submit" name="submit" value="Add Selection as Favorite Team" />
 </form>
 
 <form action="../HaloRank/CompareTeams" method="post">
