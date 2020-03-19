@@ -231,8 +231,9 @@ namespace GCBlueTeamFinalProject.Controllers
                 List<Teams> teams = Teams.TeamMaker(newGamerList);
                 return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
             }
-            else
+            else if(submit == "Add Selection as Favorite Team")
             {
+
                 if (gamers.Count < 2 || gamers.Count > 8)
                 {
                     return View("Error", "Must select between 2 and 8 players for your teams");
@@ -250,18 +251,17 @@ namespace GCBlueTeamFinalProject.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("DisplayFavoriteTeams");
             }
+            else
+            {
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
+                return View("CompareGamers", newGamerList);
+                
+            }
         }
 
-        public IActionResult CompareGamers(List<string> gamers)
-        {
-            if (gamers.Count < 2 || gamers.Count > 16)
-            {
-                return View("Error", "Must select at least 2 people for your teams");
-            }
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
-            return View(CompareGamers);
-        }
+
+        
 
         public IActionResult AddFavoriteTeams(List<string> favTeam, string teamName)
         {

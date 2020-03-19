@@ -5,32 +5,32 @@
 
 <h1>Display Gamers</h1>
 <form action="../HaloRank/CreateTeams" method="post">
-    
-        X
-        <table class="table table-bordered">
 
-            <tr>
-                <th>Select players for Teams</th>
-                <th>Gamertag</th>
-                <th>Total Games Played</th>
-                <th>Score</th>
-                <th>Rank</th>
-                <th>Total Kills</th>
-                <th>Total Deaths</th>
-                <th>Total Assists</th>
-                <th>Kill Death Ratio</th>
-                <th>Total Assassinations</th> @*Need to decide what data to remove from this view*@
-                <th>Total Headshots</th>
-                <th>Total Shots Fired</th>
-                <th>Total Shots Landed</th>
-                <th>Accuracy Ratio</th>
-                <th>Total Games Won</th>
-                <th>Total Games Lost</th>
-                <th>Total Games Tied</th>
-                <th>Win Loss Ratio</th>
-                <th>Total Time Played</th>
-                <th></th>
-            </tr>
+    
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Select players for Teams</th>
+            <th>Gamertag</th>
+            <th>Total Games Played</th>
+            <th>Score</th>
+            <th>Rank</th>
+            <th>Total Kills</th>
+            <th>Total Deaths</th>
+            <th>Total Assists</th>
+            <th>Kill Death Ratio</th>
+            <th>Total Assassinations</th> @*Need to decide what data to remove from this view*@
+            <th>Total Headshots</th>
+            <th>Total Shots Fired</th>
+            <th>Total Shots Landed</th>
+            <th>Accuracy Ratio</th>
+            <th>Total Games Won</th>
+            <th>Total Games Lost</th>
+            <th>Total Games Tied</th>
+            <th>Win Loss Ratio</th>
+            <th>Total Time Played</th>
+            <th></th>
+        </tr>
 
         @for (int i = 0; i < Model.Count; i++)
         {
@@ -62,13 +62,12 @@
     </table>
     <input type="reset" value="Reset Selection" />
     <input type="submit" name="submit" value="Generate Teams" />
-    <input type="text" name="teamName" value="" placeholder="New Team Name"/>
+    <input type="text" name="teamName" value="" placeholder="New Team Name" />
     <input type="submit" name="submit" value="Add Selection as Favorite Team" />
+    <input type="submit" name="submit" value="Compare Gamers" />
 </form>
 
-<form action="../HaloRank/CompareTeams" method="post">
-    <input type="submit" name="submit" value="Compare Teams" />
-</form>
+
 
 <form action="../HaloRank/GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" />
