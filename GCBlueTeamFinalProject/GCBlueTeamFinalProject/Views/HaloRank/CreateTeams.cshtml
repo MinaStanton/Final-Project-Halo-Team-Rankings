@@ -12,7 +12,7 @@
     @for (int i = 0; i < Model.Count - 1; i++)
     {
         <div class="col-sm-6 col-lg-5" style="color:red">
-            <p>Red Team @Model[i].TeamName</p>
+            <h4>Red Team</h4>
             <p>@Model[i].Player1</p>
             <p>@Model[i].Player2</p>
             <p>@Model[i].Player3</p>
@@ -22,8 +22,8 @@
             <p>@Model[i].Player7</p>
             <p>@Model[i].Player8</p>
             <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
-            <p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
-            <p>Average Accuracy Ratio: @Model[i].AvgAccRatio%</p>
+            @*<p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
+            <p>Accuracy: @Model[i].AvgAccRatio%</p>*@
             <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
             <p>Average Score: @Model[i].AvgScore</p>
             <div class="form-check-inline">
@@ -47,7 +47,7 @@
     @for (int i = 1; i < Model.Count; i++)
     {
         <div class="col-sm-6 col-lg-5" style="color:blue">
-            <p>Blue Team @Model[i].TeamName</p>
+            <h4>Blue Team</h4>
             <p>@Model[i].Player1</p>
             <p>@Model[i].Player2</p>
             <p>@Model[i].Player3</p>
@@ -57,8 +57,8 @@
             <p>@Model[i].Player7</p>
             <p>@Model[i].Player8</p>
             <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
-            <p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
-            <p>Average Accuracy Ratio: @Model[i].AvgAccRatio%</p>
+            @*<p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
+            <p>Average Accuracy Ratio: @Model[i].AvgAccRatio%</p>*@
             <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
             <p>Average Score: @Model[i].AvgScore</p>
             <div class="form-check-inline">
