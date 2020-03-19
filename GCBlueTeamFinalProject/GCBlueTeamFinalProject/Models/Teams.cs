@@ -172,7 +172,7 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.Kdratio;
             }
-            double avgSum = sum / team.Count;
+            double avgSum = sum / (double)team.Count;
             avgSum = Math.Round(avgSum, 2);
             return avgSum;
         }
@@ -183,7 +183,7 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.Kdaratio;
             }
-            double avgSum = sum / team.Count;
+            double avgSum = sum / (double)team.Count;
             avgSum = Math.Round(avgSum, 2);
             return avgSum;
         }
@@ -194,9 +194,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.AccuracyRatio;
             }
-            double avgSum = sum / team.Count;
-            avgSum = Math.Round(avgSum, 2);
-            return avgSum;
+            double avgSum = sum / (double)team.Count;
+            int avgSumInt = (int)Math.Round(avgSum);
+            return avgSumInt;
         }
         public double SetAvgWLRatio(List<Gamers> team)
         {
@@ -205,13 +205,9 @@ namespace GCBlueTeamFinalProject.Models
             {
                 sum = sum + (double)gamer.WinLossRatio;
             }
-            double avgSum = sum / team.Count;
-            avgSum = Math.Round(avgSum, 2);
-            return avgSum;
-        }
-        public static string DisplayPercent(double number) //for displaying percentages as a % instead of a double (used in a view, NOT used in the contructor) using for both accuracy and winlossratio
-        {
-            return $"{number * 100}%";
+            double avgSum = sum / (double)team.Count;
+            int avgSumInt = (int)Math.Round(avgSum);
+            return avgSumInt;
         }
     }
 }
