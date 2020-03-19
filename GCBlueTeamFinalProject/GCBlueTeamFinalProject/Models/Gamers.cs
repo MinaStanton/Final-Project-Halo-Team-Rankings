@@ -93,17 +93,15 @@ namespace GCBlueTeamFinalProject.Models
         public double CalculateAccuracy(int fired, int landed) //for calculating Accuracy as a double (used in the constructor when initializing a new Gamer object)
         {
             double accuracy = (double)landed / (double)fired;
-            accuracy = Math.Round(accuracy, 2);
-            return accuracy;
-        }
-        public static string DisplayPercent(double number) //for displaying percentages as a % instead of a double (used in a view, NOT used in the contructor) using for both accuracy and winlossratio
-        {
-            return $"{number * 100}%";
+            accuracy = accuracy * 100;
+            int accuracyRounded = (int)Math.Round(accuracy);
+            return accuracyRounded;
         }
         public double CalculateWinLossRatio(int wins, int losses, int ties) //for calculating W/L Ratio (used in the constructor when initializing a new Gamer object)
         {
-            double WLRatio = (double)wins / (double)(losses + ties + wins);
-            WLRatio = Math.Round(WLRatio, 2);
+            double WLRatio = (double)wins / ((double)losses + (double)ties + (double)wins);
+            WLRatio = WLRatio * 100;
+            WLRatio = (int)Math.Round(WLRatio);
             return WLRatio;
         }
         public int CalculateScore()

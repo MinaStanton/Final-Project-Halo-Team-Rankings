@@ -46,11 +46,11 @@
             <td>@Model[i].TotalHeadshots</td>
             <td>@Model[i].TotalShotsFired</td>
             <td>@Model[i].TotalShotsLanded</td>
-            <td>@(Model[i].AccuracyRatio * 100)%</td>
+            <td>@Model[i].AccuracyRatio%</td>
             <td>@Model[i].TotalGamesWon</td>
             <td>@Model[i].TotalGamesLost</td>
             <td>@Model[i].TotalGamesTied</td>
-            <td>@(Model[i].WinLossRatio * 100)%</td>
+            <td>@Model[i].WinLossRatio%</td>
             <td>@Model[i].TotalTimePlayed</td>
             <td>
                 <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>

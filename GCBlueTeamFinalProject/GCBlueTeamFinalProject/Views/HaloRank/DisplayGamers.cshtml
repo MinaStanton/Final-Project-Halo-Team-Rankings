@@ -23,6 +23,7 @@
             <th>Total Deaths</th>
             <th>Total Assists</th>
             <th>Kill Death Ratio</th>
+            <th>Kill Death Assist Ratio</th>
             <th>Total Assassinations</th> @*Need to decide what data to remove from this view*@
             <th>Total Headshots</th>
             <th>Total Shots Fired</th>
@@ -48,15 +49,16 @@
                 <td>@Model[i].TotalDeaths</td>
                 <td>@Model[i].TotalAssists</td>
                 <td>@Model[i].Kdratio</td>
+                <td>@Model[i].Kdaratio</td>
                 <td>@Model[i].TotalAssassinations</td>
                 <td>@Model[i].TotalHeadshots</td>
                 <td>@Model[i].TotalShotsFired</td>
                 <td>@Model[i].TotalShotsLanded</td>
-                <td>@(Model[i].AccuracyRatio * 100)%</td>
+                <td>@Model[i].AccuracyRatio%</td>
                 <td>@Model[i].TotalGamesWon</td>
                 <td>@Model[i].TotalGamesLost</td>
                 <td>@Model[i].TotalGamesTied</td>
-                <td>@(Model[i].WinLossRatio * 100)%</td>
+                <td>@Model[i].WinLossRatio%</td>
                 <td>@Model[i].TotalTimePlayed</td>
                 <td>
                     <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
