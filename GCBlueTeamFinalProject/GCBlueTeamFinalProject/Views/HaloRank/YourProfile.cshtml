@@ -9,19 +9,21 @@
 
 
 <h1>My Profile</h1>
+<h6> Hello @Model.MyUser.UserName welcome back to your profile!</h6>
+
 <form action="../GetPlayerBySearch" method="post">
     <input type="text" name="search" value="" class="small" />
     <input type="submit" value="Search Gamertag" class="small" />
 </form>
 <br />
-<table class="col-5">
+<table class="col-5 dark">
     <tr>
         <td>
             <h5>Name</h5>
             <p>@Model.MyUser.UserName</p>
 
             <h5>Date Of Birth</h5>
-            <p>@Model.MyUser.UserName</p>
+            <p>@Model.MyUser.Dob</p>
         </td>
         <td>
             <h5>Gamertag</h5>
@@ -44,14 +46,14 @@
         <th>Kill Death Ratio</th>
         <th>Total Assassinations</th>
         <th>Total Headshots</th>
-        <th>Total Shots Fired</th>
-        <th>Total Shots Landed</th>
+        <th>Shots Fired</th>
+        <th>Shots Landed</th>
         <th>Accuracy Ratio</th>
-        <th>Total Games Won</th>
-        <th>Total Games Lost</th>
-        <th>Total Games Tied</th>
-        <th>Total Games Completed</th>
-        <th>Total Time Played</th>
+        <th>Games Won</th>
+        <th>Games Lost</th>
+        <th>Games Tied</th>
+        <th>Games Completed</th>
+        <th>Time Played</th>
     </tr>
     <tr>
         <td>@Model.MyGamer.TotalKills</td>
