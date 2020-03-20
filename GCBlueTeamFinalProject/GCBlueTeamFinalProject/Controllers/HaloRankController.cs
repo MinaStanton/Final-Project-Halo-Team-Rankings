@@ -86,12 +86,16 @@ namespace GCBlueTeamFinalProject.Controllers
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
-            if (searchedGamer.Gamertag == null)
+            if (searchedGamer.Gamertag == null )
             {
                 ViewBag.Message = "This Gamertag does not exist, please try again!";
                 return RedirectToAction("MyProfile");
              
             }
+            else if(searchedGamer.TotalTimePlayed == "")
+            {
+                return View("Error", "This Gamertag has not played Halo 5. Please use one of our provided Gamertags with valid data.");
+            }  
             return View(searchedGamer);
         }
         public IActionResult AddToGamers(Gamers newPlayer)
