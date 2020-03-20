@@ -50,12 +50,12 @@ namespace GCBlueTeamFinalProject.Controllers
                 if (searchedPlayer == null)
                 {
                     ViewBag.Message = "This Gamertag does not exist, please try again!";
-                    // return View("Error", "This Gamertag does not exist, please try again.");
                     return View("RegisterUser", "_RegisterUserLayout");
                 }
                 Gamers searchedGamer = new Gamers(searchedPlayer, 0);
                 searchedGamer.UserId = id;
                 newUser.UserId = id;
+                newUser.Gamertag = searchedGamer.Gamertag;
                 _context.Gamers.Add(searchedGamer);
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
@@ -88,7 +88,9 @@ namespace GCBlueTeamFinalProject.Controllers
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
             if (searchedGamer.Gamertag == null)
             {
-                return View("Error", "This Gamertag does not exist, please try again.");
+                ViewBag.Message = "This Gamertag does not exist, please try again!";
+                return RedirectToAction("MyProfile");
+             
             }
             return View(searchedGamer);
         }
@@ -151,6 +153,7 @@ namespace GCBlueTeamFinalProject.Controllers
             }
 
             List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
             //List<Gamers> gamerList = _context.Gamers.ToList();
             //This line above for quickly showing all gamers in database instead of just associated with UserID
             return View(newGamerList); //displays sorted list of gamers
@@ -162,41 +165,49 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 string id2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 Users foundUser = _context.Users.Where(x => x.UserId == id2).First();
-                if (found.Gamertag == foundUser.Gamertag)
+                if (found.Gamertag.ToLower() == foundUser.Gamertag.ToLower())
                 {
-                    return View("Error", "Please don't do that");
+                    List<Gamers> userGamers = _context.Gamers.Where(x => x.UserId == id2).ToList();
+                    ViewBag.Gamertag = foundUser.Gamertag;
+                    return View("DisplayGamers", userGamers);
                 }
-                _context.Gamers.Remove(found);
-                _context.SaveChanges();
+                else
+                {
+                    _context.Gamers.Remove(found);
+                    _context.SaveChanges();
+                }   
             }
             return RedirectToAction("DisplayGamers");
         }
         public IActionResult CreateTeams(List<string> gamers, string submit, string teamName)
         {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> userGamers = _context.Gamers.Where(x => x.UserId == id).ToList();
             if (submit == "Generate Teams")
             {
                 if (gamers.Count < 4 || gamers.Count > 16)
                 {
-                    return View("Error", "Must select between 4 and 16 players for your teams");
+                    ViewBag.ErrorGenerate = "Must select between 4 and 16 players for your teams";
+                    return View("DisplayGamers", userGamers);
                 }
-                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
                 ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Teams> teams = Teams.TeamMaker(newGamerList);
-                return View(teams); //Sending a List<Teams> //may need to validate number of gamers here
+                return View(teams); //Sending a List<Teams> 
             }
             else if (submit == "Add Selection as Favorite Team")
             {
                 if (gamers.Count < 2 || gamers.Count > 8)
                 {
-                    return View("Error", "Must select between 2 and 8 players for your teams");
+                    ViewBag.ErrorTeam = "Must select between 2 and 8 players for your teams";
+                    return View("DisplayGamers", userGamers);
                 }
                 if (teamName == null)
                 {
-                    return View("Error", "Enter a name for your new favorite team");
+                    ViewBag.ErrorName = "Enter a name for your new favorite team";
+                    return View("DisplayGamers", userGamers);
                 }
-                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
                 Teams newTeam = new Teams(newGamerList);
                 newTeam.TeamName = teamName;
@@ -207,7 +218,6 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             else
             {
-                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
                 return View("CompareGamers", newGamerList);
             }

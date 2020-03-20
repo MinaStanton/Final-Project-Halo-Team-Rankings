@@ -1,6 +1,19 @@
 ﻿@{
     ViewData["Title"] = "GetPlayerBySearch";
 }
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+
 <h1>Searched Gamertag</h1>
 @model Gamers
 <table class=" table table-bordered">
