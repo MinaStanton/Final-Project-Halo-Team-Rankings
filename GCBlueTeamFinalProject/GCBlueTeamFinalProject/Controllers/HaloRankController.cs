@@ -49,7 +49,9 @@ namespace GCBlueTeamFinalProject.Controllers
                 var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
                 if (searchedPlayer == null)
                 {
-                    return View("Error", "This Gamertag does not exist, please try again.");
+                    ViewBag.Message = "This Gamertag does not exist, please try again!";
+                    // return View("Error", "This Gamertag does not exist, please try again.");
+                    return View("RegisterUser", "_RegisterUserLayout");
                 }
                 Gamers searchedGamer = new Gamers(searchedPlayer, 0);
                 searchedGamer.UserId = id;

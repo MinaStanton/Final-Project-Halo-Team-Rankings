@@ -4,24 +4,37 @@
         ViewData["Title"] = "RegisterUser";
         Layout = "~/Views/HaloRank/_RegisterUserLayout.cshtml";
     }
-   
+
     <h1>Profile Registration Page</h1>
     <h2>Welcome to the Halo Rankings App! Before you get started we just need a bit more information.  </h2>
 
-    <form action="../HaloRank/CreateProfile" method="post">
-        @*Profile Image
-            <input type="image" name="Images" value="" /><br /><br />*@
-        
-        Gamertag
-        <input type="text" name="GamerTag" value="" /><br /><br />
-        Name
-        <input type="text" name="UserName" value="" /><br /><br />
-        Date Of Birth
-        <input type="date" name="DoB" value="" /><br /><br />
-        Gender
-        <input type="text" name="Gender" value="" /><br /><br />
-        <input type="submit" value="Create Your Profile!" /><br />
-    </form>
 
-   
+        @if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+            </script>
+
+        }
+  
+
+<form action="../HaloRank/CreateProfile" method="post">
+    @*Profile Image
+        <input type="image" name="Images" value="" /><br /><br />*@
+
+    Gamertag
+    <input type="text" name="GamerTag" value="" /><br /><br />
+    Name
+    <input type="text" name="UserName" value="" /><br /><br />
+    Date Of Birth
+    <input type="date" name="DoB" value="" /><br /><br />
+    Gender
+    <input type="text" name="Gender" value="" /><br /><br />
+    <input type="submit" value="Create Your Profile!" /><br />
+</form>
+
+
 </body>
