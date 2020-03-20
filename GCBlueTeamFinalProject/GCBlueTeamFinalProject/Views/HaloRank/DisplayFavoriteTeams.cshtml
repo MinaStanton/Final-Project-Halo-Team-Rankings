@@ -20,7 +20,7 @@
 <div>
     <table class="table table-bordered col-6">
         <tr>
-            <th></th>
+            
             <th>Team Name</th>
             <th>Player 1</th>
             <th>Player 2</th>
@@ -53,6 +53,7 @@
                 <td>@Model[i].AvgKdaratio</td>
                 <td>@Model[i].AvgAccRatio%</td>
                 <td>@Model[i].AvgScore</td>
+
                 <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
             </tr>
         }

@@ -8,7 +8,7 @@ namespace GCBlueTeamFinalProject.Models
         public int Id { get; set; }
         public string Gamertag { get; set; }
         public string UserName { get; set; }
-        public DateTime? Dob { get; set; }
+        public DateTime? Dob { get; set; } // here is the prop for DateTime Dob Dob.ToShortString();
         public string Gender { get; set; }
         public string Images { get; set; }
         public string UserId { get; set; }
