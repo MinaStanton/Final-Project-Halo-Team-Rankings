@@ -7,33 +7,43 @@
 
 @model UsersGamers
 
+    <table class="col-12">
+        <tr>
+            <td><h1>My Profile</h1></td>
+            <td>
+            <form action="../HaloRank/GetPlayerBySearch" method="post">
+            <input type="submit" value="Search Gamertag" class="small btn-primary" />
+            <input type="text" name="search" value="" class="rounded" />
 
-<h1>My Profile</h1>
-<h6> Hello @Model.MyUser.UserName welcome back to your profile!</h6>
+            </form>
+            </td>
+        </tr>
+    </table><br />
 
-<form action="../HaloRank/GetPlayerBySearch" method="post">
-    <input type="text" name="search" value="" class="small" />
-    <input type="submit" value="Search Gamertag" class="small" />
-</form>
+
+
+<h5> Hello @Model.MyUser.UserName welcome to your profile!</h5><br/>
+
+
 <br />
-<table class="col-5 dark">
+<table class="col-10 dark">
     <tr>
         <td>
-            <h5>Name</h5>
+            <h5><b>Name</b></h5>
             <p>@Model.MyUser.UserName</p>
 
-            <h5>Date Of Birth</h5>
+            <h5><b>Date Of Birth</b></h5>
             <p>@Model.MyUser.Dob</p>
         </td>
         <td>
-            <h5>Gamertag</h5>
+            <h5><b>Gamertag</b></h5>
             <p>@Model.MyUser.Gamertag</p>
 
-            <h5>Gender</h5>
+            <h5><b>Gender</b></h5>
             <p>@Model.MyUser.Gender</p>
         </td>
     </tr>
-</table>
+</table><br />
 
 
 
@@ -72,4 +82,5 @@
         <td>@Model.MyGamer.TotalGamesCompleted</td>
     </tr>
 </table>
+
 
