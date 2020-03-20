@@ -31,8 +31,9 @@ namespace GCBlueTeamFinalProject.Controllers
                 return RedirectToAction("MyProfile");
             }
             catch
-            {
-                return View();
+            {//created a new layout that doesn't have the header buttons for the register user page
+                //sending the new layout to register user view 
+                return View("RegisterUser", "_RegisterUserLayout");
             }
         }
         public async Task<ActionResult> CreateProfile(Users newUser)
