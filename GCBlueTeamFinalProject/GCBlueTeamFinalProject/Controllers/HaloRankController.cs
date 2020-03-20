@@ -71,28 +71,35 @@ namespace GCBlueTeamFinalProject.Controllers
         //    return View(newUser);
 
         //}
-        public IActionResult CreateProfile(Users newUser)
+        public async Task<ActionResult> CreateProfile(Users newUser)
         {
             if (ModelState.IsValid)
             {
-                newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var client = new HttpClient();
+                client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+                var response = await client.GetAsync($"?players={newUser.Gamertag}");
+                var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
+                if (searchedPlayer == null)
+                {
+                    return View("Error", "This Gamertag does not exist, please try again.");
+                }
+                Gamers searchedGamer = new Gamers(searchedPlayer, 0);
+                searchedGamer.UserId = id;
+                newUser.UserId = id;
+                _context.Gamers.Add(searchedGamer);
                 _context.Users.Add(newUser);
-                //if (newUser.UserId == null)
-                //{
-                //    newUser.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                //    _context.Users.Add(newUser);
-                //}
-                //searchedGamer.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                //_context.Gamers.Add(searchedGamer);
                 _context.SaveChanges();
                 return RedirectToAction("MyProfile");
             }
             return RedirectToAction("RegisterUser");
         }
-        public async Task<ActionResult> MyProfile()
+        public IActionResult MyProfile()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Users foundUser = _context.Users.Where(x => x.UserId == id).First();
+            Gamers foundGamer = _context.Gamers.Where(x => x.UserId == id && x.Gamertag == foundUser.Gamertag).First();
             //List<Users> UserList = _context.Users.Where(x => x.UserId == id).ToList();
             //Users newUser = new Users();
             //for (int i = 0; i < UserList.Count; i++)
@@ -100,16 +107,18 @@ namespace GCBlueTeamFinalProject.Controllers
             //    newUser = UserList[i];
             //}
             // Calling on the API to check if Gamertag is valid
-            var client = new HttpClient();
-            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-            var response = await client.GetAsync($"?players={foundUser.Gamertag}");
-            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
-            if (searchedPlayer == null)
-            {
-                return View("Error", "This Gamertag does not exist, please try again.");
-            }
-            Gamers searchedGamer = new Gamers(searchedPlayer, 0);
+            //var client = new HttpClient();
+            //client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+            //client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+            //var response = await client.GetAsync($"?players={foundUser.Gamertag}");
+            //var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
+            //if (searchedPlayer == null)
+            //{
+            //    return View("Error", "This Gamertag does not exist, please try again.");
+            //}
+            //Gamers searchedGamer = new Gamers(searchedPlayer, 0);
+            //_context.Gamers.Add(searchedGamer);
+            //_context.SaveChanges();
             //if (newUser.UserId != null)
             //{
             //    UsersGamers MyProfile2 = new UsersGamers(newUser, searchedGamer);
@@ -148,7 +157,7 @@ namespace GCBlueTeamFinalProject.Controllers
             //    //more validation
             //    return RedirectToAction("RegisterUser");
             //}
-            UsersGamers MyProfile = new UsersGamers(foundUser, searchedGamer);
+            UsersGamers MyProfile = new UsersGamers(foundUser, foundGamer);
             return View(MyProfile);
 
         }
@@ -253,13 +262,17 @@ namespace GCBlueTeamFinalProject.Controllers
             //This line above for quickly showing all gamers in database instead of just associated with UserID
             return View(newGamerList); //displays sorted list of gamers
         }
-
-
         public IActionResult DeleteFromGamers(int id)
         {
             Gamers found = _context.Gamers.Find(id);
             if (found != null)
             {
+                string id2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Users foundUser = _context.Users.Where(x => x.UserId == id2).First();
+                if (found.Gamertag == foundUser.Gamertag)
+                {
+                    return View("Error", "Please don't do that");
+                }
                 _context.Gamers.Remove(found);
                 _context.SaveChanges();
             }
