@@ -14,11 +14,6 @@ namespace GCBlueTeamFinalProject.Models
         {
             MyUser = myUser;
             MyGamer = myGamer;
-
         }
-       
     }
-
-
-
 }
