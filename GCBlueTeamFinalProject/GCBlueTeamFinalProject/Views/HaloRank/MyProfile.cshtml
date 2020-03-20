@@ -16,22 +16,32 @@
     <input type="submit" value="Search Gamertag" class="small" />
 </form>
 <br />
+
+<p><img src="~/img/H3_Blackout03.jpg" width="350" height="200" ></p>
+
 <table class="col-5 dark">
     <tr>
         <td>
             <h5>Name</h5>
             <p>@Model.MyUser.UserName</p>
 
-            <h5>Date Of Birth</h5>
-            <p>@Model.MyUser.Dob</p>
-        </td>
-        <td>
             <h5>Gamertag</h5>
             <p>@Model.MyUser.Gamertag</p>
 
-            <h5>Gender</h5>
-            <p>@Model.MyUser.Gender</p>
         </td>
+        @if (Model.MyUser.Dob != null && Model.MyUser.Gender != null)
+        {
+            <td>
+
+                <h5>Date Of Birth</h5>
+                <p>@Model.MyUser.Dob</p>
+
+                <h5>Gender</h5>
+                <p>@Model.MyUser.Gender</p>
+
+            </td>
+        }
+
     </tr>
 </table>
 
