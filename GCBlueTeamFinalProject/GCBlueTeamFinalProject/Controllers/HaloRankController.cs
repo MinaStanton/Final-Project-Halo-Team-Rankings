@@ -87,6 +87,10 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 return View("Error", "This Gamertag does not exist, please try again.");
             }
+            else if(searchedGamer.TotalTimePlayed == "")
+            {
+                return View("Error", "This TotalTimePlayed test worked!!.");
+            }
             return View(searchedGamer);
         }
         public IActionResult AddToGamers(Gamers newPlayer)
