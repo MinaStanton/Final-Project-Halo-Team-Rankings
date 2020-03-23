@@ -20,7 +20,7 @@
 <div>
     <table class="table table-bordered col-6">
         <tr>
-            
+
             <th>Team Name</th>
             <th>Player 1</th>
             <th>Player 2</th>
@@ -61,3 +61,13 @@
     </table>
 
 </div>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
