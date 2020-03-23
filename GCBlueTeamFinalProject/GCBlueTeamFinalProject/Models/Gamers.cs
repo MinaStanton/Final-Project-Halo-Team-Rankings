@@ -68,6 +68,37 @@ namespace GCBlueTeamFinalProject.Models
                 player.Results[id].Result.ArenaStats.TotalGamesTied);
             Score = CalculateScore();
         }
+        public void UpdateWith(PlayerRootObject player, int index)
+        {
+            Gamertag = player.Results[index].Result.PlayerId.Gamertag;
+            TotalKills = player.Results[index].Result.ArenaStats.TotalKills;
+            TotalDeaths = player.Results[index].Result.ArenaStats.TotalDeaths;
+            TimeSpentRespawning = player.Results[index].Result.ArenaStats.TotalDeaths * 5; //Seconds dead = deaths * 5
+            TotalAssists = player.Results[index].Result.ArenaStats.TotalAssists;
+            TotalAssassinations = player.Results[index].Result.ArenaStats.TotalAssassinations;
+            TotalHeadshots = player.Results[index].Result.ArenaStats.TotalHeadshots;
+            TotalShotsFired = player.Results[index].Result.ArenaStats.TotalShotsFired;
+            TotalShotsLanded = player.Results[index].Result.ArenaStats.TotalShotsLanded;
+            //DisplayAcc = DisplayPercent(CalculateAccuracy(player.Results[i].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
+            //player.Results[i].Result.ArenaStats.TotalShotsLanded));
+            TotalGamesWon = player.Results[index].Result.ArenaStats.TotalGamesWon;
+            TotalGamesLost = player.Results[index].Result.ArenaStats.TotalGamesLost;
+            TotalGamesTied = player.Results[index].Result.ArenaStats.TotalGamesTied;
+            TotalGamesCompleted = player.Results[index].Result.ArenaStats.TotalGamesCompleted;
+            TotalTimePlayed = player.Results[index].Result.ArenaStats.TotalTimePlayed; //add parsing method, regex? (STRETCH GOAL)
+            //GameTypeNvarCharId = player.Results[id].Result.ArenaStats.ArenaGameBaseVariantStats[2].GameBaseVariantId; //add parsing method (STRETCH GOAL)
+            Kdratio = CalculateKillDeathRatio(player.Results[index].Result.ArenaStats.TotalKills, //KD = Kills / Deaths
+                player.Results[index].Result.ArenaStats.TotalDeaths);
+            Kdaratio = CalculateKillDeathAssistRatio(player.Results[index].Result.ArenaStats.TotalKills, //KDA = (Kills + (Assists / 2)) / Deaths
+                player.Results[index].Result.ArenaStats.TotalDeaths,
+                player.Results[index].Result.ArenaStats.TotalAssists);
+            AccuracyRatio = CalculateAccuracy(player.Results[index].Result.ArenaStats.TotalShotsFired, //Acc = Landed / Fired
+                player.Results[index].Result.ArenaStats.TotalShotsLanded);
+            WinLossRatio = CalculateWinLossRatio(player.Results[index].Result.ArenaStats.TotalGamesWon, //WL = Wins / (Losses + Tied)
+                player.Results[index].Result.ArenaStats.TotalGamesLost,
+                player.Results[index].Result.ArenaStats.TotalGamesTied);
+            Score = CalculateScore();
+        }
         public static string DisplayRespawnTime(int seconds) //for displaying time spent respawning in view (NOT used in the contructor)
         {
             int minutes = seconds / 60;

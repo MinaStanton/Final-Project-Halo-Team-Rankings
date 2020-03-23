@@ -3,7 +3,7 @@
 }
 
 
-@if (ViewBag.Message != null)
+@if(ViewBag.Message != null)
 {
     <script type="text/javascript">
 
@@ -14,9 +14,23 @@
 
 }
 
-<h1>Searched Gamertag</h1>
-
 @model Gamers
+
+<table class="col-12">
+    <tr>
+        <td><h1>Searched Gamertag</h1></td>
+        <td>
+            <form action="../HaloRank/GetPlayerBySearch" method="post">
+                <input type="submit" value="Search Gamertag" class="small btn-primary" />
+                <input type="text" name="search" value="" class="rounded" />
+
+            </form>
+        </td>
+    </tr>
+</table>
+<br />
+
+
 <table class=" table table-bordered">
     <tr>
         <th>Gamertag</th>
