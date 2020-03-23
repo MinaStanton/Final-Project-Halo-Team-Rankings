@@ -3,94 +3,110 @@
     ViewData["Title"] = "MyProfile";
 }
 
-
-
-@model UsersGamers
-
-    <table class="col-12">
-        <tr>
-            <td><h1>My Profile</h1></td>
-            <td>
-            <form action="../HaloRank/GetPlayerBySearch" method="post">
-            <input type="submit" value="Search Gamertag" class="small btn-primary" />
-            <input type="text" name="search" value="" class="rounded" />
-
-            </form>
-            </td>
-        </tr>
-    </table><br />
-
-
-
-<h5> Hello @Model.MyUser.UserName welcome to your profile!</h5><br/>
-
-
-<br />
-
-<p><img src="~/img/H3_Blackout03.jpg" width="350" height="200" ></p>
-
-<table class="col-5 dark">
+<table class="col-12">
     <tr>
+        <td><h1>My Profile</h1></td>
         <td>
-            <h5><b>Name</b></h5>
-            <p>@Model.MyUser.UserName</p>
-
-            <h5>Gamertag</h5>
-            <p>@Model.MyUser.Gamertag</p>
-
+            <form action="../HaloRank/GetPlayerBySearch" method="post">
+                <input type="submit" value="Search Gamertag" class="small btn-primary" />
+                <input type="text" name="search" value="" class="rounded" />
+            </form>
         </td>
-        @if (Model.MyUser.Dob != null && Model.MyUser.Gender != null)
-        {
-            <td>
-
-                <h5>Date Of Birth</h5>
-                <p>@Model.MyUser.Dob.Value.ToShortDateString()</p>
-
-                <h5>Gender</h5>
-                <p>@Model.MyUser.Gender</p>
-
-            </td>
-        }
-
-    </tr>
-</table><br />
-
-
-
-@* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
-<table class="table table-bordered">
-    <tr>
-        <th>Total Kills</th>
-        <th>Total Deaths</th>
-        <th>Total Assists</th>
-        <th>Kill Death Ratio</th>
-        <th>Total Assassinations</th>
-        <th>Total Headshots</th>
-        <th>Shots Fired</th>
-        <th>Shots Landed</th>
-        <th>Accuracy Ratio</th>
-        <th>Games Won</th>
-        <th>Games Lost</th>
-        <th>Games Tied</th>
-        <th>Games Completed</th>
-        <th>Time Played</th>
-    </tr>
-    <tr>
-        <td>@Model.MyGamer.TotalKills</td>
-        <td>@Model.MyGamer.TotalDeaths</td>
-        <td>@Model.MyGamer.TotalAssists</td>
-        <td>@Model.MyGamer.Kdratio</td>
-        <td>@Model.MyGamer.TotalAssassinations</td>
-        <td>@Model.MyGamer.TotalHeadshots</td>
-        <td>@Model.MyGamer.TotalShotsFired</td>
-        <td>@Model.MyGamer.TotalShotsLanded</td>
-        <td>@Model.MyGamer.AccuracyRatio%</td>
-        <td>@Model.MyGamer.TotalGamesWon</td>
-        <td>@Model.MyGamer.TotalGamesLost</td>
-        <td>@Model.MyGamer.TotalGamesTied</td>
-        <td>@Model.MyGamer.WinLossRatio%</td>
-        <td>@Model.MyGamer.TotalGamesCompleted</td>
     </tr>
 </table>
+<br />
 
 
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+
+}
+
+
+
+
+
+    @model UsersGamers
+
+
+
+
+
+    <h5> Hello @Model.MyUser.UserName welcome to your profile!</h5>
+    <br />
+
+
+    <br />
+
+    <p><img src="~/img/H3_Blackout03.jpg" width="350" height="200"></p>
+
+    <table class="col-5 dark">
+        <tr>
+            <td>
+                <h5><b>Name</b></h5>
+                <p>@Model.MyUser.UserName</p>
+
+                <h5>Gamertag</h5>
+                <p>@Model.MyUser.Gamertag</p>
+
+            </td>
+            @if (Model.MyUser.Dob != null && Model.MyUser.Gender != null)
+            {
+                <td>
+
+                    <h5>Date Of Birth</h5>
+                    <p>@Model.MyUser.Dob.Value.ToShortDateString()</p>
+
+                    <h5>Gender</h5>
+                    <p>@Model.MyUser.Gender</p>
+
+                </td>
+            }
+
+        </tr>
+    </table>
+    <br />
+
+
+
+    @* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
+    <table class="table table-bordered">
+        <tr>
+            <th>Total Kills</th>
+            <th>Total Deaths</th>
+            <th>Total Assists</th>
+            <th>Kill Death Ratio</th>
+            <th>Total Assassinations</th>
+            <th>Total Headshots</th>
+            <th>Shots Fired</th>
+            <th>Shots Landed</th>
+            <th>Accuracy Ratio</th>
+            <th>Games Won</th>
+            <th>Games Lost</th>
+            <th>Games Tied</th>
+            <th>Games Completed</th>
+            <th>Time Played</th>
+        </tr>
+        <tr>
+            <td>@Model.MyGamer.TotalKills</td>
+            <td>@Model.MyGamer.TotalDeaths</td>
+            <td>@Model.MyGamer.TotalAssists</td>
+            <td>@Model.MyGamer.Kdratio</td>
+            <td>@Model.MyGamer.TotalAssassinations</td>
+            <td>@Model.MyGamer.TotalHeadshots</td>
+            <td>@Model.MyGamer.TotalShotsFired</td>
+            <td>@Model.MyGamer.TotalShotsLanded</td>
+            <td>@Model.MyGamer.AccuracyRatio%</td>
+            <td>@Model.MyGamer.TotalGamesWon</td>
+            <td>@Model.MyGamer.TotalGamesLost</td>
+            <td>@Model.MyGamer.TotalGamesTied</td>
+            <td>@Model.MyGamer.WinLossRatio%</td>
+            <td>@Model.MyGamer.TotalGamesCompleted</td>
+        </tr>
+    </table>

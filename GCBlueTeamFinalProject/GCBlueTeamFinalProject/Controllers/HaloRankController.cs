@@ -68,13 +68,9 @@ namespace GCBlueTeamFinalProject.Controllers
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Users foundUser = _context.Users.Where(x => x.UserId == id).First();
             Gamers foundGamer = _context.Gamers.Where(x => x.UserId == id && x.Gamertag == foundUser.Gamertag).First();
-            UsersGamers MyProfile = new UsersGamers(foundUser, foundGamer);
-            return View(MyProfile);
+            UsersGamers UserProfile = new UsersGamers(foundUser, foundGamer);
+            return View(UserProfile);
 
-        }
-        public IActionResult Error(string message)
-        {
-            return View(message);
         }
         public async Task<ActionResult> GetPlayerBySearch(string search) //searches for player, checks if it's valid and returns view with gamer
         {
@@ -88,13 +84,24 @@ namespace GCBlueTeamFinalProject.Controllers
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
             if (searchedGamer.Gamertag == null )
             {
+
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Users foundUser = _context.Users.Where(x => x.UserId == id).First();
+                Gamers foundGamer = _context.Gamers.Where(x => x.UserId == id && x.Gamertag == foundUser.Gamertag).First();
+                UsersGamers UserProfile = new UsersGamers(foundUser, foundGamer);
                 ViewBag.Message = "This Gamertag does not exist, please try again!";
-                return RedirectToAction("MyProfile");
-             
+                return View("MyProfile", UserProfile);
+                //string errorMessage = "This Gamertag does not exist, please try again!";
+                //return RedirectToAction("ProfileError", new { errorMessage });
             }
             else if(searchedGamer.TotalTimePlayed == "")
             {
-                return View("Error", "This Gamertag has not played Halo 5. Please use one of our provided Gamertags with valid data.");
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Users foundUser = _context.Users.Where(x => x.UserId == id).First();
+                Gamers foundGamer = _context.Gamers.Where(x => x.UserId == id && x.Gamertag == foundUser.Gamertag).First();
+                UsersGamers UserProfile = new UsersGamers(foundUser, foundGamer);
+                ViewBag.Message = "This Gamertag does not have any Halo 5 play time!";
+                return View("MyProfile", UserProfile);
             }  
             return View(searchedGamer);
         }
@@ -115,52 +122,6 @@ namespace GCBlueTeamFinalProject.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("DisplayGamers");
-        }
-        public async Task<ActionResult> DisplayGamers()
-        {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
-            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
-            string search = "";
-            for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
-            {
-                if (i > 0)
-                {
-                    search = search + ",";
-                }
-                search = search + gamerList[i].Gamertag;
-            }
-
-            var client = new HttpClient();
-            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-            var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
-            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
-            List<Gamers> apiListSearch = new List<Gamers>();
-            for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
-            {
-                apiListSearch.Add(new Gamers(searchedPlayer, i));
-            }
-
-            List<Gamers> sortedList = apiListSearch.OrderByDescending(x => x.Score).ToList(); //sorts list of gamers by score
-            foreach (Gamers gamer in gamerList)
-            {
-                _context.Gamers.Remove(gamer);
-                _context.SaveChanges();
-            }
-
-            for (int i = 0; i < sortedList.Count; i++) //assigns a ranking based on order of list (based on score)
-            {
-                sortedList[i].Ranking = i + 1;
-                sortedList[i].UserId = id;
-                _context.Gamers.Add(sortedList[i]);
-                _context.SaveChanges();
-            }
-
-            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
-            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
-            //List<Gamers> gamerList = _context.Gamers.ToList();
-            //This line above for quickly showing all gamers in database instead of just associated with UserID
-            return View(newGamerList); //displays sorted list of gamers
         }
         public IActionResult DeleteFromGamers(int id)
         {
@@ -267,5 +228,56 @@ namespace GCBlueTeamFinalProject.Controllers
             List<Teams> favTeams = _context.Teams.Where(x => x.UserId == id).ToList();
             return View(favTeams);
         }
+
+        public IActionResult DisplayGamers()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List < Gamers > GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+            return View(GamerList);
+        }
+
+        public async Task<ActionResult> UpdateGamers()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
+            string search = "";
+            for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
+            {
+                if (i > 0)
+                {
+                    search = search + ",";
+                }
+                search = search + gamerList[i].Gamertag;
+            }
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+            var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
+            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
+            //List<Gamers> apiListSearch = new List<Gamers>();
+            for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
+            {
+                var newData = searchedPlayer.Results[i];
+                //search gamerList for the appropriate matching Gamers class for this result (e.g. pull old information class) and set to oldData
+                var oldData = gamerList.Where(oldDbGamer => oldDbGamer.Gamertag == newData.Result.PlayerId.Gamertag).Single();
+
+                oldData.UpdateWith(searchedPlayer, i);
+
+                //1. pull object from the database
+                //2. update information
+                //3. savechanges
+
+                //old:
+                //1. pull object from database
+                //2. create NEW object with updated information
+                //3. attempt to relink NEW object with database (fails)
+                //4. save
+            }
+            _context.SaveChanges();
+            return RedirectToAction("DisplayGamers"); //displays sorted list of gamers
+        }
+
+
     }
 }
