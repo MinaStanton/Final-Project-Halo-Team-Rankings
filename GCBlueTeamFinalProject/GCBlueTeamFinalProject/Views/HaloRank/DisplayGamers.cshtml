@@ -7,7 +7,7 @@
     <tr>
         <td><h1>Friends List</h1></td>
         <td>
-            <form action="../HaloRank/GetPlayerBySearch" method="post">
+            <form action="../HaloRank/GetPlayerBySearch" method="post" >
                 <input type="submit" value="Search Gamertag" class="small btn-primary" />
                 <input type="text" name="search" value="" class="rounded" />
 
@@ -16,6 +16,8 @@
     </tr>
 </table>
 <br />
+
+
 <form action="../HaloRank/CreateTeams" method="post">
 
 
@@ -31,8 +33,8 @@
             <th>Kill Death Ratio</th>
             <th>Accuracy Ratio</th>
             <th>Win Loss Ratio</th>
-            @*<th>Total Games Played</th>
-                <th>Score</th>
+            <th>Total Games Played</th>
+                @*<th>Score</th>
                 <th>Total Kills</th>
                 <th>Total Deaths</th>
                 <th>Total Assists</th>
@@ -46,41 +48,42 @@
                 <th>Total Time Played</th>*@
 
 
-            <th></th>
+            <th><a href="../HaloRank/UpdateGamers" class="btn btn-outline-warning btn-block">Update</a></th>
         </tr>
 
         @for (int i = 0; i < Model.Count; i++)
         {
-            <tr>
-                <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
-                <td>@Model[i].Gamertag</td>
-                @*<td>@Math.Round(((double)Model[i].TotalHeadshots / (double)Model[i].TotalGamesCompleted), 2)</td>
-                    <td>@Math.Round(((double)Model[i].TotalAssassinations / (double)Model[i].TotalGamesCompleted), 2)</td>*@
-                <td>@Model[i].Ranking</td>
-                <td>@Model[i].Score</td>
-                <td>@Model[i].Kdratio</td>
-                <td>@Model[i].AccuracyRatio%</td>
-                <td>@Model[i].WinLossRatio%</td>
-                @*<td>@Model[i].TotalGamesCompleted</td>
-                    <td>@Model[i].Score</td>
-                    <td>@Model[i].TotalKills</td>
-                    <td>@Model[i].TotalDeaths</td>
-                    <td>@Model[i].TotalAssists</td>
-                    <td>@Model[i].TotalAssassinations</td>
-                    <td>@Model[i].TotalHeadshots</td>
-                    <td>@Model[i].TotalShotsFired</td>
-                    <td>@Model[i].TotalShotsLanded</td>
-                    <td>@Model[i].TotalGamesWon</td>
-                    <td>@Model[i].TotalGamesLost</td>
-                    <td>@Model[i].TotalGamesTied</td>
-                    <td>@Model[i].TotalTimePlayed</td>*@
-                <td>
-                    @if (Model[i].Gamertag != ViewBag.Gamertag)
-                    {
-                        <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
-                    }
-                </td>
-            </tr>
+    <tr>
+        <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
+        <td>@Model[i].Gamertag</td>
+        @*<td>@Math.Round(((double)Model[i].TotalHeadshots / (double)Model[i].TotalGamesCompleted), 2)</td>
+        <td>@Math.Round(((double)Model[i].TotalAssassinations / (double)Model[i].TotalGamesCompleted), 2)</td>*@
+        <td>@Model[i].Ranking</td>
+        <td>@Model[i].Score</td>
+        <td>@Model[i].Kdratio</td>
+        <td>@Model[i].AccuracyRatio%</td>
+        <td>@Model[i].WinLossRatio%</td>
+        <td>@Model[i].TotalGamesCompleted</td>
+        @*<td>@Model[i].TotalGamesCompleted</td>
+        <td>@Model[i].Score</td>
+        <td>@Model[i].TotalKills</td>
+        <td>@Model[i].TotalDeaths</td>
+        <td>@Model[i].TotalAssists</td>
+        <td>@Model[i].TotalAssassinations</td>
+        <td>@Model[i].TotalHeadshots</td>
+        <td>@Model[i].TotalShotsFired</td>
+        <td>@Model[i].TotalShotsLanded</td>
+        <td>@Model[i].TotalGamesWon</td>
+        <td>@Model[i].TotalGamesLost</td>
+        <td>@Model[i].TotalGamesTied</td>
+        *@
+        <td>
+            @if (Model[i].Gamertag != ViewBag.Gamertag)
+            {
+                <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger btn-block">Delete</a>
+            }
+        </td>
+    </tr>
         }
     </table>
     <input type="reset" value="Reset Selection" />

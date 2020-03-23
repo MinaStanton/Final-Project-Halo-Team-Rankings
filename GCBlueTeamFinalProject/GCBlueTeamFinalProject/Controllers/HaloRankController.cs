@@ -116,52 +116,52 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return RedirectToAction("DisplayGamers");
         }
-        public async Task<ActionResult> DisplayGamers()
-        {
-            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
-            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
-            string search = "";
-            for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
-            {
-                if (i > 0)
-                {
-                    search = search + ",";
-                }
-                search = search + gamerList[i].Gamertag;
-            }
+        //public async Task<ActionResult> DisplayGamers()
+        //{
+        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
+        //    List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
+        //    string search = "";
+        //    for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
+        //    {
+        //        if (i > 0)
+        //        {
+        //            search = search + ",";
+        //        }
+        //        search = search + gamerList[i].Gamertag;
+        //    }
 
-            var client = new HttpClient();
-            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
-            var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
-            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
-            List<Gamers> apiListSearch = new List<Gamers>();
-            for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
-            {
-                apiListSearch.Add(new Gamers(searchedPlayer, i));
-            }
+        //    var client = new HttpClient();
+        //    client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+        //    var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
+        //    var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
+        //    List<Gamers> apiListSearch = new List<Gamers>();
+        //    for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
+        //    {
+        //        apiListSearch.Add(new Gamers(searchedPlayer, i));
+        //    }
 
-            List<Gamers> sortedList = apiListSearch.OrderByDescending(x => x.Score).ToList(); //sorts list of gamers by score
-            foreach (Gamers gamer in gamerList)
-            {
-                _context.Gamers.Remove(gamer);
-                _context.SaveChanges();
-            }
+        //    List<Gamers> sortedList = apiListSearch.OrderByDescending(x => x.Score).ToList(); //sorts list of gamers by score
+        //    foreach (Gamers gamer in gamerList)
+        //    {
+        //        _context.Gamers.Remove(gamer);
+        //        _context.SaveChanges();
+        //    }
 
-            for (int i = 0; i < sortedList.Count; i++) //assigns a ranking based on order of list (based on score)
-            {
-                sortedList[i].Ranking = i + 1;
-                sortedList[i].UserId = id;
-                _context.Gamers.Add(sortedList[i]);
-                _context.SaveChanges();
-            }
+        //    for (int i = 0; i < sortedList.Count; i++) //assigns a ranking based on order of list (based on score)
+        //    {
+        //        sortedList[i].Ranking = i + 1;
+        //        sortedList[i].UserId = id;
+        //        _context.Gamers.Add(sortedList[i]);
+        //        _context.SaveChanges();
+        //    }
 
-            List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
-            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
-            //List<Gamers> gamerList = _context.Gamers.ToList();
-            //This line above for quickly showing all gamers in database instead of just associated with UserID
-            return View(newGamerList); //displays sorted list of gamers
-        }
+        //    List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+        //    ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+        //    //List<Gamers> gamerList = _context.Gamers.ToList();
+        //    //This line above for quickly showing all gamers in database instead of just associated with UserID
+        //    return View(newGamerList); //displays sorted list of gamers
+        //}
         public IActionResult DeleteFromGamers(int id)
         {
             Gamers found = _context.Gamers.Find(id);
@@ -267,5 +267,99 @@ namespace GCBlueTeamFinalProject.Controllers
             List<Teams> favTeams = _context.Teams.Where(x => x.UserId == id).ToList();
             return View(favTeams);
         }
+
+        //[HttpGet]
+        //public IActionResult UpdateGamers()
+        //{
+        //    Super found = _context.Super.Find(id);
+        //    if (found != null)
+        //    {
+        //        return View(found);
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+
+        //[HttpPost]
+        //public IActionResult UpdateGamers(Super editedSuper)
+        //{
+        //    Super dbSuper = _context.Super.Find(editedSuper.Id);
+        //    if (ModelState.IsValid)
+        //    {
+        //        dbSuper.Name = editedSuper.Name;
+        //        dbSuper.SuperName = editedSuper.SuperName;
+        //        dbSuper.Power = editedSuper.Power;
+        //        dbSuper.PowerLevel = editedSuper.PowerLevel;
+        //        _context.Entry(dbSuper).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        //        _context.Update(dbSuper);
+        //        _context.SaveChanges();
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+
+
+        public async Task<ActionResult> UpdateGamers()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets UserID from ASP login
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id).ToList(); //finds list of gamers associated with that UserID
+            string search = "";
+            for (int i = 0; i < gamerList.Count; i++) //builds a gamertag string based on friends list gamertags for API search
+            {
+                if (i > 0)
+                {
+                    search = search + ",";
+                }
+                search = search + gamerList[i].Gamertag;
+            }
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
+            var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
+            var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
+            List<Gamers> apiListSearch = new List<Gamers>();
+            for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
+            {
+                apiListSearch.Add(new Gamers(searchedPlayer, i));
+            }
+
+            List<Gamers> sortedList = apiListSearch.OrderByDescending(x => x.Score).ToList(); //sorts list of gamers by score
+            for(int i =0; i < sortedList.Count; i++)
+            {
+                sortedList[i].Id = gamerList[i].Id;
+                Gamers dbgamer = _context.Gamers.Find(sortedList[i].Id);
+                _context.Entry(dbgamer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(dbgamer);
+                _context.SaveChanges();
+            }
+            //foreach (Gamers gamer in gamerList)
+            //{
+            //    _context.Gamers.Remove(gamer);
+            //    _context.SaveChanges();
+            //}
+
+            //for (int i = 0; i < sortedList.Count; i++) //assigns a ranking based on order of list (based on score)
+            //{
+            //    sortedList[i].Ranking = i + 1;
+            //    sortedList[i].UserId = id;
+            //    _context.Gamers.Add(sortedList[i]);
+            //    _context.SaveChanges();
+            //}
+
+            //List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+            //ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+            //List<Gamers> gamerList = _context.Gamers.ToList();
+            //This line above for quickly showing all gamers in database instead of just associated with UserID
+            return RedirectToAction("DisplayGamers"); //displays sorted list of gamers
+        }
+
+        public IActionResult DisplayGamers()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List < Gamers > GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+            return View(GamerList);
+        }
+
+
+
     }
 }
