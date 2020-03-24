@@ -17,29 +17,33 @@
     </tr>
 </table>
 <br />
-<div>
+
+  
     <table class="table table-bordered col-6">
         <tr>
 
             <th>Team Name</th>
-            <th>Player 1</th>
-            <th>Player 2</th>
-            <th>Player 3</th>
-            <th>Player 4</th>
-            <th>Player 5</th>
-            <th>Player 6</th>
-            <th>Player 7</th>
-            <th>Player 8</th>
-            <th>Average Win/Loss Ratio</th>
-            <th>Average Kill/Deaths Ratio</th>
-            <th>Average Kill/Death/Assists Ratio</th>
-            <th>Average Accuracy Ratio</th>
-            <th>Average Score</th>
+            @for (int i = 1; i <= ViewBag.teamMembers; i++)
+            {
+
+                <th>Player @i</th>
+              
+            }
+                <th>Average Win/Loss Ratio</th>
+                <th>Average Kill/Deaths Ratio</th>
+                <th>Average Kill/Death/Assists Ratio</th>
+                <th>Average Accuracy Ratio</th>
+                <th>Average Score</th>
+
         </tr>
+      
         @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
-                <td>@Model[i].TeamName</td>
+        <td>@Model[i].TeamName</td>
+
+        @if (ViewBag.teamMembers == 8)
+        {
                 <td>@Model[i].Player1</td>
                 <td>@Model[i].Player2</td>
                 <td>@Model[i].Player3</td>
@@ -53,14 +57,55 @@
                 <td>@Model[i].AvgKdaratio</td>
                 <td>@Model[i].AvgAccRatio%</td>
                 <td>@Model[i].AvgScore</td>
+        }
+        else if (ViewBag.teamMembers == 6)
+        {
+                <td>@Model[i].Player1</td>
+                <td>@Model[i].Player2</td>
+                <td>@Model[i].Player3</td>
+                <td>@Model[i].Player4</td>
+                <td>@Model[i].Player5</td>
+                <td>@Model[i].Player6</td>
+                <td>@Model[i].AvgWlratio%</td>
+                <td>@Model[i].AvgKdratio</td>
+                <td>@Model[i].AvgKdaratio</td>
+                <td>@Model[i].AvgAccRatio%</td>
+                <td>@Model[i].AvgScore</td>
+        }
+        else if (ViewBag.teamMembers == 4)
+        {
+                <td>@Model[i].Player1</td>
+                <td>@Model[i].Player2</td>
+                <td>@Model[i].Player3</td>
+                <td>@Model[i].Player4</td>
+                <td>@Model[i].AvgWlratio%</td>
+                <td>@Model[i].AvgKdratio</td>
+                <td>@Model[i].AvgKdaratio</td>
+                <td>@Model[i].AvgAccRatio%</td>
+                <td>@Model[i].AvgScore</td>
+        }
+        else
+        {
+                <td>@Model[i].Player1</td>
+                <td>@Model[i].Player2</td>
+                <td>@Model[i].AvgWlratio%</td>
+                <td>@Model[i].AvgKdratio</td>
+                <td>@Model[i].AvgKdaratio</td>
+                <td>@Model[i].AvgAccRatio%</td>
+                <td>@Model[i].AvgScore</td>
 
-                <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
-            </tr>
+            
+        }
+
+
+        <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
+    </tr>
         }
 
     </table>
 
-</div>
+
+   
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">

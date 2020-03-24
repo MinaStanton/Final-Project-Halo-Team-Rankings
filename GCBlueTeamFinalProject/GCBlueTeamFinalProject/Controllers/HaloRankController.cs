@@ -226,6 +226,32 @@ namespace GCBlueTeamFinalProject.Controllers
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Teams> favTeams = _context.Teams.Where(x => x.UserId == id).ToList();
+            int teamMembers = 0;
+            int totalMembers = 0;
+            foreach (Teams team in favTeams)
+            {
+                if(team.Player4 != null && team.Player5 == null)
+                {
+                    teamMembers = 4;
+                }
+                if(team.Player6 != null && team.Player7 == null)
+                {
+                    teamMembers = 6;
+                }
+                if(team.Player8 != null)
+                {
+                    teamMembers = 8;
+                }
+
+                
+                if (teamMembers > totalMembers)
+                {
+                    totalMembers = teamMembers;
+                }
+                
+            }
+
+            ViewBag.teamMembers = totalMembers;
             return View(favTeams);
         }
 
