@@ -16,11 +16,15 @@ namespace GCBlueTeamFinalProject.Controllers
     {
         private readonly string APIKEYVARIABLE;
         private readonly HaloRankDbContext _context;
+        private readonly string FRIENDSLISTID1;
+        private readonly string FRIENDSLISTID2;
 
         public HaloRankController(HaloRankDbContext context, IConfiguration configuration)
         {
             _context = context;
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["APIKeyName"];
+            FRIENDSLISTID1 = configuration.GetSection("FriendsListKeys")["List1"];
+            FRIENDSLISTID2 = configuration.GetSection("FriendsListKeys")["List2"];
         }
         public IActionResult RegisterUser()
         {
@@ -317,12 +321,12 @@ namespace GCBlueTeamFinalProject.Controllers
         public IActionResult GenerateFriends() 
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            string id2 = "15c1f640-bcdc-44f1-a64f-dd82b967ce31"; // Halo Tracker Hash ID
-            string id3 = "c277b161-9306-42f0-bf99-162f62a09def"; // Mike's ID example@example
-            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id2 && x.UserId == id3).ToList();
+            string id2 = $"{FRIENDSLISTID1}";
+            string id3 = $"{FRIENDSLISTID2}";
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id2 || x.UserId == id3).ToList();
             List<Gamers> userGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
             List<string> gamertags = new List<string>();
-            foreach (Gamers gamers in gamerList)
+            foreach (Gamers gamers in userGamerList)
             {
                 gamertags.Add(gamers.Gamertag);
             }
@@ -332,12 +336,11 @@ namespace GCBlueTeamFinalProject.Controllers
                 newgamer.CopyGamer(gamerList[i]);
                 newgamer.UserId = id;
 
-                if (!gamertags.Contains(newgamer.Gamertag)) // if our old friendslist doesn't contain this new gametag 
+                if (gamertags.Contains(gamerList[i].Gamertag) == false) // if our old friendslist doesn't contain this new gametag 
                 {
                     _context.Gamers.Add(newgamer);
                     _context.SaveChanges();
                 }
-
             }
             return RedirectToAction("DisplayGamers");
         }
