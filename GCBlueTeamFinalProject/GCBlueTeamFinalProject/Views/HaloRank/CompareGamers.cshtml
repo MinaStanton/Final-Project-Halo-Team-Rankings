@@ -3,12 +3,11 @@
     ViewData["Title"] = "CompareGamers";
 }
 @model List<Gamers>
-<h1>CompareGamers</h1>
+<h1>Compare Gamers</h1>
 
 <table class="table table-bordered">
 
     <tr>
-        <th>Select Teams</th>
         <th>Gamertag</th>
         <th>Games Played</th>
         <th>Score</th>
@@ -26,14 +25,12 @@
         <th>Games Lost</th>
         <th>Games Tied</th>
         <th>Win Loss Ratio</th>
-        <th>Time Played</th>
         <th></th>
     </tr>
 
     @for (int i = 0; i < Model.Count; i++)
     {
         <tr>
-            <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
             <td>@Model[i].Gamertag</td>
             <td>@Model[i].TotalGamesCompleted</td>
             <td>@Model[i].Score</td>
@@ -51,7 +48,6 @@
             <td>@Model[i].TotalGamesLost</td>
             <td>@Model[i].TotalGamesTied</td>
             <td>@Model[i].WinLossRatio%</td>
-            <td>@Model[i].TotalTimePlayed</td>
             <td>
                 <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
             </td>

@@ -78,6 +78,14 @@ namespace GCBlueTeamFinalProject.Controllers
         }
         public async Task<ActionResult> GetPlayerBySearch(string search) //searches for player, checks if it's valid and returns view with gamer
         {
+            if (search == null)
+            {
+                string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+                List<Gamers> userGamers = GetGamerList();
+                ViewBag.Message = "This gamertag does not exist";
+                return View("DisplayGamers", userGamers);
+            }
             var client = new HttpClient();
             client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
@@ -86,7 +94,7 @@ namespace GCBlueTeamFinalProject.Controllers
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
-            if (searchedGamer.Gamertag == null )
+            if (searchedGamer.Gamertag == null)
             {
 
                 string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -151,30 +159,31 @@ namespace GCBlueTeamFinalProject.Controllers
         public IActionResult CreateTeams(List<string> gamers, string submit, string teamName)
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List<Gamers> userGamers = _context.Gamers.Where(x => x.UserId == id).ToList();
+            ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+            List<Gamers> userGamers = GetGamerList();
             if (submit == "Generate Teams")
             {
                 if (gamers.Count < 4 || gamers.Count > 16)
                 {
-                    ViewBag.ErrorGenerate = "Must select between 4 and 16 players for your teams";
+                    ViewBag.Message = "Must select between 4 and 16 players for your teams";
                     return View("DisplayGamers", userGamers);
                 }
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
-                ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                //ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                //ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Teams> teams = Teams.TeamMaker(newGamerList);
                 return View(teams); //Sending a List<Teams> 
             }
             else if (submit == "Add Selection as Favorite Team")
             {
-                if (gamers.Count < 2 || gamers.Count > 8 || gamers.Count %2 != 0)
+                if (gamers.Count < 2 || gamers.Count > 8 || gamers.Count % 2 != 0)
                 {
-                    ViewBag.ErrorTeam = "Teams must be even and between 2 to 8 players.";
+                    ViewBag.Message = "Teams must be even and between 2 to 8 players.";
                     return View("DisplayGamers", userGamers);
                 }
                 if (teamName == null)
                 {
-                    ViewBag.ErrorName = "Enter a name for your new favorite team";
+                    ViewBag.Message = "Enter a name for your new favorite team";
                     return View("DisplayGamers", userGamers);
                 }
                 
@@ -188,6 +197,11 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             else
             {
+                if (gamers.Count < 2)
+                {
+                    ViewBag.Message = "Select at least 2 people to compare";
+                    return View("DisplayGamers", userGamers);
+                }
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
                 return View("CompareGamers", newGamerList);
             }
@@ -263,14 +277,9 @@ namespace GCBlueTeamFinalProject.Controllers
             ViewBag.teamMembers = totalMembers;
             if(favTeams.Count == 0)
             {
-                List<Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
-                ViewBag.NoTeamsError = "You do not have any favorite teams! Please create one.";
-                // This For loop does the Ranking within C#, not within the database
-                for (int i = 0; i < GamerList.Count; i++)
-                {
-                    GamerList[i].Ranking = i + 1;
-                }
+                List<Gamers> GamerList = GetGamerList();
                 ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
+                ViewBag.Message = "You do not have any favorite teams saved";
                 return View("DisplayGamers", GamerList);
             }
             return View(favTeams);
@@ -279,12 +288,7 @@ namespace GCBlueTeamFinalProject.Controllers
         public IActionResult DisplayGamers()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List <Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
-            // This For loop does the Ranking within C#, not within the database
-            for (int i = 0; i < GamerList.Count; i++)
-            {
-                GamerList[i].Ranking = i + 1;
-            }
+            List<Gamers> GamerList = GetGamerList();
             ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
             return View(GamerList);
         }
@@ -354,6 +358,16 @@ namespace GCBlueTeamFinalProject.Controllers
                 }
             }
             return RedirectToAction("DisplayGamers");
+        }
+        public List<Gamers> GetGamerList()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+            for (int i = 0; i < GamerList.Count; i++)
+            {
+                GamerList[i].Ranking = i + 1;
+            }
+            return GamerList;
         }
     }
 }

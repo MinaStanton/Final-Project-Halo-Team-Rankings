@@ -95,62 +95,11 @@
     <input type="submit" name="submit" value="Compare Gamers" />
 </form>
 
-
-
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
-
             window.onload = function () {
                 alert("@ViewBag.Message");
             };
     </script>
-
 }
-
-@if (ViewBag.ErrorGenerate != null)
-{
-    <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.ErrorGenerate");
-            };
-    </script>
-
-}
-
-@if (ViewBag.ErrorTeam != null)
-{
-    <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.ErrorTeam");
-            };
-    </script>
-
-}
-
-@if (ViewBag.ErrorName != null)
-{
-    <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.ErrorName");
-            };
-    </script>
-
-}
-@if (ViewBag.NoTeamsError != null)
-{
-    <script type="text/javascript">
-
-            window.onload = function () {
-                alert("@ViewBag.NoTeamsError");
-            };
-    </script>
-
-}
-
-
-
-
