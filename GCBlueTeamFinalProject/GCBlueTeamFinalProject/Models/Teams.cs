@@ -209,5 +209,18 @@ namespace GCBlueTeamFinalProject.Models
             int avgSumInt = (int)Math.Round(avgSum);
             return avgSumInt;
         }
+
+        public static List<int> CalculateProbabilty(double scoreofTeam1, double scoreOfTeam2)
+        {
+
+            double team1Probability = scoreofTeam1 / (scoreofTeam1 + scoreOfTeam2) * 100;
+
+            double team2Probability = scoreOfTeam2 / (scoreofTeam1 + scoreOfTeam2) * 100;
+
+            int team1ResultRounded = (int)Math.Round(team1Probability);
+            int team2ResultRounded = (int)Math.Round(team2Probability);
+
+            return new List<int>() { team1ResultRounded, team2ResultRounded };
+        }
     }
 }

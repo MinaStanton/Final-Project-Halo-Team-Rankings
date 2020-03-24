@@ -172,6 +172,9 @@ namespace GCBlueTeamFinalProject.Controllers
                 //ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 //ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Teams> teams = Teams.TeamMaker(newGamerList);
+                List<int> teamProbabilities = Teams.CalculateProbabilty((double)teams[0].AvgScore, (double)teams[1].AvgScore);
+                ViewBag.Team1Probability = teamProbabilities[0];
+                ViewBag.Team2Probability = teamProbabilities[1];
                 return View(teams); //Sending a List<Teams> 
             }
             else if (submit == "Add Selection as Favorite Team")
