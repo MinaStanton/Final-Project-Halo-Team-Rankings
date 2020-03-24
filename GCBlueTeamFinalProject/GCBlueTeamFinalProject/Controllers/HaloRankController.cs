@@ -163,9 +163,9 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             else if (submit == "Add Selection as Favorite Team")
             {
-                if (gamers.Count < 2 || gamers.Count > 8)
+                if (gamers.Count < 2 || gamers.Count > 8 || gamers.Count %2 != 0)
                 {
-                    ViewBag.ErrorTeam = "Must select between 2 and 8 players for your teams";
+                    ViewBag.ErrorTeam = "Teams must be even and between 2 to 8 players.";
                     return View("DisplayGamers", userGamers);
                 }
                 if (teamName == null)
@@ -173,6 +173,7 @@ namespace GCBlueTeamFinalProject.Controllers
                     ViewBag.ErrorName = "Enter a name for your new favorite team";
                     return View("DisplayGamers", userGamers);
                 }
+                
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
                 Teams newTeam = new Teams(newGamerList);
                 newTeam.TeamName = teamName;
@@ -230,7 +231,11 @@ namespace GCBlueTeamFinalProject.Controllers
             int totalMembers = 0;
             foreach (Teams team in favTeams)
             {
-                if(team.Player4 != null && team.Player5 == null)
+                if (team.Player2 != null && team.Player3 == null)
+                {
+                    teamMembers = 2;
+                }
+                if (team.Player4 != null && team.Player5 == null)
                 {
                     teamMembers = 4;
                 }
