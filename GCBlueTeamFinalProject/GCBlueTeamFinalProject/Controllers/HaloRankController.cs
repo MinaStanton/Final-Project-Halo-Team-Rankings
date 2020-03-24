@@ -226,6 +226,12 @@ namespace GCBlueTeamFinalProject.Controllers
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             List<Teams> favTeams = _context.Teams.Where(x => x.UserId == id).ToList();
+            if(favTeams.Count == 0)
+            {
+                List<Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+                ViewBag.NoTeamsError = "You do not have any favorite teams! Please create one.";
+                return View("DisplayGamers", GamerList);
+            }
             return View(favTeams);
         }
 
