@@ -68,6 +68,30 @@ namespace GCBlueTeamFinalProject.Models
                 player.Results[id].Result.ArenaStats.TotalGamesTied);
             Score = CalculateScore();
         }
+
+        public void CopyGamer(Gamers player)
+        {
+            Gamertag = player.Gamertag;
+            TotalKills = player.TotalKills;
+            TotalDeaths = player.TotalDeaths;
+            TimeSpentRespawning = player.TimeSpentRespawning;
+            TotalAssists = player.TotalAssists;
+            TotalAssassinations = player.TotalAssassinations;
+            TotalHeadshots = player.TotalHeadshots;
+            TotalShotsFired = player.TotalShotsFired;
+            TotalShotsLanded = player.TotalShotsLanded;
+            TotalGamesWon = player.TotalGamesWon;
+            TotalGamesLost = player.TotalGamesLost;
+            TotalGamesTied = player.TotalGamesTied;
+            TotalGamesCompleted = player.TotalGamesCompleted;
+            TotalTimePlayed = player.TotalTimePlayed;
+            Kdratio = player.Kdratio;
+            Kdaratio = player.Kdaratio;
+            AccuracyRatio = player.AccuracyRatio;
+            WinLossRatio = player.WinLossRatio;
+            Score = player.Score;
+        }
+
         public void UpdateWith(PlayerRootObject player, int index)
         {
             Gamertag = player.Results[index].Result.PlayerId.Gamertag;

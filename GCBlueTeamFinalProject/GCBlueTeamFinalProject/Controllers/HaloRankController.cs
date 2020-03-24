@@ -232,7 +232,12 @@ namespace GCBlueTeamFinalProject.Controllers
         public IActionResult DisplayGamers()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            List < Gamers > GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+            List <Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+            // This For loop does the Ranking within C#, not within the database
+            for (int i = 0; i < GamerList.Count; i++)
+            {
+                GamerList[i].Ranking = i + 1;
+            }
             ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
             return View(GamerList);
         }
@@ -277,7 +282,32 @@ namespace GCBlueTeamFinalProject.Controllers
             _context.SaveChanges();
             return RedirectToAction("DisplayGamers"); //displays sorted list of gamers
         }
+        public IActionResult GenerateFriends() 
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string id2 = "15c1f640-bcdc-44f1-a64f-dd82b967ce31"; // Halo Tracker Hash ID
+            string id3 = "c277b161-9306-42f0-bf99-162f62a09def"; // Mike's ID example@example
+            List<Gamers> gamerList = _context.Gamers.Where(x => x.UserId == id2 && x.UserId == id3).ToList();
+            List<Gamers> userGamerList = _context.Gamers.Where(x => x.UserId == id).ToList();
+            List<string> gamertags = new List<string>();
+            foreach (Gamers gamers in gamerList)
+            {
+                gamertags.Add(gamers.Gamertag);
+            }
+            for (int i = 0; i < gamerList.Count; i++)
+            {
+                Gamers newgamer = new Gamers();
+                newgamer.CopyGamer(gamerList[i]);
+                newgamer.UserId = id;
 
+                if (!gamertags.Contains(newgamer.Gamertag)) // if our old friendslist doesn't contain this new gametag 
+                {
+                    _context.Gamers.Add(newgamer);
+                    _context.SaveChanges();
+                }
 
+            }
+            return RedirectToAction("DisplayGamers");
+        }
     }
 }
