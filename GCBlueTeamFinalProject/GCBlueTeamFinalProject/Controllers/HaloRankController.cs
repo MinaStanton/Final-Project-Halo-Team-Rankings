@@ -252,6 +252,12 @@ namespace GCBlueTeamFinalProject.Controllers
             }
 
             ViewBag.teamMembers = totalMembers;
+            if(favTeams.Count == 0)
+            {
+                List<Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
+                ViewBag.NoTeamsError = "You do not have any favorite teams! Please create one.";
+                return View("DisplayGamers", GamerList);
+            }
             return View(favTeams);
         }
 
