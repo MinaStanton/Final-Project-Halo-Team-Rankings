@@ -51,7 +51,7 @@ namespace GCBlueTeamFinalProject.Controllers
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
                 var response = await client.GetAsync($"?players={newUser.Gamertag}");
                 var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
-                if (searchedPlayer == null)
+                if (searchedPlayer == null || searchedPlayer.Results[0].Result.PlayerId.Gamertag == null)
                 {
                     ViewBag.Message = "This Gamertag does not exist, please try again!";
                     return View("RegisterUser", "_RegisterUserLayout");
@@ -265,6 +265,12 @@ namespace GCBlueTeamFinalProject.Controllers
             {
                 List<Gamers> GamerList = _context.Gamers.Where(x => x.UserId == id).OrderByDescending(x => x.Score).ToList();
                 ViewBag.NoTeamsError = "You do not have any favorite teams! Please create one.";
+                // This For loop does the Ranking within C#, not within the database
+                for (int i = 0; i < GamerList.Count; i++)
+                {
+                    GamerList[i].Ranking = i + 1;
+                }
+                ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
                 return View("DisplayGamers", GamerList);
             }
             return View(favTeams);
