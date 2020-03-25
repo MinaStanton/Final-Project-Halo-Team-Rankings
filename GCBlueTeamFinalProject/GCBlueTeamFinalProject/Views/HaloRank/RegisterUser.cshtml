@@ -5,44 +5,78 @@
         Layout = "~/Views/HaloRank/_RegisterUserLayout.cshtml";
     }
 
-    <h1>Profile Registration Page</h1>
+    <h1>Profile Registration</h1>
 
-        @if (ViewBag.Message != null)
-        {
-            <script type="text/javascript">
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
 
             window.onload = function () {
                 alert("@ViewBag.Message");
             };
-            </script>
+        </script>
 
-        }
+    }
 
-    <h4>Welcome to the Halo Rankings App! Before you get started we just need a bit more information.</h4> <br />
+    <h5>Welcome to the Halo Rankings App! Before you get started we just need a bit more information.</h5> <br />
 
     <form action="../HaloRank/CreateProfile" method="post">
         @*Profile Image
-        <input type="image" name="Images" value="" /><br /><br />*@
+            <input type="image" name="Images" value="" /><br /><br />*@
+        <div class="form-group">
+            <label for="gamertaginput">Enter your gamertag, or try "xxx Carbon xxx" if you don't have one</label>
+            <input type="text" class="form-control" name="Gamertag" value="" id="gamertaginput" placeholder="Gamertag" required />
+        </div>
 
-        <h6><b>Gamertag</b></h6>
-        <input type="text" name="GamerTag" value="" required/><br /><br />
-        <h6><b>Name</b></h6>
-        <input type="text" name="UserName" value="" required/><br /><br />
-        <h6><b>Date of Birth</b></h6>
-        <input type="date" name="DoB" value="" /><br /><br />
-        <h6><b>Gender</b></h6>
-        <input type="text" name="Gender" value="" /><br /><br />
+        @*<div class="row">
+                <div class="col">
+                    <label for="gamertaginput">Enter your gamertag</label>
+                    <input type="text" class="form-control" name="Gamertag" id="gamertaginput" placeholder="Gamertag" />
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Or pick one of these gamertags</label>
+                        <select class="form-control" name="Gamertag" id="exampleFormControlSelect1">
+                            <option selected>Gamertag</option>
+                            <option>Star Forge 7</option>
+                            <option>Powered Plant</option>
+                            <option>x Swatacular x</option>
+                            <option>blody09</option>
+                            <option>xxx Carbon xxx</option>
+                        </select>
+                    </div>
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label for="nameinput">Name</label>
+            <input type="text" class="form-control" name="UserName" value="" id="nameinput" placeholder="Name" required />
+        </div>
+        <div class="form-group">
+            <label for="dateinput">Birthday</label>
+            <input type="date" class="form-control" name="DoB" value="" id="dateinput" />
+        </div>
+        <div class="form-group">
+            <label for="genderinput">Species</label>
+            <select class="form-control" name="Gender" id="genderinput">
+                <option>Human</option>
+                <option>Grunt</option>
+                <option>Warthog</option>
+                <option>Banshee</option>
+                <option>Steve</option>
+                <option>Other</option>
+            </select>
+        </div>
+        
+        <br />
         <input type="submit" class="btn btn-success" value="Create Your Profile!" /><br />
     </form>
     <br />
-    <p>If you don't have a gamertag, try one from this list</p>
-    <ul>
-        <li><p>Star Forge 7</p></li>
-        <li><p>Powered Plant</p></li>
-        <li><p>blody09</p></li>
-        <li><p>Herro Tommy</p></li>
-        <li><p>Crarazy</p></li>
-    </ul>
-
-
+    @*<p>If you don't have a gamertag, try one from this list</p>
+        <ul>
+            <li><p>Star Forge 7</p></li>
+            <li><p>Powered Plant</p></li>
+            <li><p>blody09</p></li>
+            <li><p>Herro Tommy</p></li>
+            <li><p>Crarazy</p></li>
+        </ul>*@
 </body>
