@@ -57,7 +57,7 @@
             <input type="submit" name="submit" value="Generate Teams" class=" btn btn-outline-info btn-block" />
         </div>
         <div class="col">
-            <input type="submit" name="submit" value="Compare Gamers" class="btn btn-outline-info btn-block" />
+            <input type="submit" name="submit" value="Compare Friends" class="btn btn-outline-info btn-block" />
         </div>
         <div class="col">
             <input type="reset" value="Reset Selection" class="btn btn-outline-info btn-block" />
@@ -68,32 +68,32 @@
 
     <br />
 
-    <table class="table table-striped table-responsive">
+    <table class="table table-striped table-responsive-lg">
 
         <tr>
-            <th>Select Players</th>
-            <th>Gamertag</th>
-            <th>Rank</th>
-            <th>Score</th>
-            <th>Kill Death Ratio</th>
-            <th>Accuracy Ratio</th>
-            <th>Win Loss Ratio</th>
-            <th>Total Games Played</th>
+            <th id="aligntextintd">Select Players</th>
+            <th id="aligntextintd">Gamertag</th>
+            <th id="aligntextintd">Rank</th>
+            <th id="aligntextintd">Score</th>
+            <th id="aligntextintd">Kill Death Ratio</th>
+            <th id="aligntextintd">Accuracy Ratio</th>
+            <th id="aligntextintd">Win Loss Ratio</th>
+            <th id="aligntextintd">Total Games Played</th>
             <th></th>
         </tr>
 
         @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
-                <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
-                <td>@Model[i].Gamertag</td>
-                <td>@Model[i].Ranking</td>
-                <td>@Model[i].Score</td>
-                <td>@Model[i].Kdratio</td>
-                <td>@Model[i].AccuracyRatio%</td>
-                <td>@Model[i].WinLossRatio%</td>
-                <td>@Model[i].TotalGamesCompleted</td>
-                <td>
+                <td id="aligntextintd"><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
+                <td id="aligntextintd">@Model[i].Gamertag</td>
+                <td id="aligntextintd">@Model[i].Ranking</td>
+                <td id="aligntextintd">@Model[i].Score</td>
+                <td id="aligntextintd">@Model[i].Kdratio</td>
+                <td id="aligntextintd">@Model[i].AccuracyRatio%</td>
+                <td id="aligntextintd">@Model[i].WinLossRatio%</td>
+                <td id="aligntextintd">@Model[i].TotalGamesCompleted</td>
+                <td id="aligntextintd">
                     @if (Model[i].Gamertag != ViewBag.Gamertag)
                     {
                         <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger btn-block">Delete</a>

@@ -48,9 +48,32 @@
 
 <br />
 
-@* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
-<table class="table table-bordered table-striped">
+<form action="../HaloRank/AddToGamers" method="post">
+    <input type="hidden" name="Gamertag" value="@Model.Gamertag" />
+    <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
+    <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
+    <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
+    <input type="hidden" name="Kdratio" value="@Model.Kdratio" />
+    <input type="hidden" name="Kdaratio" value="@Model.Kdaratio" />
+    <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
+    <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
+    <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
+    <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
+    <input type="hidden" name="AccuracyRatio" value="@Model.AccuracyRatio" />
+    <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
+    <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
+    <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
+    <input type="hidden" name="WinLossRatio" value="@Model.WinLossRatio" />
+    <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
+    <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
+    <input type="hidden" name="Score" value="@Model.Score" />
+    <input type="hidden" name="UserID" value="@ViewBag.UserId" />
+    <input type="submit" value="Add to friends list" class="btn btn-outline-success btn-block" />
+</form>
 
+<br />
+
+<table class="table table-bordered table-striped">
     <tr>
         <th>Total Kills</th>
         <td>@Model.TotalKills</td>
@@ -111,64 +134,42 @@
 
 
 @*<table class=" table table-bordered">
-    <tr>
-        <th>Gamertag</th>
-        <th>Total Kills</th>
-        <th>Total Deaths</th>
-        <th>Total Assists</th>
-        <th>Kill Deaths Ratio</th>
-        <th>Total Assassinations</th>
-        <th>Total Headshots</th>
-        <th>Total Shots Fired</th>
-        <th>Total Shots Landed</th>
-        <th>Accuracy Ratio</th>
-        <th>Total Games Won</th>
-        <th>Total Games Lost</th>
-        <th>Total Games Tied</th>
-        <th>Win Loss Ratio</th>
-        <th>Total Games Completed</th>
-        <th>Total Time Played</th>
-        <th>Score</th>
-    </tr>
-    <tr>
-        <td>@Model.Gamertag</td>
-        <td>@Model.TotalKills</td>
-        <td>@Model.TotalDeaths</td>
-        <td>@Model.TotalAssists</td>
-        <td>@Model.Kdratio</td>
-        <td>@Model.TotalAssassinations</td>
-        <td>@Model.TotalHeadshots</td>
-        <td>@Model.TotalShotsFired</td>
-        <td>@Model.TotalShotsLanded</td>
-        <td>@Model.AccuracyRatio%</td>
-        <td>@Model.TotalGamesWon</td>
-        <td>@Model.TotalGamesLost</td>
-        <td>@Model.TotalGamesTied</td>
-        <td>@Model.WinLossRatio%</td>
-        <td>@Model.TotalGamesCompleted</td>
-        <td>@Model.TotalTimePlayed</td>
-        <td>@Model.Score</td>
-    </tr>
-</table>
-<form action="../HaloRank/AddToGamers" method="post">
-    <input type="hidden" name="Gamertag" value="@Model.Gamertag" />
-    <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
-    <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
-    <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
-    <input type="hidden" name="Kdratio" value="@Model.Kdratio" />
-    <input type="hidden" name="Kdaratio" value="@Model.Kdaratio" />
-    <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
-    <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
-    <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
-    <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
-    <input type="hidden" name="AccuracyRatio" value="@Model.AccuracyRatio" />
-    <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
-    <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
-    <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
-    <input type="hidden" name="WinLossRatio" value="@Model.WinLossRatio" />
-    <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
-    <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
-    <input type="hidden" name="Score" value="@Model.Score" />
-    <input type="hidden" name="UserID" value="@ViewBag.UserId" />
-    <input type="submit" value="Add to friends list" />
-</form>*@
+        <tr>
+            <th>Gamertag</th>
+            <th>Total Kills</th>
+            <th>Total Deaths</th>
+            <th>Total Assists</th>
+            <th>Kill Deaths Ratio</th>
+            <th>Total Assassinations</th>
+            <th>Total Headshots</th>
+            <th>Total Shots Fired</th>
+            <th>Total Shots Landed</th>
+            <th>Accuracy Ratio</th>
+            <th>Total Games Won</th>
+            <th>Total Games Lost</th>
+            <th>Total Games Tied</th>
+            <th>Win Loss Ratio</th>
+            <th>Total Games Completed</th>
+            <th>Total Time Played</th>
+            <th>Score</th>
+        </tr>
+        <tr>
+            <td>@Model.Gamertag</td>
+            <td>@Model.TotalKills</td>
+            <td>@Model.TotalDeaths</td>
+            <td>@Model.TotalAssists</td>
+            <td>@Model.Kdratio</td>
+            <td>@Model.TotalAssassinations</td>
+            <td>@Model.TotalHeadshots</td>
+            <td>@Model.TotalShotsFired</td>
+            <td>@Model.TotalShotsLanded</td>
+            <td>@Model.AccuracyRatio%</td>
+            <td>@Model.TotalGamesWon</td>
+            <td>@Model.TotalGamesLost</td>
+            <td>@Model.TotalGamesTied</td>
+            <td>@Model.WinLossRatio%</td>
+            <td>@Model.TotalGamesCompleted</td>
+            <td>@Model.TotalTimePlayed</td>
+            <td>@Model.Score</td>
+        </tr>
+    </table>*@

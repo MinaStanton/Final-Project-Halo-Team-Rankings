@@ -3,10 +3,9 @@
     ViewData["Title"] = "CompareGamers";
 }
 @model List<Gamers>
-<h1>Compare Gamers</h1>
-
-<table class="table table-bordered">
-
+<h1>Compare Friends</h1>
+<br />
+<table class="table table-striped table-responsive">
     <tr>
         <th>Gamertag</th>
         <th>Games Played</th>
@@ -25,7 +24,6 @@
         <th>Games Lost</th>
         <th>Games Tied</th>
         <th>Win Loss Ratio</th>
-        <th></th>
     </tr>
 
     @for (int i = 0; i < Model.Count; i++)
@@ -48,9 +46,6 @@
             <td>@Model[i].TotalGamesLost</td>
             <td>@Model[i].TotalGamesTied</td>
             <td>@Model[i].WinLossRatio%</td>
-            <td>
-                <a href="../HaloRank/DeleteFromGamers?id=@Model[i].Id" class="btn btn-danger">Delete</a>
-            </td>
         </tr>
     }
 </table>
