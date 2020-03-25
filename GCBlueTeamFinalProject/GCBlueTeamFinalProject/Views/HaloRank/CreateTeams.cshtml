@@ -4,79 +4,169 @@
 }
 @model List<Teams>
 
-<h1>Red vs Blue</h1>
 
+<body class="view" style="
+        background-image: url('../img/halo3_84822770_full_flipped.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;">
+</body>
+<br />
+<br />
+<br />
+<br />
 
 <div class="row">
+    <div class="col-sm-6">
+        <div class="card-transparent"style="background-color: rgba(11, 12, 12, 0.50)">
+            <div class="card-body align-items-center d-flex justify-content-center" style="color:white">
+                @for (int i = 0; i < Model.Count - 1; i++)
+                {
+                    <div>
 
-    @for (int i = 0; i < Model.Count - 1; i++)
-    {
-    <div class="col-sm-6 col-lg-5" style="color:red">
-        <h4>Red Team</h4>
-        <p>@Model[i].Player1</p>
-        <p>@Model[i].Player2</p>
-        <p>@Model[i].Player3</p>
-        <p>@Model[i].Player4</p>
-        <p>@Model[i].Player5</p>
-        <p>@Model[i].Player6</p>
-        <p>@Model[i].Player7</p>
-        <p>@Model[i].Player8</p>
-        <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
-        @*<p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
-        <p>Accuracy: @Model[i].AvgAccRatio%</p>*@
-        <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
-        <p>Average Score: @Model[i].AvgScore</p>
-        <p>Probability of Winning: @ViewBag.Team1Probability%</p>
-        <div class="form-check-inline">
-            <form action="../HaloRank/AddFavoriteTeams" method="post">
-                <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
-                <input type="hidden" name="favTeam" value="@Model[i].Player1" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player2" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player3" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player4" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player5" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player6" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player7" />
-                <input type="hidden" name="favTeam" value="@Model[i].Player8" />
-                <input type="submit" name="name" value="Add team to Favorites" />
-            </form>
+                        <h4>Red Team</h4>
+                        <p>@Model[i].Player1</p>
+                        <p>@Model[i].Player2</p>
+                        <p>@Model[i].Player3</p>
+                        <p>@Model[i].Player4</p>
+                        <p>@Model[i].Player5</p>
+                        <p>@Model[i].Player6</p>
+                        <p>@Model[i].Player7</p>
+                        <p>@Model[i].Player8</p>
+                        <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
+                        <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
+                        <p>Average Score: @Model[i].AvgScore</p>
+                        <p>Probability of Winning: @ViewBag.Team1Probability%</p>
+                        <div class="form-check-inline">
+                            <form action="../HaloRank/AddFavoriteTeams" method="post">
+                                <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player1" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player2" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player3" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player4" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player5" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player6" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player7" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player8" />
+                                <input type="submit" name="name" value="Add team to Favorites" />
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-    }
-
-
-    @for (int i = 1; i < Model.Count; i++)
-    {
-<div class="col-sm-6 col-lg-5" style="color:blue">
-    <h4>Blue Team</h4>
-    <p>@Model[i].Player1</p>
-    <p>@Model[i].Player2</p>
-    <p>@Model[i].Player3</p>
-    <p>@Model[i].Player4</p>
-    <p>@Model[i].Player5</p>
-    <p>@Model[i].Player6</p>
-    <p>@Model[i].Player7</p>
-    <p>@Model[i].Player8</p>
-    <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
-    @*<p>Average Kill/Death/Assist Ratio: @Model[i].AvgKdaratio</p>
-        <p>Average Accuracy Ratio: @Model[i].AvgAccRatio%</p>*@
-    <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
-    <p>Average Score: @Model[i].AvgScore</p>
-    <p>Probability of Winning: @ViewBag.Team2Probability%</p>
-    <div class="form-check-inline">
-        <form action="../HaloRank/AddFavoriteTeams" method="post">
-            <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
-            <input type="hidden" name="favTeam" value="@Model[i].Player1" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player2" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player3" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player4" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player5" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player6" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player7" />
-            <input type="hidden" name="favTeam" value="@Model[i].Player8" />
-            <input type="submit" value="Add team to Favorites" />
-        </form>
+    <div class="col-sm-6">
+        <div class="card-transparent"style="background-color: rgba(11, 12, 12, 0.50)">
+            <div class="card-body align-items-center d-flex justify-content-center" style="color:white">
+                @for (int i = 1; i < Model.Count; i++)
+                {
+                    <div>
+                        <h4>Blue Team</h4>
+                        <p>@Model[i].Player1</p>
+                        <p>@Model[i].Player2</p>
+                        <p>@Model[i].Player3</p>
+                        <p>@Model[i].Player4</p>
+                        <p>@Model[i].Player5</p>
+                        <p>@Model[i].Player6</p>
+                        <p>@Model[i].Player7</p>
+                        <p>@Model[i].Player8</p>
+                        <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
+                        <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
+                        <p>Average Score: @Model[i].AvgScore</p>
+                        <p>Probability of Winning: @ViewBag.Team2Probability%</p>
+                        <div class="form-check-inline">
+                            <form action="../HaloRank/AddFavoriteTeams" method="post">
+                                <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player1" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player2" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player3" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player4" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player5" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player6" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player7" />
+                                <input type="hidden" name="favTeam" value="@Model[i].Player8" />
+                                <input type="submit" value="Add team to Favorites" />
+                            </form>
+                        </div>
+                    </div>
+               
+                }
+            </div>
+        </div>
     </div>
 </div>
-    }
-</div>
+
+
+@*<div class="card-transparent" style="background-color: rgba(11, 12, 12, 0.50)">
+    <div class="row">
+
+        @for (int i = 0; i < Model.Count - 1; i++)
+        {
+            <div class="col-sm-6 col-lg-5 p-md-5 " style="color:white">
+
+                <h4>Red Team</h4>
+                <p>@Model[i].Player1</p>
+                <p>@Model[i].Player2</p>
+                <p>@Model[i].Player3</p>
+                <p>@Model[i].Player4</p>
+                <p>@Model[i].Player5</p>
+                <p>@Model[i].Player6</p>
+                <p>@Model[i].Player7</p>
+                <p>@Model[i].Player8</p>
+                <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
+                <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
+                <p>Average Score: @Model[i].AvgScore</p>
+                <p>Probability of Winning: @ViewBag.Team1Probability%</p>
+                <div class="form-check-inline">
+                    <form action="../HaloRank/AddFavoriteTeams" method="post">
+                        <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player1" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player2" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player3" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player4" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player5" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player6" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player7" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player8" />
+                        <input type="submit" name="name" value="Add team to Favorites" />
+                    </form>
+                </div>
+            </div>
+        }
+
+
+        @for (int i = 1; i < Model.Count; i++)
+        {
+            <div class="col-sm-6 col-lg-5 p-md-5 pl-lg-5 text-lg-right" style="color:white">
+                <h4>Blue Team</h4>
+                <p>@Model[i].Player1</p>
+                <p>@Model[i].Player2</p>
+                <p>@Model[i].Player3</p>
+                <p>@Model[i].Player4</p>
+                <p>@Model[i].Player5</p>
+                <p>@Model[i].Player6</p>
+                <p>@Model[i].Player7</p>
+                <p>@Model[i].Player8</p>
+                <p>Average Kill/Death Ratio: @Model[i].AvgKdratio</p>
+                <p>Average Win/Loss Ratio: @Model[i].AvgWlratio%</p>
+                <p>Average Score: @Model[i].AvgScore</p>
+                <p>Probability of Winning: @ViewBag.Team2Probability%</p>
+                <div class="form-check-inline">
+                    <form action="../HaloRank/AddFavoriteTeams" method="post">
+                        <input type="text" name="TeamName" value="" placeholder="Enter Team Name" required />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player1" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player2" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player3" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player4" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player5" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player6" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player7" />
+                        <input type="hidden" name="favTeam" value="@Model[i].Player8" />
+                        <input type="submit" value="Add team to Favorites" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>*@
