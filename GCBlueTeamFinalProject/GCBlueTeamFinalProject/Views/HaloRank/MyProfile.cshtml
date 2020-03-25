@@ -4,7 +4,6 @@
 }
 <table class="col-10">
     <tr>
-        <td><h1>My Profile</h1></td>
         <td>
             <form action="../HaloRank/GetPlayerBySearch" method="post">
                 <input type="submit" value="Search Gamertag" class="small btn-primary" />
@@ -41,8 +40,7 @@
 
 @model UsersGamers
 
-<h5> Hello @Model.MyUser.UserName welcome to your profile!</h5>
-<br />
+<h4> Hello @Model.MyUser.UserName welcome to your profile!</h4>
 <br />
 <p><img src="~/img/H3_Blackout03.jpg" width="350" height="200"></p>
 <table class="col-5 dark">
@@ -68,37 +66,60 @@
 </table>
 <br />
 @* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
+
     <tr>
-        <th>Total Kills</th>
-        <th>Total Deaths</th>
-        <th>Total Assists</th>
-        <th>Kill Death Ratio</th>
-        <th>Total Assassinations</th>
-        <th>Total Headshots</th>
-        <th>Shots Fired</th>
-        <th>Shots Landed</th>
-        <th>Accuracy Ratio</th>
-        <th>Games Won</th>
-        <th>Games Lost</th>
-        <th>Games Tied</th>
-        <th>Games Completed</th>
-        <th>Time Played</th>
+    <th>Total Kills</th>
+    <td>@Model.MyGamer.TotalKills</td>
     </tr>
     <tr>
-        <td>@Model.MyGamer.TotalKills</td>
-        <td>@Model.MyGamer.TotalDeaths</td>
-        <td>@Model.MyGamer.TotalAssists</td>
-        <td>@Model.MyGamer.Kdratio</td>
-        <td>@Model.MyGamer.TotalAssassinations</td>
-        <td>@Model.MyGamer.TotalHeadshots</td>
-        <td>@Model.MyGamer.TotalShotsFired</td>
-        <td>@Model.MyGamer.TotalShotsLanded</td>
-        <td>@Model.MyGamer.AccuracyRatio%</td>
-        <td>@Model.MyGamer.TotalGamesWon</td>
-        <td>@Model.MyGamer.TotalGamesLost</td>
-        <td>@Model.MyGamer.TotalGamesTied</td>
-        <td>@Model.MyGamer.WinLossRatio%</td>
-        <td>@Model.MyGamer.TotalGamesCompleted</td>
+    <th>Total Deaths</th>
+    <td>@Model.MyGamer.TotalDeaths</td>
+    </tr>
+    <tr>
+    <th>Total Assists</th>
+    <td>@Model.MyGamer.TotalAssists</td>
+    </tr>
+    <tr>
+    <th>Kill Death Ratio</th>
+    <td>@Model.MyGamer.Kdratio</td>
+    </tr>
+    <tr>
+    <th>Total Assassinations</th>
+    <td>@Model.MyGamer.TotalAssassinations</td>
+    </tr>
+    <tr>
+    <th>Total Headshots</th>
+    <td>@Model.MyGamer.TotalHeadshots</td>
+    </tr>
+    <tr>
+    <th>Shots Fired</th>
+    <td>@Model.MyGamer.TotalShotsFired</td>
+    </tr>
+    <tr>
+    <th>Shots Landed</th>
+    <td>@Model.MyGamer.TotalShotsLanded</td>
+    </tr>
+    <th>Accuracy Ratio</th>
+    <td>@Model.MyGamer.AccuracyRatio%</td>
+    </tr>
+    <th>Games Won</th>
+    <td>@Model.MyGamer.TotalGamesWon</td>
+    </tr>
+    <th>Games Lost</th>
+    <td>@Model.MyGamer.TotalGamesLost</td>
+    </tr>
+    </tr>
+    <th>Games Tied</th>
+    <td>@Model.MyGamer.TotalGamesTied</td>
+    </tr>
+    </tr>
+    <th>Win Loss Ratio</th>
+    <td>@Model.MyGamer.WinLossRatio%</td>
+    </tr>
+    </tr>
+    <th>Games Completed</th>
+    <td>@Model.MyGamer.TotalGamesCompleted</td>
     </tr>
 </table>
+

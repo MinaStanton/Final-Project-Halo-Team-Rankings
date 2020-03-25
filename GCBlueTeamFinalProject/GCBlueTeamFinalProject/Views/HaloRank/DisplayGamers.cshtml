@@ -3,8 +3,6 @@
 }
 @model List<Gamers>
 
-<a href ="../HaloRank/GenerateFriends" class="btn btn-outline-warning">Generate Friends</a>
-
 <table class="col-12">
     <tr>
         <td><h1>Friends List</h1></td>
@@ -18,54 +16,42 @@
     </tr>
 </table>
 <br />
-
+<br />
 
 <form action="../HaloRank/CreateTeams" method="post">
-
+    <input type="text" name="teamName" value="" placeholder="Favorite Team Name" class="rounded" />
+    <input type="submit" name="submit" value="Add as Favorite Team" class="btn btn-outline-info" />
+    <input type="reset" value="Reset Selection" class="btn btn-outline-info" />
+    <input type="submit" name="submit" value="Generate Teams" class=" btn btn-outline-info" />
+    <input type="submit" name="submit" value="Compare Gamers" class="btn btn-outline-info" />
+    <a href="../HaloRank/GenerateFriends" class="btn btn-outline-danger">Populate Friends</a>
+    <a href="../HaloRank/UpdateGamers" class="btn btn-outline-warning">Refresh Stats</a>
+    <br/>
 
     <table class="table table-bordered">
 
         <tr>
-            <th>Select players for Teams</th>
+            <th>Select Players</th>
             <th>Gamertag</th>
-            @*<th>Headshots per game</th>
-                <th>Assassinations per game</th>*@
             <th>Rank</th>
             <th>Score</th>
             <th>Kill Death Ratio</th>
             <th>Accuracy Ratio</th>
             <th>Win Loss Ratio</th>
             <th>Total Games Played</th>
-
-            <th><a href="../HaloRank/UpdateGamers" class="btn btn-outline-warning btn-block">Update</a></th>
         </tr>
 
         @for (int i = 0; i < Model.Count; i++)
         {
             <tr>
-                <td><input type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
+                <td><input  type="checkbox" name="gamers" value="@Model[i].Gamertag" /></td>
                 <td>@Model[i].Gamertag</td>
-                @*<td>@Math.Round(((double)Model[i].TotalHeadshots / (double)Model[i].TotalGamesCompleted), 2)</td>
-                    <td>@Math.Round(((double)Model[i].TotalAssassinations / (double)Model[i].TotalGamesCompleted), 2)</td>*@
                 <td>@Model[i].Ranking</td>
                 <td>@Model[i].Score</td>
                 <td>@Model[i].Kdratio</td>
                 <td>@Model[i].AccuracyRatio%</td>
                 <td>@Model[i].WinLossRatio%</td>
                 <td>@Model[i].TotalGamesCompleted</td>
-                @*<td>@Model[i].TotalGamesCompleted</td>
-                    <td>@Model[i].Score</td>
-                    <td>@Model[i].TotalKills</td>
-                    <td>@Model[i].TotalDeaths</td>
-                    <td>@Model[i].TotalAssists</td>
-                    <td>@Model[i].TotalAssassinations</td>
-                    <td>@Model[i].TotalHeadshots</td>
-                    <td>@Model[i].TotalShotsFired</td>
-                    <td>@Model[i].TotalShotsLanded</td>
-                    <td>@Model[i].TotalGamesWon</td>
-                    <td>@Model[i].TotalGamesLost</td>
-                    <td>@Model[i].TotalGamesTied</td>
-                *@
                 <td>
                     @if (Model[i].Gamertag != ViewBag.Gamertag)
                     {
@@ -75,11 +61,6 @@
             </tr>
         }
     </table>
-    <input type="reset" value="Reset Selection" />
-    <input type="submit" name="submit" value="Generate Teams" />
-    <input type="text" name="teamName" value="" placeholder="New Team Name" />
-    <input type="submit" name="submit" value="Add Selection as Favorite Team" />
-    <input type="submit" name="submit" value="Compare Gamers" />
 </form>
 
 @if (ViewBag.Message != null)
