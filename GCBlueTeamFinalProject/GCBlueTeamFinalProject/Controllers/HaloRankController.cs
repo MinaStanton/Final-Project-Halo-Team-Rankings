@@ -177,7 +177,7 @@ namespace GCBlueTeamFinalProject.Controllers
                 ViewBag.Team2Probability = teamProbabilities[1];
                 return View(teams); //Sending a List<Teams> 
             }
-            else if (submit == "Add Selection as Favorite Team")
+            else if (submit == "Add as Favorite Team")
             {
                 if (gamers.Count < 2 || gamers.Count > 8 || gamers.Count % 2 != 0)
                 {

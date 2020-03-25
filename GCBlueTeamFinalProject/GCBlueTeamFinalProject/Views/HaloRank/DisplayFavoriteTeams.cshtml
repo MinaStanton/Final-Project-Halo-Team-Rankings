@@ -19,27 +19,24 @@
 <br />
 
   
-    <table class="table table-bordered col-6">
+    <table class="table table-bordered table-striped ">
         <tr>
 
             <th>Team Name</th>
             @for (int i = 1; i <= ViewBag.teamMembers; i++)
             {
-
-                <th>Player @i</th>
-              
+                <th >Player @i </th>
             }
-                <th>Average Win/Loss Ratio</th>
-                <th>Average Kill/Deaths Ratio</th>
-                <th>Average Kill/Death/Assists Ratio</th>
-                <th>Average Accuracy Ratio</th>
-                <th>Average Score</th>
-
+                <th>Win/Loss Ratio</th>
+                <th>Kill/Deaths Ratio</th>
+                <th>Kill/Death/Assists Ratio</th>
+                <th>Accuracy Ratio</th>
+                <th>Score</th>
         </tr>
       
         @for (int i = 0; i < Model.Count; i++)
         {
-            <tr>
+        <tr>
         <td>@Model[i].TeamName</td>
 
         @if (ViewBag.teamMembers == 8)
@@ -92,20 +89,14 @@
                 <td>@Model[i].AvgKdratio</td>
                 <td>@Model[i].AvgKdaratio</td>
                 <td>@Model[i].AvgAccRatio%</td>
-                <td>@Model[i].AvgScore</td>
-
-            
+                <td>@Model[i].AvgScore</td>   
         }
-
-
         <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
     </tr>
         }
 
     </table>
 
-
-   
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
