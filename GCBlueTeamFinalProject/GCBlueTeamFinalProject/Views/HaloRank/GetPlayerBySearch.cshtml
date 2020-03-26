@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "GetPlayerBySearch";
+    Layout = "~/Views/HaloRank/_ProfileViewLayout.cshtml";
 }
-
 
 @if (ViewBag.Message != null)
 {
@@ -11,165 +11,131 @@
                 alert("@ViewBag.Message");
             };
     </script>
-
 }
 
 @model Gamers
+<br />
+<body class="view" style="
+        background-image: url('../img/halo3_19452998_Full.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;">
+</body>
 
-<div class="form-row">
-    <div class="col">
-        <h1>@Model.Gamertag</h1>
-    </div>
-    <form action="../HaloRank/GetPlayerBySearch" method="post" class="col">
-        <div class="form-row">
-            <div class="col">
-                <input type="text" name="search" value="" class="form-control" placeholder="Search Gamertag" required />
-            </div>
-            <div class="col">
-                <input type="submit" value="Search Gamertag" class="btn btn-primary btn-block" />
-            </div>
-            <div class="col">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Try This Gamertag
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Star Forge 7">Star Forge 7</a>
-                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Powered Plant">Powered Plant</a>
-                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=blody09">blody09</a>
-                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Herro Tommy">Herro Tommy</a>
-                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Crarazy">Crarazy</a>
+<div class="card-transparent" style="background-color: rgba(11, 12, 12, 0.80); padding: 50px;">
+    <div class="form-row">
+        <div class="col">
+            <h1 style="color:white">Search Results: @Model.Gamertag</h1>
+        </div>
+        <form action="../HaloRank/GetPlayerBySearch" method="post" class="col">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" name="search" value="" class="form-control" placeholder="Search Gamertag" required />
+                </div>
+                <div class="col">
+                    <input type="submit" value="Search Gamertag" class="btn btn-primary btn-block" />
+                </div>
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Try This Gamertag
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Star Forge 7">Star Forge 7</a>
+                            <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Powered Plant">Powered Plant</a>
+                            <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=blody09">blody09</a>
+                            <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Herro Tommy">Herro Tommy</a>
+                            <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Crarazy">Crarazy</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
+    </div>
+
+    <br />
+
+    <form action="../HaloRank/AddToGamers" method="post">
+        <input type="hidden" name="Gamertag" value="@Model.Gamertag" />
+        <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
+        <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
+        <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
+        <input type="hidden" name="Kdratio" value="@Model.Kdratio" />
+        <input type="hidden" name="Kdaratio" value="@Model.Kdaratio" />
+        <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
+        <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
+        <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
+        <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
+        <input type="hidden" name="AccuracyRatio" value="@Model.AccuracyRatio" />
+        <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
+        <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
+        <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
+        <input type="hidden" name="WinLossRatio" value="@Model.WinLossRatio" />
+        <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
+        <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
+        <input type="hidden" name="Score" value="@Model.Score" />
+        <input type="hidden" name="UserID" value="@ViewBag.UserId" />
+        <input type="submit" value="Add to friends list" class="btn btn-outline-success btn-block" />
     </form>
-</div>
 
-<br />
+    <br />
 
-<form action="../HaloRank/AddToGamers" method="post">
-    <input type="hidden" name="Gamertag" value="@Model.Gamertag" />
-    <input type="hidden" name="TotalKills" value="@Model.TotalKills" />
-    <input type="hidden" name="TotalDeaths" value="@Model.TotalDeaths" />
-    <input type="hidden" name="TotalAssists" value="@Model.TotalAssists" />
-    <input type="hidden" name="Kdratio" value="@Model.Kdratio" />
-    <input type="hidden" name="Kdaratio" value="@Model.Kdaratio" />
-    <input type="hidden" name="TotalAssassinations" value="@Model.TotalAssassinations" />
-    <input type="hidden" name="TotalHeadshots" value="@Model.TotalHeadshots" />
-    <input type="hidden" name="TotalShotsFired" value="@Model.TotalShotsFired" />
-    <input type="hidden" name="TotalShotsLanded" value="@Model.TotalShotsLanded" />
-    <input type="hidden" name="AccuracyRatio" value="@Model.AccuracyRatio" />
-    <input type="hidden" name="TotalGamesWon" value="@Model.TotalGamesWon" />
-    <input type="hidden" name="TotalGamesLost" value="@Model.TotalGamesLost" />
-    <input type="hidden" name="TotalGamesTied" value="@Model.TotalGamesTied" />
-    <input type="hidden" name="WinLossRatio" value="@Model.WinLossRatio" />
-    <input type="hidden" name="TotalGamesCompleted" value="@Model.TotalGamesCompleted" />
-    <input type="hidden" name="TotalTimePlayed" value="@Model.TotalTimePlayed" />
-    <input type="hidden" name="Score" value="@Model.Score" />
-    <input type="hidden" name="UserID" value="@ViewBag.UserId" />
-    <input type="submit" value="Add to friends list" class="btn btn-outline-success btn-block" />
-</form>
-
-<br />
-
-<table class="table table-bordered table-striped">
-    <tr>
-        <th>Total Kills</th>
-        <td>@Model.TotalKills</td>
-    </tr>
-    <tr>
-        <th>Total Deaths</th>
-        <td>@Model.TotalDeaths</td>
-    </tr>
-    <tr>
-        <th>Total Assists</th>
-        <td>@Model.TotalAssists</td>
-    </tr>
-    <tr>
-        <th>Kill Death Ratio</th>
-        <td>@Model.Kdratio</td>
-    </tr>
-    <tr>
-        <th>Total Assassinations</th>
-        <td>@Model.TotalAssassinations</td>
-    </tr>
-    <tr>
-        <th>Total Headshots</th>
-        <td>@Model.TotalHeadshots</td>
-    </tr>
-    <tr>
-        <th>Shots Fired</th>
-        <td>@Model.TotalShotsFired</td>
-    </tr>
-    <tr>
-        <th>Shots Landed</th>
-        <td>@Model.TotalShotsLanded</td>
-    </tr>
-    <tr>
-        <th>Accuracy Ratio</th>
-        <td>@Model.AccuracyRatio%</td>
-    </tr>
-    <tr>
-        <th>Games Won</th>
-        <td>@Model.TotalGamesWon</td>
-    </tr>
-    <tr>
-        <th>Games Lost</th>
-        <td>@Model.TotalGamesLost</td>
-    </tr>
-    <tr>
-        <th>Games Tied</th>
-        <td>@Model.TotalGamesTied</td>
-    </tr>
-    <tr>
-        <th>Win Loss Ratio</th>
-        <td>@Model.WinLossRatio%</td>
-    </tr>
-    <tr>
-        <th>Games Completed</th>
-        <td>@Model.TotalGamesCompleted</td>
-    </tr>
-</table>
-
-
-@*<table class=" table table-bordered">
+    <table class="table table-striped" style="color:white">
         <tr>
-            <th>Gamertag</th>
             <th>Total Kills</th>
-            <th>Total Deaths</th>
-            <th>Total Assists</th>
-            <th>Kill Deaths Ratio</th>
-            <th>Total Assassinations</th>
-            <th>Total Headshots</th>
-            <th>Total Shots Fired</th>
-            <th>Total Shots Landed</th>
-            <th>Accuracy Ratio</th>
-            <th>Total Games Won</th>
-            <th>Total Games Lost</th>
-            <th>Total Games Tied</th>
-            <th>Win Loss Ratio</th>
-            <th>Total Games Completed</th>
-            <th>Total Time Played</th>
-            <th>Score</th>
+            <td>@Model.TotalKills</td>
         </tr>
         <tr>
-            <td>@Model.Gamertag</td>
-            <td>@Model.TotalKills</td>
+            <th>Total Deaths</th>
             <td>@Model.TotalDeaths</td>
-            <td>@Model.TotalAssists</td>
-            <td>@Model.Kdratio</td>
-            <td>@Model.TotalAssassinations</td>
-            <td>@Model.TotalHeadshots</td>
-            <td>@Model.TotalShotsFired</td>
-            <td>@Model.TotalShotsLanded</td>
-            <td>@Model.AccuracyRatio%</td>
-            <td>@Model.TotalGamesWon</td>
-            <td>@Model.TotalGamesLost</td>
-            <td>@Model.TotalGamesTied</td>
-            <td>@Model.WinLossRatio%</td>
-            <td>@Model.TotalGamesCompleted</td>
-            <td>@Model.TotalTimePlayed</td>
-            <td>@Model.Score</td>
         </tr>
-    </table>*@
+        <tr>
+            <th>Total Assists</th>
+            <td>@Model.TotalAssists</td>
+        </tr>
+        <tr>
+            <th>Kill Death Ratio</th>
+            <td>@Model.Kdratio</td>
+        </tr>
+        <tr>
+            <th>Total Assassinations</th>
+            <td>@Model.TotalAssassinations</td>
+        </tr>
+        <tr>
+            <th>Total Headshots</th>
+            <td>@Model.TotalHeadshots</td>
+        </tr>
+        <tr>
+            <th>Shots Fired</th>
+            <td>@Model.TotalShotsFired</td>
+        </tr>
+        <tr>
+            <th>Shots Landed</th>
+            <td>@Model.TotalShotsLanded</td>
+        </tr>
+        <tr>
+            <th>Accuracy Ratio</th>
+            <td>@Model.AccuracyRatio%</td>
+        </tr>
+        <tr>
+            <th>Games Won</th>
+            <td>@Model.TotalGamesWon</td>
+        </tr>
+        <tr>
+            <th>Games Lost</th>
+            <td>@Model.TotalGamesLost</td>
+        </tr>
+        <tr>
+            <th>Games Tied</th>
+            <td>@Model.TotalGamesTied</td>
+        </tr>
+        <tr>
+            <th>Win Loss Ratio</th>
+            <td>@Model.WinLossRatio%</td>
+        </tr>
+        <tr>
+            <th>Games Completed</th>
+            <td>@Model.TotalGamesCompleted</td>
+        </tr>
+    </table>
+</div>
