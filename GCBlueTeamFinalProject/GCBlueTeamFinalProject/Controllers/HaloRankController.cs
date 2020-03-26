@@ -161,7 +161,7 @@ namespace GCBlueTeamFinalProject.Controllers
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewBag.Gamertag = _context.Users.Where(x => x.UserId == id).First().Gamertag;
             List<Gamers> userGamers = GetGamerList();
-            if (submit == "Generate Teams")
+            if (submit == "Team Matchup")
             {
                 if (gamers.Count < 4 || gamers.Count > 16)
                 {
@@ -177,7 +177,7 @@ namespace GCBlueTeamFinalProject.Controllers
                 ViewBag.Team2Probability = teamProbabilities[1];
                 return View(teams); //Sending a List<Teams> 
             }
-            else if (submit == "Add as Favorite Team")
+            else if (submit == "Add As Favorite Team")
             {
                 if (gamers.Count < 2 || gamers.Count > 8 || gamers.Count % 2 != 0)
                 {

@@ -2,32 +2,6 @@
 @{
     ViewData["Title"] = "MyProfile";
 }
-<table class="col-10">
-    <tr>
-        <td>
-            <form action="../HaloRank/GetPlayerBySearch" method="post">
-                <input type="submit" value="Search Gamertag" class="small btn-primary" />
-                <input type="text" name="search" value="" class="rounded" />
-            </form>
-        </td>
-        <td>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Try This Gamertag
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Star Forge 7">Star Forge 7</a>
-                    <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Powered Plant">Powered Plant</a>
-                    <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=blody09">blody09</a>
-                    <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Herro Tommy">Herro Tommy</a>
-                    <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Crarazy">Crarazy</a>
-                </div>
-            </div>
-        </td>
-    </tr>
-</table>
-<br />
-
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript">
@@ -40,26 +14,53 @@
 
 @model UsersGamers
 
-<h4> Hello @Model.MyUser.UserName welcome to your profile!</h4>
+<div class="form-row">
+    <div class="col">
+        <h1>Hello @Model.MyUser.UserName</h1>
+    </div>
+    <form action="../HaloRank/GetPlayerBySearch" method="post" class="col">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" name="search" value="" class="form-control" placeholder="Search Gamertag" required />
+            </div>
+            <div class="col">
+                <input type="submit" value="Search Gamertag" class="btn btn-primary btn-block" />
+            </div>
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Try This Gamertag
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Star Forge 7">Star Forge 7</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Powered Plant">Powered Plant</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=blody09">blody09</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Herro Tommy">Herro Tommy</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Crarazy">Crarazy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <br />
-<p><img src="~/img/H3_Blackout03.jpg" width="350" height="200"></p>
-<table class="col-5 dark">
+
+<table class="col-6">
     <tr>
         <td>
-            <h5><b>Name</b></h5>
-            <p>@Model.MyUser.UserName</p>
-
             <h5>Gamertag</h5>
             <p>@Model.MyUser.Gamertag</p>
-
         </td>
-        @if (Model.MyUser.Dob != null && Model.MyUser.Gender != null)
+        <td>
+            <h5>Species</h5>
+            <p>@Model.MyUser.Gender</p>
+        </td>
+        @if (Model.MyUser.Dob != null)
         {
             <td>
                 <h5>Date Of Birth</h5>
                 <p>@Model.MyUser.Dob.Value.ToShortDateString()</p>
-                <h5>Species</h5>
-                <p>@Model.MyUser.Gender</p>
             </td>
         }
     </tr>
@@ -67,62 +68,61 @@
 <br />
 @* add user info like you would see on a profile page. then below it list out a table with all of the users gaming stats *@
 <table class="table table-bordered table-striped">
-
     <tr>
-    <th>Total Kills</th>
-    <td>@Model.MyGamer.TotalKills</td>
+        <th>Total Kills</th>
+        <td>@Model.MyGamer.TotalKills</td>
     </tr>
     <tr>
-    <th>Total Deaths</th>
-    <td>@Model.MyGamer.TotalDeaths</td>
+        <th>Total Deaths</th>
+        <td>@Model.MyGamer.TotalDeaths</td>
     </tr>
     <tr>
-    <th>Total Assists</th>
-    <td>@Model.MyGamer.TotalAssists</td>
+        <th>Total Assists</th>
+        <td>@Model.MyGamer.TotalAssists</td>
     </tr>
     <tr>
-    <th>Kill Death Ratio</th>
-    <td>@Model.MyGamer.Kdratio</td>
+        <th>Kill Death Ratio</th>
+        <td>@Model.MyGamer.Kdratio</td>
     </tr>
     <tr>
-    <th>Total Assassinations</th>
-    <td>@Model.MyGamer.TotalAssassinations</td>
+        <th>Total Assassinations</th>
+        <td>@Model.MyGamer.TotalAssassinations</td>
     </tr>
     <tr>
-    <th>Total Headshots</th>
-    <td>@Model.MyGamer.TotalHeadshots</td>
+        <th>Total Headshots</th>
+        <td>@Model.MyGamer.TotalHeadshots</td>
     </tr>
     <tr>
-    <th>Shots Fired</th>
-    <td>@Model.MyGamer.TotalShotsFired</td>
+        <th>Shots Fired</th>
+        <td>@Model.MyGamer.TotalShotsFired</td>
     </tr>
     <tr>
-    <th>Shots Landed</th>
-    <td>@Model.MyGamer.TotalShotsLanded</td>
+        <th>Shots Landed</th>
+        <td>@Model.MyGamer.TotalShotsLanded</td>
     </tr>
     <tr>
-    <th>Accuracy Ratio</th>
-    <td>@Model.MyGamer.AccuracyRatio%</td>
+        <th>Accuracy Ratio</th>
+        <td>@Model.MyGamer.AccuracyRatio%</td>
     </tr>
     <tr>
-    <th>Games Won</th>
-    <td>@Model.MyGamer.TotalGamesWon</td>
+        <th>Games Won</th>
+        <td>@Model.MyGamer.TotalGamesWon</td>
     </tr>
     <tr>
-    <th>Games Lost</th>
-    <td>@Model.MyGamer.TotalGamesLost</td>
+        <th>Games Lost</th>
+        <td>@Model.MyGamer.TotalGamesLost</td>
     </tr>
     <tr>
-    <th>Games Tied</th>
-    <td>@Model.MyGamer.TotalGamesTied</td>
+        <th>Games Tied</th>
+        <td>@Model.MyGamer.TotalGamesTied</td>
     </tr>
     <tr>
-    <th>Win Loss Ratio</th>
-    <td>@Model.MyGamer.WinLossRatio%</td>
+        <th>Win Loss Ratio</th>
+        <td>@Model.MyGamer.WinLossRatio%</td>
     </tr>
     <tr>
-    <th>Games Completed</th>
-    <td>@Model.MyGamer.TotalGamesCompleted</td>
+        <th>Games Completed</th>
+        <td>@Model.MyGamer.TotalGamesCompleted</td>
     </tr>
 </table>
 
