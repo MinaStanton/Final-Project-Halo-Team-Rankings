@@ -7,45 +7,47 @@
 <br />
 <table class="table table-striped table-responsive">
     <tr>
-        <th>Gamertag</th>
-        <th>Games Played</th>
-        <th>Score</th>
-        <th>Rank</th>
-        <th>Kills</th>
-        <th>Deaths</th>
-        <th>Assists</th>
-        <th>Death Ratio</th>
-        <th>Assassinations</th> @*Need to decide what data to remove from this view*@
-        <th>Headshots</th>
-        <th>Shots Fired</th>
-        <th>Shots Landed</th>
-        <th>Ratio</th>
-        <th>Games Won</th>
-        <th>Games Lost</th>
-        <th>Games Tied</th>
-        <th>Win Loss Ratio</th>
+        <th id="aligntextintd">Gamertag</th>
+        <th id="aligntextintd">Games Played</th>
+        <th id="aligntextintd">Score</th>
+        <th id="aligntextintd">Rank</th>
+        <th id="aligntextintd">Kills</th>
+        <th id="aligntextintd">Deaths</th>
+        <th id="aligntextintd">Assists</th>
+        <th id="aligntextintd">Death Ratio</th>
+        <th id="aligntextintd">Assassinations</th> @*Need to decide what data to remove from this view*@
+        <th id="aligntextintd">Headshots</th>
+        <th id="aligntextintd">Shots Fired</th>
+        <th id="aligntextintd">Shots Landed</th>
+        <th id="aligntextintd">Accuracy</th>
+        <th id="aligntextintd">Games Won</th>
+        <th id="aligntextintd">Games Lost</th>
+        <th id="aligntextintd">Games Tied</th>
+        <th id="aligntextintd">Win Loss Ratio</th>
+        <th id="aligntextintd">Time Spent Dead</th>
     </tr>
 
     @for (int i = 0; i < Model.Count; i++)
     {
         <tr>
-            <td>@Model[i].Gamertag</td>
-            <td>@Model[i].TotalGamesCompleted</td>
-            <td>@Model[i].Score</td>
-            <td>@Model[i].Ranking</td>
-            <td>@Model[i].TotalKills</td>
-            <td>@Model[i].TotalDeaths</td>
-            <td>@Model[i].TotalAssists</td>
-            <td>@Model[i].Kdratio</td>
-            <td>@Model[i].TotalAssassinations</td>
-            <td>@Model[i].TotalHeadshots</td>
-            <td>@Model[i].TotalShotsFired</td>
-            <td>@Model[i].TotalShotsLanded</td>
-            <td>@Model[i].AccuracyRatio%</td>
-            <td>@Model[i].TotalGamesWon</td>
-            <td>@Model[i].TotalGamesLost</td>
-            <td>@Model[i].TotalGamesTied</td>
-            <td>@Model[i].WinLossRatio%</td>
+            <td id="aligntextintd">@Model[i].Gamertag</td>
+            <td id="aligntextintd">@Model[i].TotalGamesCompleted</td>
+            <td id="aligntextintd">@Model[i].Score</td>
+            <td id="aligntextintd">@Model[i].Ranking</td>
+            <td id="aligntextintd">@Model[i].TotalKills</td>
+            <td id="aligntextintd">@Model[i].TotalDeaths</td>
+            <td id="aligntextintd">@Model[i].TotalAssists</td>
+            <td id="aligntextintd">@Model[i].Kdratio</td>
+            <td id="aligntextintd">@Model[i].TotalAssassinations</td>
+            <td id="aligntextintd">@Model[i].TotalHeadshots</td>
+            <td id="aligntextintd">@Model[i].TotalShotsFired</td>
+            <td id="aligntextintd">@Model[i].TotalShotsLanded</td>
+            <td id="aligntextintd">@Model[i].AccuracyRatio%</td>
+            <td id="aligntextintd">@Model[i].TotalGamesWon</td>
+            <td id="aligntextintd">@Model[i].TotalGamesLost</td>
+            <td id="aligntextintd">@Model[i].TotalGamesTied</td>
+            <td id="aligntextintd">@Model[i].WinLossRatio%</td>
+            <td id="aligntextintd">@Gamers.DisplayRespawnTime((int)Model[i].TimeSpentRespawning)</td>
         </tr>
     }
 </table>

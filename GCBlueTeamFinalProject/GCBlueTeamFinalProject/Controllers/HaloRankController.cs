@@ -56,6 +56,11 @@ namespace GCBlueTeamFinalProject.Controllers
                     ViewBag.Message = "This Gamertag does not exist, please try again!";
                     return View("RegisterUser", "_RegisterUserLayout");
                 }
+                if (searchedPlayer.Results[0].Result.ArenaStats.TotalTimePlayed == "")
+                {
+                    ViewBag.Message = "This Gamertag does not have any Halo 5 play time!";
+                    return View("RegisterUser", "_RegisterUserLayout");
+                }
                 Gamers searchedGamer = new Gamers(searchedPlayer, 0);
                 searchedGamer.UserId = id;
                 newUser.UserId = id;

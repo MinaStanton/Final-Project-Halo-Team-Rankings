@@ -23,7 +23,20 @@
             <div class="col">
                 <input type="submit" value="Search Gamertag" class="btn btn-primary btn-block" />
             </div>
-
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Try This Gamertag
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Star Forge 7">Star Forge 7</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Powered Plant">Powered Plant</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=blody09">blody09</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Herro Tommy">Herro Tommy</a>
+                        <a class="dropdown-item" href="../HaloRank/GetPlayerBySearch?search=Crarazy">Crarazy</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -35,7 +48,7 @@
         white-space: nowrap;
     }
 </style>
-<table class="table table-striped table-responsive-md bg-light">
+<table class="table table-striped table-responsive bg-light">
     <tr>
         <th>Team</th>
         @for (int i = 1; i <= ViewBag.teamMembers; i++)
