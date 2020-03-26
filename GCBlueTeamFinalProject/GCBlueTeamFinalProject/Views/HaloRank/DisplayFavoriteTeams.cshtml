@@ -4,98 +4,115 @@
 }
 @model List<Teams>
 
-<table class="col-12">
-    <tr>
-        <td><h1>Favorite Teams</h1></td>
-        <td>
-            <form action="../HaloRank/GetPlayerBySearch" method="post">
-                <input type="submit" value="Search Gamertag" class="small btn-primary" />
-                <input type="text" name="search" value="" class="rounded" />
+<body class="view" style="
+        background-image: url('../img/h3_mpalpha_snowboundcarnage.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;">
+</body>
 
-            </form>
-        </td>
-    </tr>
-</table>
+<div class="form-row">
+    <div class="col">
+        <h1 class="text-white">Favorite Teams</h1>
+    </div>
+    <form action="../HaloRank/GetPlayerBySearch" method="post" class="col">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" name="search" value="" class="form-control" placeholder="Search Gamertag" required />
+            </div>
+            <div class="col">
+                <input type="submit" value="Search Gamertag" class="btn btn-primary btn-block" />
+            </div>
+
+        </div>
+    </form>
+</div>
+<br />
 <br />
 
-  
-    <table class="table table-bordered table-striped ">
-        <tr>
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
+<table class="table table-striped table-responsive-md bg-light">
+    <tr>
+        <th>Team</th>
+        @for (int i = 1; i <= ViewBag.teamMembers; i++)
+        {
 
-            <th>Team Name</th>
-            @for (int i = 1; i <= ViewBag.teamMembers; i++)
-            {
-                <th >Player @i </th>
-            }
-                <th>Win/Loss Ratio</th>
-                <th>Kill/Deaths Ratio</th>
-                <th>Kill/Death/Assists Ratio</th>
-                <th>Accuracy Ratio</th>
-                <th>Score</th>
-        </tr>
-      
-        @for (int i = 0; i < Model.Count; i++)
-        {
-        <tr>
-        <td>@Model[i].TeamName</td>
-
-        @if (ViewBag.teamMembers == 8)
-        {
-                <td>@Model[i].Player1</td>
-                <td>@Model[i].Player2</td>
-                <td>@Model[i].Player3</td>
-                <td>@Model[i].Player4</td>
-                <td>@Model[i].Player5</td>
-                <td>@Model[i].Player6</td>
-                <td>@Model[i].Player7</td>
-                <td>@Model[i].Player8</td>
-                <td>@Model[i].AvgWlratio%</td>
-                <td>@Model[i].AvgKdratio</td>
-                <td>@Model[i].AvgKdaratio</td>
-                <td>@Model[i].AvgAccRatio%</td>
-                <td>@Model[i].AvgScore</td>
+            <th>Player @i </th>
         }
-        else if (ViewBag.teamMembers == 6)
-        {
-                <td>@Model[i].Player1</td>
-                <td>@Model[i].Player2</td>
-                <td>@Model[i].Player3</td>
-                <td>@Model[i].Player4</td>
-                <td>@Model[i].Player5</td>
-                <td>@Model[i].Player6</td>
-                <td>@Model[i].AvgWlratio%</td>
-                <td>@Model[i].AvgKdratio</td>
-                <td>@Model[i].AvgKdaratio</td>
-                <td>@Model[i].AvgAccRatio%</td>
-                <td>@Model[i].AvgScore</td>
-        }
-        else if (ViewBag.teamMembers == 4)
-        {
-                <td>@Model[i].Player1</td>
-                <td>@Model[i].Player2</td>
-                <td>@Model[i].Player3</td>
-                <td>@Model[i].Player4</td>
-                <td>@Model[i].AvgWlratio%</td>
-                <td>@Model[i].AvgKdratio</td>
-                <td>@Model[i].AvgKdaratio</td>
-                <td>@Model[i].AvgAccRatio%</td>
-                <td>@Model[i].AvgScore</td>
-        }
-        else
-        {
-                <td>@Model[i].Player1</td>
-                <td>@Model[i].Player2</td>
-                <td>@Model[i].AvgWlratio%</td>
-                <td>@Model[i].AvgKdratio</td>
-                <td>@Model[i].AvgKdaratio</td>
-                <td>@Model[i].AvgAccRatio%</td>
-                <td>@Model[i].AvgScore</td>   
-        }
-        <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
+        <th>Win/Loss Ratio</th>
+        <th>Kill/Deaths Ratio</th>
+        <th>Kill/Death/Assists Ratio</th>
+        <th>Accuracy Ratio</th>
+        <th>Score</th>
+        <th></th>
     </tr>
-        }
 
-    </table>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+<tr>
+    <td>@Model[i].TeamName</td>
+
+    @if (ViewBag.teamMembers == 8)
+    {
+        <td id="aligntextintd">@Model[i].Player1</td>
+        <td id="aligntextintd">@Model[i].Player2</td>
+        <td id="aligntextintd">@Model[i].Player3</td>
+        <td id="aligntextintd">@Model[i].Player4</td>
+        <td id="aligntextintd">@Model[i].Player5</td>
+        <td id="aligntextintd">@Model[i].Player6</td>
+        <td id="aligntextintd">@Model[i].Player7</td>
+        <td id="aligntextintd">@Model[i].Player8</td>
+        <td id="aligntextintd">@Model[i].AvgWlratio%</td>
+        <td id="aligntextintd">@Model[i].AvgKdratio</td>
+        <td id="aligntextintd">@Model[i].AvgKdaratio</td>
+        <td id="aligntextintd">@Model[i].AvgAccRatio%</td>
+        <td id="aligntextintd">@Model[i].AvgScore</td>
+    }
+    else if (ViewBag.teamMembers == 6)
+    {
+        <td id="aligntextintd">@Model[i].Player1</td>
+        <td id="aligntextintd">@Model[i].Player2</td>
+        <td id="aligntextintd">@Model[i].Player3</td>
+        <td id="aligntextintd">@Model[i].Player4</td>
+        <td id="aligntextintd">@Model[i].Player5</td>
+        <td id="aligntextintd">@Model[i].Player6</td>
+        <td id="aligntextintd">@Model[i].AvgWlratio%</td>
+        <td id="aligntextintd">@Model[i].AvgKdratio</td>
+        <td id="aligntextintd">@Model[i].AvgKdaratio</td>
+        <td id="aligntextintd">@Model[i].AvgAccRatio%</td>
+        <td id="aligntextintd">@Model[i].AvgScore</td>
+    }
+    else if (ViewBag.teamMembers == 4)
+    {
+        <td id="aligntextintd">@Model[i].Player1</td>
+        <td id="aligntextintd">@Model[i].Player2</td>
+        <td id="aligntextintd">@Model[i].Player3</td>
+        <td id="aligntextintd">@Model[i].Player4</td>
+        <td id="aligntextintd">@Model[i].AvgWlratio%</td>
+        <td id="aligntextintd">@Model[i].AvgKdratio</td>
+        <td id="aligntextintd">@Model[i].AvgKdaratio</td>
+        <td id="aligntextintd">@Model[i].AvgAccRatio%</td>
+        <td id="aligntextintd">@Model[i].AvgScore</td>
+    }
+    else
+    {
+        <td id="aligntextintd">@Model[i].Player1</td>
+        <td id="aligntextintd">@Model[i].Player2</td>
+        <td id="aligntextintd">@Model[i].AvgWlratio%</td>
+        <td id="aligntextintd">@Model[i].AvgKdratio</td>
+        <td id="aligntextintd">@Model[i].AvgKdaratio</td>
+        <td id="aligntextintd">@Model[i].AvgAccRatio%</td>
+        <td id="aligntextintd">@Model[i].AvgScore</td>
+    }
+    <td><a href="../HaloRank/DeleteFavoriteTeams?id=@Model[i].Id" class="btn btn-danger">Remove</a></td>
+</tr>
+    }
+
+</table>
 
 @if (ViewBag.Message != null)
 {
