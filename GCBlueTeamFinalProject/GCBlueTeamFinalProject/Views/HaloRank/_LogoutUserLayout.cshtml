@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    ViewData["Title"] = "_LogoutUserLayout";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="HaloRank" asp-action="DisplayGamers">Halo Arena Matchup</a>
+                <a class="navbar-brand" asp-area="" asp-controller="HaloRank" asp-action="RegisterUser">Halo Arena Matchup</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,15 +23,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="MyProfile">My Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="DisplayGamers">Friends List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HaloRank" asp-action="DisplayFavoriteTeams">Favorite Teams</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -39,9 +34,9 @@
         </main>
     </div>
 
-    <footer class="footer text-black">
+    <footer class="footer text-muted">
         <div class="container">
-            &copy; 2020 - GC C# Blue Team Final Project - <a asp-area="" asp-controller="HaloRank" asp-action="MyProfile">My Profile</a>
+            &copy; 2020 - GC C# Blue Team Final Project
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

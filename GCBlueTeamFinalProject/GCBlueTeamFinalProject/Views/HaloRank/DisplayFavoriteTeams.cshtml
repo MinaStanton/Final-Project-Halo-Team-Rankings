@@ -71,7 +71,7 @@
             @for (int i = 0; i < Model.Count; i++)
             {
                 <tr>
-                    <td>@Model[i].TeamName</td>
+                    <td id="aligntextintd">@Model[i].TeamName</td>
 
                     @if (ViewBag.teamMembers == 8)
                     {
@@ -133,13 +133,13 @@
     </div>
 </div>
 
-            @if (ViewBag.Message != null)
-            {
-                <script type="text/javascript">
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
 
             window.onload = function () {
                 alert("@ViewBag.Message");
             };
-                </script>
+    </script>
 
-            }
+}

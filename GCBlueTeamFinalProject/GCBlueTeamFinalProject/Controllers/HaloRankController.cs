@@ -95,21 +95,17 @@ namespace GCBlueTeamFinalProject.Controllers
             client.BaseAddress = new Uri($"https://www.haloapi.com/stats/h5/servicerecords/arena");
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
             var response = await client.GetAsync($"?players={search}");
-            //ADD NUGET PACKAGE - Microsoft.aspnet.webapi.client
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>();
             ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             Gamers searchedGamer = new Gamers(searchedPlayer, 0);
             if (searchedGamer.Gamertag == null)
             {
-
                 string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 Users foundUser = _context.Users.Where(x => x.UserId == id).First();
                 Gamers foundGamer = _context.Gamers.Where(x => x.UserId == id && x.Gamertag == foundUser.Gamertag).First();
                 UsersGamers UserProfile = new UsersGamers(foundUser, foundGamer);
                 ViewBag.Message = "This Gamertag does not exist, please try again!";
                 return View("MyProfile", UserProfile);
-                //string errorMessage = "This Gamertag does not exist, please try again!";
-                //return RedirectToAction("ProfileError", new { errorMessage });
             }
             else if(searchedGamer.TotalTimePlayed == "")
             {
@@ -174,8 +170,6 @@ namespace GCBlueTeamFinalProject.Controllers
                     return View("DisplayGamers", userGamers);
                 }
                 List<Gamers> newGamerList = _context.Gamers.Where(x => x.UserId == id && gamers.Contains(x.Gamertag)).ToList();
-                //ViewBag.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                //ViewBag.UserId2 = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 List<Teams> teams = Teams.TeamMaker(newGamerList);
                 List<int> teamProbabilities = Teams.CalculateProbabilty((double)teams[0].AvgScore, (double)teams[1].AvgScore);
                 ViewBag.Team1Probability = teamProbabilities[0];
@@ -273,13 +267,10 @@ namespace GCBlueTeamFinalProject.Controllers
                 {
                     teamMembers = 8;
                 }
-
-                
                 if (teamMembers > totalMembers)
                 {
                     totalMembers = teamMembers;
-                }
-                
+                }              
             }
 
             ViewBag.teamMembers = totalMembers;
@@ -292,7 +283,6 @@ namespace GCBlueTeamFinalProject.Controllers
             }
             return View(favTeams);
         }
-
         public IActionResult DisplayGamers()
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -319,7 +309,6 @@ namespace GCBlueTeamFinalProject.Controllers
             client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{APIKEYVARIABLE}");
             var response = await client.GetAsync($"?players={search}"); //searches for players in the API based on the search
             var searchedPlayer = await response.Content.ReadAsAsync<PlayerRootObject>(); //comes in as a PlayerRootObject
-            //List<Gamers> apiListSearch = new List<Gamers>();
             for (int i = 0; i < searchedPlayer.Results.Length; i++) //adds each Gamers from the PlayerRootObject to a List<Gamers>
             {
                 var newData = searchedPlayer.Results[i];
@@ -331,12 +320,6 @@ namespace GCBlueTeamFinalProject.Controllers
                 //1. pull object from the database
                 //2. update information
                 //3. savechanges
-
-                //old:
-                //1. pull object from database
-                //2. create NEW object with updated information
-                //3. attempt to relink NEW object with database (fails)
-                //4. save
             }
             _context.SaveChanges();
             return RedirectToAction("DisplayGamers"); //displays sorted list of gamers
